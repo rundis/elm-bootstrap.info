@@ -5,7 +5,7 @@ module.exports = {
   entry: './src/index.js',
 
   output: {
-    path: '../docs-site',
+    path: 'dist',
     filename: 'index.js'
   },
 
