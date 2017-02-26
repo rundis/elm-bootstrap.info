@@ -84,6 +84,7 @@ div []
 """
 
 
+pills : List (Html msg)
 pills =
     [ h2 [] [ text "Pill badges" ]
     , p [] [ text "To create more rounded badges use the pill* functions." ]

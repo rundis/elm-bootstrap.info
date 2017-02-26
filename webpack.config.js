@@ -43,6 +43,7 @@ module.exports = {
   ],
 
   devServer: {
-    stats: 'errors-only'
+    stats: 'errors-only',
+    historyApiFallback: true
   }
 };

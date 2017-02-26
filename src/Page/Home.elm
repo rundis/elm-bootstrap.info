@@ -2,6 +2,7 @@ module Page.Home exposing (view)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
+import Globals
 
 
 view : List (Html msg)
@@ -28,7 +29,7 @@ view =
                 ]
                 [ text "Elm" ]
             , text " applications using "
-            , a [ href "http://getbootstrap.com/", target "_blank"
+            , a [ href Globals.bootstrapUrl, target "_blank"
                 , style [("color", "#ffe484")]
                 ]
                 [ text "Bootstrap 4" ]

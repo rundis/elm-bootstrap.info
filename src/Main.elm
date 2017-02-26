@@ -4,7 +4,9 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Navigation exposing (Location)
 import Route
+import Globals
 import Bootstrap.Navbar as Navbar
+import Page.NotFound as NotFound
 import Page.Home as PHome
 import Page.Table as Table
 import Page.Progress as Progress
@@ -38,6 +40,7 @@ type alias Model =
 
 type Msg
     = UrlChange Location
+    | PageChange String
     | NavbarMsg Navbar.State
     | TableMsg Table.State
     | ProgressMsg Progress.State
@@ -55,12 +58,12 @@ init location =
         ( navbarState, navbarCmd ) =
             Navbar.initialState NavbarMsg
 
-        ( pageNavState, pageNavCmd) =
+        ( pageNavState, pageNavCmd ) =
             PageNav.initialState PageNavMsg
 
         ( model, urlCmd ) =
             urlUpdate location
-                { route = Route.Home
+                { route = Route.NotFound
                 , navbarState = navbarState
                 , tableState = Table.initialState
                 , progressState = Progress.initialState
@@ -102,6 +105,9 @@ update msg model =
         UrlChange location ->
             urlUpdate location model
 
+        PageChange url ->
+            ( model, Navigation.newUrl url )
+
         NavbarMsg state ->
             ( { model | navbarState = state }, Cmd.none )
 
@@ -127,7 +133,7 @@ update msg model =
             ( { model | modalState = state }, Cmd.none )
 
         PageNavMsg state ->
-            ( { model | pageNavState = state}, Cmd.none )
+            ( { model | pageNavState = state }, Cmd.none )
 
 
 urlUpdate : Navigation.Location -> Model -> ( Model, Cmd Msg )
@@ -144,7 +150,10 @@ view : Model -> Html Msg
 view model =
     div
         []
-        (viewMenu model :: viewPage model)
+        ( [ viewMenu model ]
+         ++ viewPage model
+         ++ [ viewFooter ]
+        )
 
 
 viewMenu : Model -> Html Msg
@@ -154,24 +163,33 @@ viewMenu model =
         |> Navbar.collapseLarge
         |> Navbar.withAnimation
         |> Navbar.lightCustomClass "bd-navbar"
-        |> Navbar.brand [ href "#" ] [ text "Elm Bootstrap" ]
+        |> Navbar.brand
+            ( Route.clickTo Route.Home PageChange )
+            [ text "Elm Bootstrap" ]
         |> Navbar.items
-            [ Navbar.itemLink [ href "#grid" ] [ text "Grid" ]
-            , Navbar.itemLink [ href "#form"] [ text "Form" ]
-            , Navbar.itemLink [ href "#card" ] [ text "Card" ]
-            , Navbar.itemLink [ href "#table" ] [ text "Table" ]
-            , Navbar.itemLink [ href "#button" ] [ text "Button" ]
-            , Navbar.itemLink [ href "#dropdown" ] [ text "Dropdown" ]
-            , Navbar.itemLink [ href "#progress" ] [ text "Progress" ]
-            , Navbar.itemLink [ href "#alert" ] [ text "Alert" ]
-            , Navbar.itemLink [ href "#badge" ] [ text "Badge" ]
-            , Navbar.itemLink [ href "#listgroup" ] [ text "ListGroup" ]
-            , Navbar.itemLink [ href "#tab" ] [ text "Tab" ]
-            , Navbar.itemLink [ href "#accordion" ] [ text "Accordion" ]
-            , Navbar.itemLink [ href "#modal" ] [ text "Modal" ]
-            , Navbar.itemLink [ href "#navbar"] [ text "Navbar" ]
+            [ menuLink "Grid" Route.Grid
+            , menuLink "Form" Route.Form
+            , menuLink "Card" Route.Card
+            , menuLink "Table" Route.Table
+            , menuLink "Button" Route.Button
+            , menuLink "Dropdown" Route.Dropdown
+            , menuLink "Progress" Route.Progress
+            , menuLink "Alert" Route.Alert
+            , menuLink "Badge" Route.Badge
+            , menuLink "Listgroup" Route.ListGroup
+            , menuLink "Tab" Route.Tab
+            , menuLink "Accordion" Route.Accordion
+            , menuLink "Modal" Route.Modal
+            , menuLink "Navbar" Route.Navbar
             ]
         |> Navbar.view model.navbarState
+
+
+menuLink : String -> Route.Route -> Navbar.Item Msg
+menuLink name route =
+    Navbar.itemLink
+        (Route.clickTo route PageChange )
+        [ text name ]
 
 
 viewPage : Model -> List (Html Msg)
@@ -223,9 +241,41 @@ viewPage model =
             Form.view
 
         Route.NotFound ->
-            viewNotFound model
+            NotFound.view
 
 
-viewNotFound : Model -> List (Html Msg)
-viewNotFound model =
-    [ h1 [] [ text "NOT FOUND" ] ]
+viewFooter : Html msg
+viewFooter =
+    footer [ class "bd-footer text-muted" ]
+        [ div [ class "container" ]
+            [ ul [ class "bd-footer-links" ]
+                [ li []
+                    [ i [class "fa fa-github", attribute "aria-hidden" "true" ] []
+                    , externalLink Globals.githubDocsUrl " Docs"
+                    ]
+                , li []
+                    [ i [class "fa fa-github", attribute "aria-hidden" "true" ] []
+                    , externalLink Globals.githubSourceUrl " Source"
+                    ]
+                , li []
+                    [ externalLink Globals.packageUrl "Package"
+                    ]
+                , li []
+                    [ externalLink Globals.bootstrapUrl "Bootstrap 4" ]
+                ]
+
+            , p [] [ text "Created by Magnus Rundberget "
+                   , i [class "fa fa-twitter", attribute "aria-hidden" "true" ] []
+                   , externalLink "https://twitter.com/mrundberget" "mrundberget"
+                   , text " with help from contributor heroes !"
+                   ]
+            , p [] [ text "The code is licensed BSD-3 and the documentation is licensed CC BY 3.0." ]
+
+            ]
+        ]
+
+
+externalLink : String -> String -> Html msg
+externalLink url label =
+    a [ href url, target "_blank"]
+        [ text label ]
