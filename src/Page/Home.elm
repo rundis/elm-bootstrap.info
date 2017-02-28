@@ -3,10 +3,11 @@ module Page.Home exposing (view)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Globals
+import Route
 
 
-view : List (Html msg)
-view =
+view : (String -> msg) -> List (Html msg)
+view pageMsg =
     [ main_
         [ class "bd-masthead", id "content" ]
         [ div
@@ -59,6 +60,8 @@ view =
                         [ text """The easiest way to get started is using the Bootstrap.CDN module, which allows you to inline the latest Bootstrap CSS.
                                This allows you to start using Elm Bootstrap with the elm-reactor from the get go.
                                """
+                        , a (Route.clickTo Route.GettingStarted pageMsg )
+                            [ text "Read more..."]
                         ]
                     ]
                 , div

@@ -81,19 +81,19 @@ subscriptions state toMsg =
         ]
 
 
-view : State -> (State -> msg) -> List (Html msg)
+view : State -> (State -> msg) -> Util.PageContent msg
 view state toMsg =
-    [ Util.simplePageHeader
-        "Dropdown"
+    { title = "Dropdown"
+    , description =
         """Dropdowns are toggleable, contextual overlays for displaying lists of links and more.
            They’re made interactive with a little bit of Elm. They’re toggled by clicking."""
-    , Util.pageContent
+    , children =
         (basic state toMsg
             ++ customized state toMsg
             ++ split state toMsg
             ++ menu state toMsg
         )
-    ]
+    }
 
 
 basic : State -> (State -> msg) -> List (Html msg)

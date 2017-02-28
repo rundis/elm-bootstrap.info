@@ -43,17 +43,17 @@ subscriptions state toMsg =
         ]
 
 
-view : State -> (State -> msg) -> List (Html msg)
+view : State -> (State -> msg) -> Util.PageContent msg
 view state toMsg =
-    [ Util.simplePageHeader
-        "Navbar"
+    { title = "Navbar"
+    , description =
         """The navbar is a wrapper that positions branding, navigation, and other elements in a concise header.
         It’s easily extensible and supports responsive behavior."""
-    , Util.pageContent
-        ( basic state toMsg
+    , children =
+        (basic state toMsg
             ++ custom state toMsg
         )
-    ]
+    }
 
 
 

@@ -2,8 +2,6 @@ var CleanWebpackPlugin = require('clean-webpack-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 
-var debug = '&debug=true'
-
 module.exports = {
   entry: './src/index.js',
 
@@ -27,7 +25,7 @@ module.exports = {
       {
         test: /\.elm$/,
         exclude: [/elm-stuff/, /node_modules/],
-        loader: 'elm-hot!elm-webpack?verbose=true&warn=true&debug=true'
+        loader: 'elm-webpack?verbose=true&warn=true'
       }
     ],
 
@@ -45,8 +43,4 @@ module.exports = {
     ])
   ],
 
-  devServer: {
-    stats: 'errors-only',
-    historyApiFallback: true
-  }
 };

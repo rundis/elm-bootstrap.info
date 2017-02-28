@@ -46,15 +46,15 @@ initialState =
     }
 
 
-view : State -> (State -> msg) -> List (Html msg)
+view : State -> (State -> msg) -> Util.PageContent msg
 view state toMsg =
-    [ Util.simplePageHeader
-        "Progress"
+    { title = "Progress"
+    , description =
         """Use our custom progress component for displaying simple or complex progress bars.
         We don’t use the HTML5 <progress> element, ensuring you can stack progress bars, animate them, and place text labels over them."""
-    , Util.pageContent
+    , children =
         (quickStart ++ optioned state toMsg ++ stacked)
-    ]
+    }
 
 
 quickStart : List (Html msg)
@@ -154,7 +154,6 @@ optionsForm ({ options } as state) toMsg =
                     ]
                 ]
             ]
-
 
 
 progressOptions :

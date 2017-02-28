@@ -12,6 +12,7 @@ import Json.Decode
 
 type Route
     = Home
+    | GettingStarted
     | Grid
     | Table
     | Progress
@@ -33,6 +34,7 @@ routeParser : Parser (Route -> a) a
 routeParser =
     UrlParser.oneOf
         [ UrlParser.map Home top
+        , UrlParser.map GettingStarted (s "getting-started")
         , UrlParser.map Grid (s "grid")
         , UrlParser.map Table (s "table")
         , UrlParser.map Progress (s "progress")
@@ -59,6 +61,9 @@ encode route =
     case route of
         Home ->
             "/"
+
+        GettingStarted ->
+            "/getting-started"
 
         Grid ->
             "/grid"

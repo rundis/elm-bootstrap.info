@@ -6,14 +6,13 @@ import Util
 import Bootstrap.Badge as Badge
 
 
-view : List (Html msg)
+view : Util.PageContent msg
 view =
-    [ Util.simplePageHeader
-        "Badge"
-        "Small and adaptive tag for adding context to just about any content."
-    , Util.pageContent
+    { title = "Badge"
+    , description = "Small and adaptive tag for adding context to just about any content."
+    , children =
         (example ++ contextual ++ pills)
-    ]
+    }
 
 
 example : List (Html msg)

@@ -40,14 +40,14 @@ subscriptions state toMsg =
     Tab.subscriptions state.animatedState (\ts -> toMsg { state | animatedState = ts })
 
 
-view : State -> (State -> msg) -> List (Html msg)
+view : State -> (State -> msg) -> Util.PageContent msg
 view state toMsg =
-    [ Util.simplePageHeader
-        "Tab"
+    { title = "Tab"
+    , description =
         """Use the Tab module when you want to create a tabbed interface element with tabbable regions of content."""
-    , Util.pageContent
+    , children =
         (tabs state toMsg ++ pills state toMsg ++ animated state toMsg ++ customized state toMsg)
-    ]
+    }
 
 
 tabs : State -> (State -> msg) -> List (Html msg)
@@ -241,9 +241,9 @@ animated state toMsg =
         ]
     , Util.code animatedCode
     , Util.calloutWarning
-        [ h4 [] [ text "Don't forget the subscription !"]
+        [ h4 [] [ text "Don't forget the subscription !" ]
         , p [] [ text """When you set withAnimation to True it's really important that you remember to also wire up the subscriptions function.
-                         If you forget, changing tabs will not work."""]
+                         If you forget, changing tabs will not work.""" ]
         ]
     ]
 
@@ -313,8 +313,6 @@ customized state toMsg =
 
                 Fill ->
                     [ Tab.fill ]
-
-
     in
         [ h2 [] [ text "Customizing with options" ]
         , p [] [ text "You can easily customize spacing and alignement of tabs using helper functions" ]
@@ -322,13 +320,13 @@ customized state toMsg =
             [ Form.form []
                 [ h5 [] [ text "Tab layout options" ]
                 , Form.group []
-                    [ Form.label [] [ text "Horizontal alignment"]
+                    [ Form.label [] [ text "Horizontal alignment" ]
                     , div []
-                        [ Radio.radio (radioAttrs None)  "Default"
-                        , Radio.radio (radioAttrs Center)  "Tab.center"
-                        , Radio.radio (radioAttrs Right)  "Tab.right"
-                        , Radio.radio (radioAttrs Justified)  "Tab.justified"
-                        , Radio.radio (radioAttrs Fill)  "Tab.fill"
+                        [ Radio.radio (radioAttrs None) "Default"
+                        , Radio.radio (radioAttrs Center) "Tab.center"
+                        , Radio.radio (radioAttrs Right) "Tab.right"
+                        , Radio.radio (radioAttrs Justified) "Tab.justified"
+                        , Radio.radio (radioAttrs Fill) "Tab.fill"
                         ]
                     ]
                 , hr [] []

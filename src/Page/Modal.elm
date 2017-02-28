@@ -28,17 +28,17 @@ initialState =
     }
 
 
-view : State -> (State -> msg) -> List (Html msg)
+view : State -> (State -> msg) -> Util.PageContent msg
 view state toMsg =
-    [ Util.simplePageHeader
-        "Modal"
+    { title = "Modal"
+    , description =
         """Modals are streamlined, but flexible dialog prompts powered by Elm !
         They support a number of use cases from user notification to completely custom content and feature a handful of helpful subcomponents, sizes, and more."""
-    , Util.pageContent
+    , children =
         (example state toMsg
             ++ grid state toMsg
         )
-    ]
+    }
 
 
 example : State -> (State -> msg) -> List (Html msg)

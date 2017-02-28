@@ -37,16 +37,15 @@ subscriptions state toMsg =
         ]
 
 
-view : State -> (State -> msg) -> List (Html msg)
+view : State -> (State -> msg) -> Util.PageContent msg
 view state toMsg =
-    [ Util.simplePageHeader
-        "Accordion"
-        """An accordion is a group of stacked cards where you can toggle the visibility (slide up/down) of each card"""
-    , Util.pageContent
+    { title = "Accordion"
+    , description = """An accordion is a group of stacked cards where you can toggle the visibility (slide up/down) of each card."""
+    , children =
         (example state toMsg
             ++ advanced state toMsg
         )
-    ]
+    }
 
 
 example : State -> (State -> msg) -> List (Html msg)

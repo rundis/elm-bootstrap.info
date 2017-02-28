@@ -5,6 +5,14 @@ import Html exposing (..)
 import Markdown
 
 
+
+type alias PageContent msg =
+    { title : String
+    , description : String
+    , children : List (Html msg)
+    }
+
+
 simplePageHeader : String -> String -> Html msg
 simplePageHeader title intro =
     div

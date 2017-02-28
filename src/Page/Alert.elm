@@ -6,14 +6,13 @@ import Bootstrap.Alert as Alert
 import Util
 
 
-view : List (Html msg)
+view : Util.PageContent msg
 view =
-    [ Util.simplePageHeader
-        "Alert"
-        "Provide contextual feedback messages for typical user actions with the handful of available and flexible alert messages."
-    , Util.pageContent
+    { title = "Alert"
+    , description = "Provide contextual feedback messages for typical user actions with the handful of available and flexible alert messages."
+    , children =
         (basic ++ extended)
-    ]
+    }
 
 
 basic : List (Html msg)

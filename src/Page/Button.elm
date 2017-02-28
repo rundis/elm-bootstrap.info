@@ -7,13 +7,13 @@ import Bootstrap.ButtonGroup as ButtonGroup
 import Util
 
 
-view : List (Html msg)
+view : Util.PageContent msg
 view =
-    [ Util.simplePageHeader
-        "Button"
+    { title = "Button"
+    , description =
         """Use Bootstrap’s custom button styles for actions in forms, dialogs, and more.
-        Includes support for a handful of contextual variations, sizes, states, and more."""
-    , Util.pageContent
+           Includes support for a handful of contextual variations, sizes, states, and more."""
+    , children =
         (examples
             ++ linkButtons
             ++ outlines
@@ -21,7 +21,7 @@ view =
             ++ disableds
             ++ composing
         )
-    ]
+    }
 
 
 examples : List (Html msg)

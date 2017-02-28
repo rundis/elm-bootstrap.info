@@ -16,12 +16,11 @@ import Bootstrap.Grid.Row as Row
 import Util
 
 
-view : List (Html msg)
+view : Util.PageContent msg
 view =
-    [ Util.simplePageHeader
-        "Form"
-        """Elm Bootstrap provides you functions to easily utilize most of the extensive form support offered by Bootstrap."""
-    , Util.pageContent
+    { title = "Form"
+    , description = """Elm Bootstrap provides you functions to easily utilize most of the extensive form support offered by Bootstrap."""
+    , children =
         (controls
             ++ formGroups
             ++ fieldsets
@@ -33,7 +32,7 @@ view =
             ++ validation
             ++ customControls
         )
-    ]
+    }
 
 
 controls : List (Html msg)

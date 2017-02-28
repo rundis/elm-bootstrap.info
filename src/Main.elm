@@ -1,4 +1,4 @@
-module Main exposing (..)
+port module Main exposing (..)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
@@ -22,6 +22,10 @@ import Page.Accordion as Accordion
 import Page.Modal as Modal
 import Page.Navbar as PageNav
 import Page.Form as Form
+import Page.GettingStarted as GettingStarted
+import Util
+import Bootstrap.Grid as Grid
+import Bootstrap.Grid.Col as Col
 
 
 type alias Model =
@@ -143,7 +147,10 @@ urlUpdate location model =
             ( { model | route = Route.NotFound }, Cmd.none )
 
         Just route ->
-            ( { model | route = route }, Cmd.none )
+            ( { model | route = route }, updateAnalytics <| Route.encode route )
+
+
+port updateAnalytics: String -> Cmd msg
 
 
 view : Model -> Html Msg
@@ -160,27 +167,15 @@ viewMenu : Model -> Html Msg
 viewMenu model =
     Navbar.config NavbarMsg
         |> Navbar.container
-        |> Navbar.collapseLarge
+        |> Navbar.collapseSmall
         |> Navbar.withAnimation
         |> Navbar.lightCustomClass "bd-navbar"
         |> Navbar.brand
             ( Route.clickTo Route.Home PageChange )
             [ text "Elm Bootstrap" ]
         |> Navbar.items
-            [ menuLink "Grid" Route.Grid
-            , menuLink "Form" Route.Form
-            , menuLink "Card" Route.Card
-            , menuLink "Table" Route.Table
-            , menuLink "Button" Route.Button
-            , menuLink "Dropdown" Route.Dropdown
-            , menuLink "Progress" Route.Progress
-            , menuLink "Alert" Route.Alert
-            , menuLink "Badge" Route.Badge
-            , menuLink "Listgroup" Route.ListGroup
-            , menuLink "Tab" Route.Tab
-            , menuLink "Accordion" Route.Accordion
-            , menuLink "Modal" Route.Modal
-            , menuLink "Navbar" Route.Navbar
+            [ menuLink "Getting started" Route.GettingStarted
+            , menuLink "Modules" Route.Alert
             ]
         |> Navbar.view model.navbarState
 
@@ -194,57 +189,133 @@ menuLink name route =
 
 viewPage : Model -> List (Html Msg)
 viewPage model =
-    case model.route of
-        Route.Home ->
-            PHome.view
+    let
+        wrap = wrapPageLayout model
+    in
+        case model.route of
+            Route.Home ->
+                PHome.view PageChange
 
-        Route.Grid ->
-            Grid.view model.gridState GridMsg
+            Route.GettingStarted ->
+                GettingStarted.view PageChange
 
-        Route.Card ->
-            Card.view
+            Route.Grid ->
+                Grid.view model.gridState GridMsg
+                    |> wrap
 
-        Route.Table ->
-            Table.view model.tableState TableMsg
+            Route.Card ->
+                Card.view |> wrap
 
-        Route.Progress ->
-            Progress.view model.progressState ProgressMsg
+            Route.Table ->
+                Table.view model.tableState TableMsg
+                    |> wrap
 
-        Route.Alert ->
-            Alert.view
+            Route.Progress ->
+                Progress.view model.progressState ProgressMsg
+                    |> wrap
 
-        Route.Badge ->
-            Badge.view
+            Route.Alert ->
+                Alert.view
+                    |> wrap
 
-        Route.ListGroup ->
-            ListGroup.view
+            Route.Badge ->
+                Badge.view
+                    |> wrap
 
-        Route.Tab ->
-            Tab.view model.tabState TabMsg
+            Route.ListGroup ->
+                ListGroup.view
+                    |> wrap
 
-        Route.Button ->
-            Button.view
+            Route.Tab ->
+                Tab.view model.tabState TabMsg
+                    |> wrap
 
-        Route.Dropdown ->
-            Dropdown.view model.dropdownState DropdownMsg
+            Route.Button ->
+                Button.view |> wrap
 
-        Route.Accordion ->
-            Accordion.view model.accordionState AccordionMsg
+            Route.Dropdown ->
+                Dropdown.view model.dropdownState DropdownMsg
+                    |> wrap
 
-        Route.Modal ->
-            Modal.view model.modalState ModalMsg
+            Route.Accordion ->
+                Accordion.view model.accordionState AccordionMsg
+                    |> wrap
 
-        Route.Navbar ->
-            PageNav.view model.pageNavState PageNavMsg
+            Route.Modal ->
+                Modal.view model.modalState ModalMsg
+                    |> wrap
 
-        Route.Form ->
-            Form.view
+            Route.Navbar ->
+                PageNav.view model.pageNavState PageNavMsg
+                    |> wrap
 
-        Route.NotFound ->
-            NotFound.view
+            Route.Form ->
+                Form.view |> wrap
+
+            Route.NotFound ->
+                NotFound.view
 
 
-viewFooter : Html msg
+wrapPageLayout : Model -> Util.PageContent Msg -> List (Html Msg)
+wrapPageLayout model pageContent =
+    [ Util.simplePageHeader pageContent.title pageContent.description
+    , Grid.container []
+        [ Grid.row []
+            [ Grid.col
+                [ Col.xs12, Col.md2, Col.pushMd10, Col.attrs [ class "bd-sidebar" ] ]
+                [ viewSidebar model ]
+            , Grid.col
+                [ Col.xs12, Col.md10, Col.pullMd2, Col.attrs [ class "bd-content"] ]
+                pageContent.children
+            ]
+        ]
+    ]
+
+
+
+viewSidebar : Model -> Html Msg
+viewSidebar model =
+    let
+        link page title =
+            sidebarLink page title (page == model.route)
+    in
+        nav [ class "bd-links" ]
+            [ div [ class "bd-toc-item active" ]
+                [ text "Modules"
+                , ul [ class "nav bd-sidenav" ]
+                   [ link Route.Accordion "Accordion"
+                   , link Route.Alert "Alert"
+                   , link Route.Badge "Badge"
+                   , link Route.Button "Button"
+                   , link Route.Card "Card"
+                   , link Route.Dropdown "Dropdown"
+                   , link Route.Form "Form"
+                   , link Route.Grid "Grid"
+                   , link Route.ListGroup "Listgroup"
+                   , link Route.Modal "Modal"
+                   , link Route.Navbar "Navbar"
+                   , link Route.Progress "Progress"
+                   , link Route.Tab "Tab"
+                   , link Route.Table "Table"
+                   ]
+                ]
+            ]
+
+sidebarLink : Route.Route -> String -> Bool -> Html Msg
+sidebarLink page label isActive =
+    li
+        (if isActive then
+             [ class "active bd-sidenav-active" ]
+           else
+                []
+        )
+        [ a (Route.clickTo page PageChange )
+            [ text label ]
+        ]
+
+
+
+viewFooter : Html Msg
 viewFooter =
     footer [ class "bd-footer text-muted" ]
         [ div [ class "container" ]

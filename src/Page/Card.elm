@@ -10,13 +10,13 @@ import Util
 import Color
 
 
-view : List (Html msg)
+view : Util.PageContent msg
 view =
-    [ Util.simplePageHeader
-        "Card"
+    { title = "Card"
+    , description =
         """A card is a flexible and extensible content container.
         It includes options for headers and footers, a wide variety of content, contextual background colors, and powerful display options."""
-    , Util.pageContent
+    , children =
         (example
             ++ blocks
             ++ blockContents
@@ -30,7 +30,7 @@ view =
             ++ decks
             ++ columns
         )
-    ]
+    }
 
 
 example : List (Html msg)

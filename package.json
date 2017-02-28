@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "webpack-dev-server --hot --inline --port 5000",
-    "build": "webpack"
+    "build": "webpack --config webpack.config.prod.js && cp dist/index.html dist/200.html"
   },
   "author": "",
   "license": "BSD3",

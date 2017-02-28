@@ -33,17 +33,17 @@ initialState =
     }
 
 
-view : State -> (State -> msg) -> List (Html msg)
+view : State -> (State -> msg) -> Util.PageContent msg
 view state toMsg =
-    [ Util.simplePageHeader
-        "Table"
+    { title = "Table"
+    , description =
         """The table module allows you easily create tables with different styling options.
            Currently there is no interactive support (sorting, paging etc)"""
-    , Util.pageContent
+    , children =
         (viewSimpleTable state toMsg
                     ++ viewOptionedTable state toMsg
         )
-    ]
+    }
 
 
 

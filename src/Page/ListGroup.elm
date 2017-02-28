@@ -7,16 +7,23 @@ import Bootstrap.ListGroup as ListGroup
 import Bootstrap.Badge as Badge
 
 
-view : List (Html msg)
+view : Util.PageContent msg
 view =
-    [ Util.simplePageHeader
-        "List group"
+    { title = "List group"
+    , description =
         """List groups are a flexible and powerful component for displaying a series of content.
         List group items can be modified and extended to support just about any content within.
         They can also be used as navigation with the right modifier class."""
-    , Util.pageContent
-        (basic ++ active ++ disabledItems ++ actionable ++ contextual ++ badges ++ custom)
-    ]
+    , children =
+        (basic
+            ++ active
+            ++ disabledItems
+            ++ actionable
+            ++ contextual
+            ++ badges
+            ++ custom
+        )
+    }
 
 
 basic : List (Html msg)
