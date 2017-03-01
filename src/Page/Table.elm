@@ -77,11 +77,8 @@ viewSimpleTable state toMsg =
                 ]
             )
         ]
-    , Accordion.accordion
-        state.simpleState
-        { toMsg = (\accState -> toMsg { state | simpleState = accState })
-        , withAnimation = False
-        , cards =
+    , Accordion.config (\accState -> toMsg { state | simpleState = accState })
+        |> Accordion.cards
             [ Accordion.card
                 { id = "simpleTable"
                 , options = []
@@ -90,7 +87,9 @@ viewSimpleTable state toMsg =
                     [ Accordion.block [] [ Card.custom simpleTableSampleCode ] ]
                 }
             ]
-        }
+        |> Accordion.view state.simpleState
+
+
     ]
 
 
@@ -161,11 +160,8 @@ viewOptionedTable state toMsg =
                 ]
         }
         ]
-    , Accordion.accordion
-        state.optionedState
-        { toMsg = (\accState -> toMsg { state | optionedState = accState })
-        , withAnimation = False
-        , cards =
+    , Accordion.config (\accState -> toMsg { state | optionedState = accState })
+        |> Accordion.cards
             [ Accordion.card
                 { id = "simpleTable"
                 , options = []
@@ -176,7 +172,7 @@ viewOptionedTable state toMsg =
                     ]
                 }
             ]
-        }
+        |> Accordion.view state.optionedState
     ]
 
 

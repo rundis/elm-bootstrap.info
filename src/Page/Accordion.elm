@@ -53,11 +53,9 @@ example state toMsg =
     [ h2 [] [ text "Basic example" ]
     , p [] [ text "Accordions are interactive elements and needs view state to work. To use an accordion there is a little bit of wiring involved." ]
     , Util.example
-        [ Accordion.accordion
-            state.exampleState
-            { toMsg = (\ac -> toMsg { state | exampleState = ac })
-            , withAnimation = True
-            , cards =
+        [ Accordion.config (\ac -> toMsg { state | exampleState = ac })
+            |> Accordion.withAnimation
+            |> Accordion.cards
                 [ Accordion.card
                     { id = "card1"
                     , options = []
@@ -79,7 +77,7 @@ example state toMsg =
                         ]
                     }
                 ]
-            }
+            |> Accordion.view state.exampleState
         ]
     , Util.code exampleCode
     ]
@@ -124,11 +122,9 @@ update msg model =
 
 view : Model -> Html Msg
 view model =
-    Accordion.accordion
-        model.accordionState
-        { toMsg = AccordionMsg
-        , withAnimation = True
-        , cards =
+    Accordion.config AccordionMsg
+        |> Accordion.withAnimation
+        |> Accordion.cards
             [ Accordion.card
                 { id = "card1"
                 , options = []
@@ -150,7 +146,7 @@ view model =
                     ]
                 }
             ]
-        }
+        |> Accordion.view model.accordionState
 
 -- You need to do this wiring when you use animations !
 
@@ -169,11 +165,9 @@ advanced state toMsg =
                   Accordion cards reuses quite a bit of functionality from the Card module, so you will be using function from that module when writing the view for an accordion."""
         ]
     , Util.example
-        [ Accordion.accordion
-            state.advancedState
-            { toMsg = (\ac -> toMsg { state | advancedState = ac })
-            , withAnimation = True
-            , cards =
+        [ Accordion.config (\ac -> toMsg { state | advancedState = ac })
+            |> Accordion.withAnimation
+            |> Accordion.cards
                 [ Accordion.card
                     { id = "card1"
                     , options = [ Card.outlineSuccess, Card.align Text.alignXsCenter ]
@@ -209,7 +203,7 @@ advanced state toMsg =
                         ]
                     }
                 ]
-            }
+            |> Accordion.view state.advancedState
         ]
     , Util.code advancedCode
     ]
@@ -218,11 +212,9 @@ advanced state toMsg =
 advancedCode : Html msg
 advancedCode =
     Util.toMarkdownElm """
-Accordion.accordion
-    model.accordionState
-    { toMsg = AccordionMsg
-    , withAnimation = True
-    , cards =
+Accordion.config AccordionMsg
+    |> Accordion.withAnimation
+    |> Accordion.cards
         [ Accordion.card
             { id = "card1"
             , options = [ Card.outlineSuccess, Card.align Text.alignXsCenter ]
@@ -258,5 +250,5 @@ Accordion.accordion
                 ]
             }
         ]
-    }
+    |> Accordion.view model.accordionState
 """

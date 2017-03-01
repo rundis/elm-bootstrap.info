@@ -56,12 +56,8 @@ tabs state toMsg =
     , p [] [ text """Create a classic tabbed control using the tabs function.
                     Since the Tabs require some internal view state, you will need to do a little bit of wiring to get it working.""" ]
     , Util.example
-        [ Tab.tabs
-            state.tabState
-            { toMsg = (\ts -> toMsg { state | tabState = ts })
-            , options = []
-            , withAnimation = False
-            , items =
+        [ Tab.config (\ts -> toMsg { state | tabState = ts })
+            |> Tab.items
                 [ Tab.item
                     { link = Tab.link [] [ text "Tab 1" ]
                     , pane =
@@ -79,7 +75,8 @@ tabs state toMsg =
                             ]
                     }
                 ]
-            }
+
+            |> Tab.view state.tabState
         ]
     , Util.code tabsCode
     ]
@@ -122,28 +119,26 @@ update msg model =
 
 view : Model -> Html msg
 view model =
-    Tab.tabs
-        model.tabState
-        { toMsg = TabMsg
-        , options = []
-        , withAnimation = False
-        , items =
+    Tab.config TabMsg
+        |> Tab.items
             [ Tab.item
-                { link = Tab.link [] [ text "Tab 1"]
-                , pane = Tab.pane [ class "mt-3"]
-                            [ h4 [] [ text "Tab 1 Heading"]
-                            , p [] [ text "Contents of tab 1." ]
-                            ]
+                { link = Tab.link [] [ text "Tab 1" ]
+                , pane =
+                    Tab.pane [ class "mt-3" ]
+                        [ h4 [] [ text "Tab 1 Heading" ]
+                        , p [] [ text "Contents of tab 1." ]
+                        ]
                 }
             , Tab.item
                 { link = Tab.link [] [ text "Tab 2" ]
-                , pane = Tab.pane [ class "mt-3"]
-                            [ h4 [] [ text "Tab 2 Heading"]
-                            , p [] [ text "This is something completely different." ]
-                            ]
+                , pane =
+                    Tab.pane [ class "mt-3" ]
+                        [ h4 [] [ text "Tab 2 Heading" ]
+                        , p [] [ text "This is something completely different." ]
+                        ]
                 }
             ]
-        }
+        |> Tab.view state.tabState
 """
 
 
@@ -152,12 +147,9 @@ pills state toMsg =
     [ h2 [] [ text "Pills" ]
     , p [] [ text "Pills are just like tabs but gives a pill look to the tabs " ]
     , Util.example
-        [ Tab.pills
-            state.pillState
-            { toMsg = (\ts -> toMsg { state | pillState = ts })
-            , options = []
-            , withAnimation = False
-            , items =
+        [ Tab.config (\ts -> toMsg { state | pillState = ts })
+            |> Tab.pills
+            |> Tab.items
                 [ Tab.item
                     { link = Tab.link [] [ text "Tab 1" ]
                     , pane =
@@ -175,7 +167,7 @@ pills state toMsg =
                             ]
                     }
                 ]
-            }
+            |> Tab.view state.pillState
         ]
     , Util.code pillsCode
     ]
@@ -184,28 +176,27 @@ pills state toMsg =
 pillsCode : Html msg
 pillsCode =
     Util.toMarkdownElm """
-Tab.pills
-    model.tabState
-    { toMsg = TabMsg
-    , options = []
-    , withAnimation = False
-    , items =
+Tab.config TabMsg
+    |> Tab.pills
+    |> Tab.items
         [ Tab.item
-            { link = Tab.link [] [ text "Tab 1"]
-            , pane = Tab.pane [ class "mt-3"]
-                        [ h4 [] [ text "Tab 1 Heading"]
-                        , p [] [ text "Contents of tab 1." ]
-                        ]
+            { link = Tab.link [] [ text "Tab 1" ]
+            , pane =
+                Tab.pane [ class "mt-3" ]
+                    [ h4 [] [ text "Tab 1 Heading" ]
+                    , p [] [ text "Contents of tab 1." ]
+                    ]
             }
         , Tab.item
             { link = Tab.link [] [ text "Tab 2" ]
-            , pane = Tab.pane [ class "mt-3"]
-                        [ h4 [] [ text "Tab 2 Heading"]
-                        , p [] [ text "This is something completely different." ]
-                        ]
+            , pane =
+                Tab.pane [ class "mt-3" ]
+                    [ h4 [] [ text "Tab 2 Heading" ]
+                    , p [] [ text "This is something completely different." ]
+                    ]
             }
         ]
-    }
+    |> Tab.view state.tabState
 """
 
 
@@ -214,12 +205,9 @@ animated state toMsg =
     [ h2 [] [ text "Adding an animation effect" ]
     , p [] [ text "You can add an fade in animation effect, by adding a little bit more of wiring." ]
     , Util.example
-        [ Tab.tabs
-            state.animatedState
-            { toMsg = (\ts -> toMsg { state | animatedState = ts })
-            , options = []
-            , withAnimation = True
-            , items =
+        [ Tab.config (\ts -> toMsg { state | animatedState = ts })
+            |> Tab.withAnimation
+            |> Tab.items
                 [ Tab.item
                     { link = Tab.link [] [ text "Tab 1" ]
                     , pane =
@@ -237,7 +225,7 @@ animated state toMsg =
                             ]
                     }
                 ]
-            }
+            |> Tab.view state.animatedState
         ]
     , Util.code animatedCode
     , Util.calloutWarning
@@ -262,29 +250,27 @@ subscriptions : Model -> Sub Msg
 
 view : Model -> Html msg
 view model =
-    Tab.tabs
-        model.tabState
-        { toMsg = TabMsg
-        , options = []
-        , withAnimation = True -- Enables animation
-        , items =
+    Tab.config TabMsg
+        |> Tab.withAnimation
+        |> Tab.items
             [ Tab.item
-                { link = Tab.link [] [ text "Tab 1"]
-                , pane = Tab.pane [ class "mt-3"]
-                            [ h4 [] [ text "Tab 1 Heading"]
-                            , p [] [ text "Contents of tab 1." ]
-                            ]
+                { link = Tab.link [] [ text "Tab 1" ]
+                , pane =
+                    Tab.pane [ class "mt-3" ]
+                        [ h4 [] [ text "Tab 1 Heading" ]
+                        , p [] [ text "Contents of tab 1." ]
+                        ]
                 }
             , Tab.item
                 { link = Tab.link [] [ text "Tab 2" ]
-                , pane = Tab.pane [ class "mt-3"]
-                            [ h4 [] [ text "Tab 2 Heading"]
-                            , p [] [ text "This is something completely different." ]
-                            ]
+                , pane =
+                    Tab.pane [ class "mt-3" ]
+                        [ h4 [] [ text "Tab 2 Heading" ]
+                        , p [] [ text "This is something completely different." ]
+                        ]
                 }
             ]
-        }
-
+        |> Tab.view model.tabState
 """
 
 
@@ -297,22 +283,22 @@ customized state toMsg =
             , Radio.checked <| layout == state.layout
             ]
 
-        tabOptions =
+        tabLayout conf =
             case state.layout of
                 None ->
-                    []
+                    conf
 
                 Center ->
-                    [ Tab.center ]
+                    Tab.center conf
 
                 Right ->
-                    [ Tab.right ]
+                    Tab.right conf
 
                 Justified ->
-                    [ Tab.justified ]
+                    Tab.justified conf
 
                 Fill ->
-                    [ Tab.fill ]
+                    Tab.fill conf
     in
         [ h2 [] [ text "Customizing with options" ]
         , p [] [ text "You can easily customize spacing and alignement of tabs using helper functions" ]
@@ -331,12 +317,9 @@ customized state toMsg =
                     ]
                 , hr [] []
                 ]
-            , Tab.pills
-                state.customizedState
-                { toMsg = (\ts -> toMsg { state | customizedState = ts })
-                , options = tabOptions
-                , withAnimation = False
-                , items =
+            , Tab.config (\ts -> toMsg { state | customizedState = ts })
+                |> tabLayout
+                |> Tab.items
                     [ Tab.item
                         { link = Tab.link [] [ text "First tab" ]
                         , pane =
@@ -361,6 +344,6 @@ customized state toMsg =
                                 ]
                         }
                     ]
-                }
+                |> Tab.view state.customizedState
             ]
         ]
