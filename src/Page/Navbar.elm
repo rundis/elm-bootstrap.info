@@ -122,7 +122,7 @@ initialState toMsg =
 -- Define a message for the navbar
 
 type Msg
-    = NavbarMsg
+    = NavbarMsg Navbar.State
 
 
 -- You need to handle navbar messages in your update function to step the navbar state forward
