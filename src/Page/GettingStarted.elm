@@ -30,12 +30,28 @@ quickStart =
     [ h2 [] [ text "Quick start"]
     , p [] [ text """The easiest way to get started is to use the Bootstrap.CDN module to inline the Bootstrap CSS.
                   This way you can quickly get up and running using elm-reactor."""]
+    , h4 [] [ text "Start a new project" ]
+    , Util.code setupCode
+    , h4 [] [ text "Module code" ]
     , Util.code quickStartCode
     , Util.calloutWarning
         [ p [] [ text """Don't use this method when you want to deploy your app for real life usage.
                          It's not very efficient, the payload for your page will be pretty big and you want get the benefits of caching the CSS.""" ]
         ]
     ]
+
+
+setupCode : Html msg
+setupCode =
+    Util.toMarkdown """
+```bash
+
+mkdir bootstrap-example
+cd bootstrap-example
+elm-package install --yes rundis/elm-bootstrap
+
+```
+"""
 
 
 
@@ -168,9 +184,21 @@ Grid.row
 example : List (Html msg)
 example =
     [ h2 [] [ text "Example page" ]
-    , p [] [ text "TODO : Work in progress." ]
+    , p [] [ text """In the example below we've made a super simple single page application.
+                     It contains basic navigation and a couple of example pages. """ ]
+    , iframe
+        [ src "https://embed.ellie-app.com/z6GP8QGKGba1/0"
+        , style
+            [ ("width","100%")
+            , ("height","600px")
+            , ("border", "0")
+            , ("border-radius","3px")
+            , ("overflow","hidden")
+            ]
+        , attribute "sandbox" "allow-modals allow-forms allow-popups allow-scripts allow-same-origin"
+        ]
+        []
     ]
-
 
 
 textLi : String -> Html msg
