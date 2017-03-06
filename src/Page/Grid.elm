@@ -222,7 +222,7 @@ variableWidthCode : Html msg
 variableWidthCode =
     Util.toMarkdownElm """
 Grid.container []
-    [ Grid.row [ Row.horisontalAlign Row.centerMd ] -- horizontally center all cols in this row for breakpoint MD (medium) and up.
+    [ Grid.row [ Row.centerMd ] -- horizontally center all cols in this row for breakpoint MD (medium) and up.
         [ Grid.col
             [ Col.xs, Col.lg2 ]
             [ text "1 of 3" ]
