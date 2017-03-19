@@ -452,7 +452,7 @@ help =
     , Util.example
         [ h4 [] [ text "Inline"]
         , Form.formInline []
-            [ Form.label [] [ text "Passoword" ]
+            [ Form.label [] [ text "Password" ]
             , Input.password [ Input.attrs [ class "mx-sm-3" ] ]
             , Form.helpInline [] [ text "Your password must be minumum 8 characters" ]
             ]
@@ -474,7 +474,7 @@ helpInlineCode : Html msg
 helpInlineCode =
     Util.toMarkdownElm """
 Form.formInline []
-    [ Form.label [] [ text "Passoword" ]
+    [ Form.label [] [ text "Password" ]
     , Input.password [ Input.attrs [ class "mx-sm-3" ] ]
     , Form.helpInline [] [ text "Your password must be minumum 8 characters" ]
     ]
