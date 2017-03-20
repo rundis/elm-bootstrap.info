@@ -124,8 +124,8 @@ conventions =
                """
         ]
     , h3 [] [ text "Options and attributes" ]
-    , p [] [ text """Most Html element creating functions in Elm bootstrap take to list arguments. The first is a list of options, the second is a list of child items or a list of child elements.
-                  It's probably easisest to illustrate with an annotated Code example first to explain further.""" ]
+    , p [] [ text """Most Html element creating functions in Elm bootstrap take two list arguments. The first is a list of options, the second is a list of child items or a list of child elements.
+                  It's probably easier to illustrate with an annotated Code example first to explain further.""" ]
 
     , Util.code optionsCode
     , Util.calloutInfo
@@ -136,8 +136,8 @@ conventions =
             , li []
                 [ text "When you specify options that address the same area, the same logic applies"
                 , ul []
-                    [ textLi "If you specify an option that says that for the smalles screensize you should center vertically."
-                    , textLi "Then you add another option saying that for the smallest screen you should center content top, the the last one of these will be the one applied."
+                    [ textLi "If you specify an option that says that for the smallest screensize you should center vertically."
+                    , textLi "Then you add another option saying that for the smallest screensize you should center content top, the last one of these will be the one applied."
                     ]
                 ]
             , textLi "Many elements have default options, which you can override by specifying options in the options list argument."
@@ -171,7 +171,7 @@ optionsCode =
 Grid.row
     [ Row.centerXs ] -- Row.centerXs creates a Row.Option
 
-    -- The second argument to row takes a list of Grid.Column items
+    -- The second argument to row is a list of Grid.Column items
     [ Col.col
         [ Col.xs12
         , Col.attrs [ class "custom-class" ] -- <module>.attrs function, creates an option to specify a list of custom Elm Html attributes.
