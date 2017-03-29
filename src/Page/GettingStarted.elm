@@ -3,11 +3,6 @@ module Page.GettingStarted exposing (view)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
-import Bootstrap.Grid as Grid
-import Bootstrap.Grid.Row as Row
-import Bootstrap.Grid.Col as Col
-import Bootstrap.Navbar as Navbar
-
 import Util
 
 

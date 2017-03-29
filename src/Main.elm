@@ -17,11 +17,14 @@ import Page.ListGroup as ListGroup
 import Page.Tab as Tab
 import Page.Card as Card
 import Page.Button as Button
+import Page.ButtonGroup as ButtonGroup
 import Page.Dropdown as Dropdown
 import Page.Accordion as Accordion
 import Page.Modal as Modal
 import Page.Navbar as PageNav
 import Page.Form as Form
+import Page.InputGroup as InputGroup
+import Page.Popover as Popover
 import Page.GettingStarted as GettingStarted
 import Util
 import Bootstrap.Grid as Grid
@@ -39,6 +42,8 @@ type alias Model =
     , accordionState : Accordion.State
     , modalState : Modal.State
     , pageNavState : PageNav.State
+    , buttonGroupState : ButtonGroup.State
+    , popoverState : Popover.State
     }
 
 
@@ -54,6 +59,8 @@ type Msg
     | AccordionMsg Accordion.State
     | ModalMsg Modal.State
     | PageNavMsg PageNav.State
+    | ButtonGroupMsg ButtonGroup.State
+    | PopoverMsg Popover.State
 
 
 init : Navigation.Location -> ( Model, Cmd Msg )
@@ -77,6 +84,8 @@ init location =
                 , accordionState = Accordion.initialState
                 , modalState = Modal.initialState
                 , pageNavState = pageNavState
+                , buttonGroupState = ButtonGroup.initialState
+                , popoverState = Popover.initialState
                 }
     in
         ( model, Cmd.batch [ navbarCmd, urlCmd, pageNavCmd ] )
@@ -135,6 +144,12 @@ update msg model =
 
         ModalMsg state ->
             ( { model | modalState = state }, Cmd.none )
+
+        ButtonGroupMsg state ->
+            ( { model | buttonGroupState = state }, Cmd.none )
+
+        PopoverMsg state ->
+            ( { model | popoverState = state }, Cmd.none )
 
         PageNavMsg state ->
             ( { model | pageNavState = state }, Cmd.none )
@@ -233,6 +248,10 @@ viewPage model =
             Route.Button ->
                 Button.view |> wrap
 
+            Route.ButtonGroup ->
+                ButtonGroup.view model.buttonGroupState ButtonGroupMsg
+                    |> wrap
+
             Route.Dropdown ->
                 Dropdown.view model.dropdownState DropdownMsg
                     |> wrap
@@ -251,6 +270,13 @@ viewPage model =
 
             Route.Form ->
                 Form.view |> wrap
+
+            Route.InputGroup ->
+                InputGroup.view |> wrap
+
+            Route.Popover ->
+                Popover.view model.popoverState PopoverMsg
+                    |> wrap
 
             Route.NotFound ->
                 NotFound.view
@@ -287,13 +313,16 @@ viewSidebar model =
                    , link Route.Alert "Alert"
                    , link Route.Badge "Badge"
                    , link Route.Button "Button"
+                   , link Route.ButtonGroup "Button group"
                    , link Route.Card "Card"
                    , link Route.Dropdown "Dropdown"
                    , link Route.Form "Form"
                    , link Route.Grid "Grid"
-                   , link Route.ListGroup "Listgroup"
+                   , link Route.InputGroup "Input group"
+                   , link Route.ListGroup "List group"
                    , link Route.Modal "Modal"
                    , link Route.Navbar "Navbar"
+                   , link Route.Popover "Popover"
                    , link Route.Progress "Progress"
                    , link Route.Tab "Tab"
                    , link Route.Table "Table"

@@ -22,11 +22,14 @@ type Route
     | Tab
     | Card
     | Button
+    | ButtonGroup
     | Dropdown
     | Accordion
     | Modal
     | Navbar
     | Form
+    | InputGroup
+    | Popover
     | NotFound
 
 
@@ -44,11 +47,14 @@ routeParser =
         , UrlParser.map Tab (s "tab")
         , UrlParser.map Card (s "card")
         , UrlParser.map Button (s "button")
+        , UrlParser.map ButtonGroup (s "buttongroup")
         , UrlParser.map Dropdown (s "dropdown")
         , UrlParser.map Accordion (s "accordion")
         , UrlParser.map Modal (s "modal")
         , UrlParser.map Navbar (s "navbar")
         , UrlParser.map Form (s "form")
+        , UrlParser.map InputGroup (s "inputgroup")
+        , UrlParser.map Popover (s "popover")
         ]
 
 decode : Location -> Maybe Route
@@ -92,6 +98,9 @@ encode route =
         Button ->
             "/button"
 
+        ButtonGroup ->
+            "/buttongroup"
+
         Dropdown ->
             "/dropdown"
 
@@ -106,6 +115,12 @@ encode route =
 
         Form ->
             "/form"
+
+        InputGroup ->
+            "/inputgroup"
+
+        Popover ->
+            "/popover"
 
         NotFound ->
             "/notfound"

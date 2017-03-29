@@ -37,7 +37,7 @@ view pageMsg =
             , text "."
             ]
         , p [ class "version" ]
-            [ text "v1.0.0"]
+            [ text "v2.0.0"]
         , p [ class "version" ]
             [ text "(Please be aware that Bootstrap 4 is currently in version v4.0.0-alpha.6)"]
         ]
