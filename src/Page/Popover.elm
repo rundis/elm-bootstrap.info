@@ -1,4 +1,4 @@
-module Page.Popover exposing (view, initialState, State)
+module Page.Popover exposing (view)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
@@ -7,39 +7,32 @@ import Bootstrap.Button as Button
 import Bootstrap.Form as Form
 import Bootstrap.Form.Input as Input
 import Util
+import Msg
 
 
-type alias State =
-    { basicState : Popover.State
-    , leftState : Popover.State
-    , rightState : Popover.State
-    , topState : Popover.State
-    , bottomState: Popover.State
+type alias State a =
+    { a
+        | popBasic : Popover.State
+        , popBottom : Popover.State
+        , popLeft : Popover.State
+        , popRight : Popover.State
+        , popTop : Popover.State
     }
 
-
-initialState : State
-initialState =
-    { basicState = Popover.initialState
-    , leftState = Popover.initialState
-    , rightState = Popover.initialState
-    , topState = Popover.initialState
-    , bottomState = Popover.initialState
-    }
-
-
-view : State -> (State -> msg) -> Util.PageContent msg
-view state toMsg =
+view :
+    State a
+    -> { children : List (Html Msg.Msg), description : String, title : String }
+view state =
     { title = "Popover"
     , description = """Add small overlay content, like those found in iOS, to any element for housing secondary information."""
     , children =
-        example state toMsg
-        ++ tooltips state toMsg
+        example state
+            ++ tooltips state
     }
 
 
-example : State -> (State -> msg) -> List (Html msg)
-example state toMsg =
+example : State a -> List (Html Msg.Msg)
+example state =
     [ h2 [] [ text "Example" ]
     , p [] [ text "You can trigger popovers from most any element. Here is a small example. (Click the small button to see the popover)" ]
     , Util.example
@@ -47,13 +40,14 @@ example state toMsg =
             [ Form.label []
                 [ text "Username "
                 , Popover.config
-                    ( Button.button
+                    (Button.button
                         [ Button.small
                         , Button.primary
                         , Button.attrs <|
-                            Popover.onClick state.basicState (\s -> toMsg { state | basicState = s })
+                            Popover.onClick state.popBasic Msg.PopBasic
+                          --(\s -> toMsg { state | popBasic = s })
                         ]
-                        [ span [class "fa fa-question-circle"]
+                        [ span [ class "fa fa-question-circle" ]
                             []
                         ]
                     )
@@ -61,7 +55,7 @@ example state toMsg =
                     |> Popover.titleH4 [] [ text "Username help" ]
                     |> Popover.content []
                         [ text "Your username must not contain numbers..." ]
-                    |> Popover.view state.basicState
+                    |> Popover.view state.popBasic
                 ]
             , Input.text [ Input.placeholder "Enter username" ]
             ]
@@ -74,6 +68,7 @@ example state toMsg =
             ]
         ]
     ]
+
 
 exampleCode : Html msg
 exampleCode =
@@ -130,30 +125,33 @@ view model =
 """
 
 
-tooltips : State -> (State -> msg) -> List (Html msg)
-tooltips state toMsg =
+tooltips : State a -> List (Html Msg.Msg)
+tooltips state =
     [ h2 [] [ text "Tooltips" ]
     , p [] [ text "You can also use the popovers as tooltips by changing from using onClick to onHover for triggering elements." ]
     , Util.example
-        [ tooltipButton "Top" state.topState (\s -> toMsg { state | topState = s })
-            |> popover Popover.top state.topState
-        , tooltipButton "Bottom" state.bottomState (\s -> toMsg { state | bottomState = s })
-            |> popover Popover.bottom state.bottomState
-        , tooltipButton "Left" state.leftState (\s -> toMsg { state | leftState = s })
-            |> popover Popover.left state.leftState
-        , tooltipButton "Right" state.rightState (\s -> toMsg { state | rightState = s })
-            |> popover Popover.right state.rightState
-        ]
-    , Util.calloutWarning
-        [ p [] [ text """Unfortunately there seems to be an issue when having multiples of popovers functioning as tooltips.
-                        I.e mouseleave doesn't always trigger as expected when you have mouseenter on another element with a tooltip trigger.
-                        ( You can observe this if moving the mouse pointer quickly accross several buttons above.)
-                        So you might want to use this feature with some care."""]
+        [ tooltipButton "Top" state.popTop Msg.PopTop
+            --(\s -> toMsg { state | popTop = s })
+            |>
+                popover Popover.top state.popTop
+        , tooltipButton "Bottom" state.popBottom Msg.PopBottom
+            --(\s -> toMsg { state | popBottom = s })
+            |>
+                popover Popover.bottom state.popBottom
+        , tooltipButton "Left" state.popLeft Msg.PopLeft
+            -- (\s -> toMsg { state | popLeft = s })
+            |>
+                popover Popover.left state.popLeft
+        , tooltipButton "Right" state.popRight Msg.PopRight
+            -- (\s -> toMsg { state | popRight = s })
+            |>
+                popover Popover.right state.popRight
         ]
     ]
 
-popover
-    : (Popover.Config msg -> Popover.Config msg1)
+
+popover :
+    (Popover.Config msg -> Popover.Config msg1)
     -> Popover.State
     -> Html msg
     -> Html msg1
@@ -169,7 +167,6 @@ tooltipButton label popState popMsg =
     Button.button
         [ Button.outlineInfo
         , Button.attrs <|
-            ( class "mr-2" :: Popover.onHover popState popMsg)
+            (class "mr-2" :: Popover.onHover popState popMsg)
         ]
         [ text label ]
-

@@ -31,6 +31,12 @@ import Bootstrap.Grid as Grid
 import Bootstrap.Grid.Col as Col
 
 
+import Msg exposing (..)
+import Bootstrap.Popover as Pop
+
+
+
+
 type alias Model =
     { route : Route.Route
     , navbarState : Navbar.State
@@ -43,24 +49,12 @@ type alias Model =
     , modalState : Modal.State
     , pageNavState : PageNav.State
     , buttonGroupState : ButtonGroup.State
-    , popoverState : Popover.State
+    , popBasic : Pop.State
+    , popTop : Pop.State
+    , popBottom : Pop.State
+    , popLeft : Pop.State
+    , popRight : Pop.State
     }
-
-
-type Msg
-    = UrlChange Location
-    | PageChange String
-    | NavbarMsg Navbar.State
-    | TableMsg Table.State
-    | ProgressMsg Progress.State
-    | GridMsg Grid.State
-    | TabMsg Tab.State
-    | DropdownMsg Dropdown.State
-    | AccordionMsg Accordion.State
-    | ModalMsg Modal.State
-    | PageNavMsg PageNav.State
-    | ButtonGroupMsg ButtonGroup.State
-    | PopoverMsg Popover.State
 
 
 init : Navigation.Location -> ( Model, Cmd Msg )
@@ -85,7 +79,11 @@ init location =
                 , modalState = Modal.initialState
                 , pageNavState = pageNavState
                 , buttonGroupState = ButtonGroup.initialState
-                , popoverState = Popover.initialState
+                , popBasic = Pop.initialState
+                , popLeft = Pop.initialState
+                , popRight = Pop.initialState
+                , popTop = Pop.initialState
+                , popBottom = Pop.initialState
                 }
     in
         ( model, Cmd.batch [ navbarCmd, urlCmd, pageNavCmd ] )
@@ -148,11 +146,24 @@ update msg model =
         ButtonGroupMsg state ->
             ( { model | buttonGroupState = state }, Cmd.none )
 
-        PopoverMsg state ->
-            ( { model | popoverState = state }, Cmd.none )
 
         PageNavMsg state ->
             ( { model | pageNavState = state }, Cmd.none )
+
+        PopBasic state ->
+            ( { model | popBasic = state }, Cmd.none )
+
+        PopLeft state ->
+            ( { model | popLeft = state }, Cmd.none )
+
+        PopRight state ->
+            ( { model | popRight = state }, Cmd.none )
+
+        PopTop state ->
+            ( { model | popTop = state }, Cmd.none )
+
+        PopBottom state ->
+            ( { model | popBottom = state }, Cmd.none )
 
 
 urlUpdate : Navigation.Location -> Model -> ( Model, Cmd Msg )
@@ -275,7 +286,7 @@ viewPage model =
                 InputGroup.view |> wrap
 
             Route.Popover ->
-                Popover.view model.popoverState PopoverMsg
+                Popover.view model
                     |> wrap
 
             Route.NotFound ->
@@ -296,7 +307,6 @@ wrapPageLayout model pageContent =
             ]
         ]
     ]
-
 
 
 viewSidebar : Model -> Html Msg
