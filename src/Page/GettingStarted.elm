@@ -146,7 +146,7 @@ aliasCode =
     Util.toMarkdownElm """
 
 import Bootstrap.Grid as Grid
-import Bootstrap.Grid as Row
+import Bootstrap.Grid.Row as Row
 import Bootstrap.Grid.Col as Col
 
 
