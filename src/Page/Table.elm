@@ -233,12 +233,12 @@ optionedTableSampleCode =
 
 Table.table
     { options = [ Table.striped, Table.hover ]
-    , head =  Table.simpleThead
+    , thead =  Table.simpleThead
         [ Table.th [] [ text "Col 1" ]
         , Table.th [] [ text "Col 2" ]
         , Table.th [] [ text "Col 3" ]
         ]
-    , body =
+    , tbody =
         Table.tbody []
             [ Table.tr []
                 [ Table.td [] [ text "Hello" ]
