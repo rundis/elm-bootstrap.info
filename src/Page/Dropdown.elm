@@ -278,7 +278,7 @@ customizeForm ({ options } as state) toMsg =
         ]
 
 
-customizedDropOptions : State -> List Dropdown.DropdownOption
+customizedDropOptions : State -> List (Dropdown.DropdownOption msg)
 customizedDropOptions { options } =
     (if options.dropUp then
         [ Dropdown.dropUp ]
