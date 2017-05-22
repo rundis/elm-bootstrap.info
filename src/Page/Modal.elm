@@ -97,7 +97,7 @@ type alias Model =
 
 init : ( Model, Cmd Msg )
 init =
-    ( { modalState : Modal.initalState}, Cmd.none )
+    ( { modalState : Modal.hiddenState}, Cmd.none )
 
 
 -- Define a message for your modal
