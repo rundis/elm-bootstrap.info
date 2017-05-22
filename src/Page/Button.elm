@@ -175,15 +175,15 @@ disabledsCode : Html msg
 disabledsCode =
     Util.toMarkdownElm """
 div []
-    [ Button.button [ Button.primary, Button.disabled ] [ text "Button" ]
+    [ Button.button [ Button.primary, Button.disabled True ] [ text "Button" ]
     , Button.button
-        [ Button.secondary, Button.disabled, Button.attrs [ class "ml-1" ] ]
+        [ Button.secondary, Button.disabled True, Button.attrs [ class "ml-1" ] ]
         [ text "Button" ]
     , Button.linkButton
-        [ Button.primary, Button.disabled, Button.attrs [ class "ml-1", href "#" ] ]
+        [ Button.primary, Button.disabled True, Button.attrs [ class "ml-1", href "#" ] ]
         [ text "Link" ]
     , Button.linkButton
-        [ Button.secondary, Button.disabled, Button.attrs [ class "ml-1", href "#" ] ]
+        [ Button.secondary, Button.disabled True, Button.attrs [ class "ml-1", href "#" ] ]
         [ text "Link" ]
     ]
 """
