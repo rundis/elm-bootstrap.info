@@ -4,6 +4,8 @@ module Page.Dropdown
         , State
         , initialState
         , subscriptions
+        , update
+        , Msg
         )
 
 import Html exposing (..)
@@ -23,6 +25,15 @@ type alias State =
     , menuState : Dropdown.State
     , options : Options
     }
+
+
+type Msg
+    = BasicMsg Dropdown.State
+    | CustomizedMsg Dropdown.State
+    | SplitMsg Dropdown.State
+    | MenuMsg Dropdown.State
+    | OptionsMsg Options
+
 
 
 initialState : State
@@ -71,40 +82,61 @@ defaultOptions =
     }
 
 
-subscriptions : State -> (State -> msg) -> Sub msg
-subscriptions state toMsg =
+subscriptions : State -> Sub Msg
+subscriptions state =
     Sub.batch
-        [ Dropdown.subscriptions state.basicState (\dd -> toMsg { state | basicState = dd })
-        , Dropdown.subscriptions state.customizedState (\dd -> toMsg { state | customizedState = dd })
-        , Dropdown.subscriptions state.splitState (\dd -> toMsg { state | splitState = dd })
-        , Dropdown.subscriptions state.menuState (\dd -> toMsg { state | menuState = dd })
+        [ Dropdown.subscriptions state.basicState BasicMsg
+        , Dropdown.subscriptions state.customizedState CustomizedMsg
+        , Dropdown.subscriptions state.splitState SplitMsg
+        , Dropdown.subscriptions state.menuState MenuMsg
         ]
 
 
-view : State -> (State -> msg) -> Util.PageContent msg
-view state toMsg =
+update : Msg -> State -> State
+update msg state =
+    case msg of
+        BasicMsg newState ->
+            { state | basicState = newState }
+
+        CustomizedMsg newState ->
+            { state | customizedState = newState }
+
+        SplitMsg newState ->
+            { state | splitState = newState }
+
+        MenuMsg newState ->
+            { state | menuState = newState }
+
+        OptionsMsg opts ->
+            { state | options = opts }
+
+
+
+
+view : State -> Util.PageContent Msg
+view state =
     { title = "Dropdown"
     , description =
         """Dropdowns are toggleable, contextual overlays for displaying lists of links and more.
            They’re made interactive with a little bit of Elm. They’re toggled by clicking."""
     , children =
-        (basic state toMsg
-            ++ customized state toMsg
-            ++ split state toMsg
-            ++ menu state toMsg
+        (basic state
+            ++ customized state
+            ++ split state
+            ++ menu state
         )
     }
 
 
-basic : State -> (State -> msg) -> List (Html msg)
-basic state toMsg =
+basic : State -> List (Html Msg)
+basic state =
     [ h2 [] [ text "Basic example" ]
     , p [] [ text "Since dropdowns are interactive, we need to do a little bit of wiring to use them." ]
     , Util.example
         [ Dropdown.dropdown
             state.basicState
             { options = []
-            , toggleMsg = (\dd -> toMsg { state | basicState = dd })
+            , toggleMsg = BasicMsg
             , toggleButton =
                 Dropdown.toggle [ Button.outlinePrimary ] [ text "My dropdown" ]
             , items =
@@ -183,15 +215,15 @@ view model =
 """
 
 
-customized : State -> (State -> msg) -> List (Html msg)
-customized state toMsg =
+customized : State -> List (Html Msg)
+customized state =
     [ h2 [] [ text "Customization" ]
     , p [] [ text "You can do quite a lot of customization on the dropdown and the dropdown button." ]
     , Util.example <|
         [ Dropdown.dropdown
             state.customizedState
             { options = customizedDropOptions state
-            , toggleMsg = (\dd -> toMsg { state | customizedState = dd })
+            , toggleMsg = CustomizedMsg
             , toggleButton =
                 Dropdown.toggle (customizedButtonOptions state) [ text "My dropdown" ]
             , items =
@@ -200,24 +232,24 @@ customized state toMsg =
                 ]
             }
         ]
-            ++ [customizeForm state toMsg]
+            ++ [customizeForm state]
     ]
 
 
-customizeForm : State -> (State -> msg) -> Html msg
-customizeForm ({ options } as state) toMsg =
+customizeForm : State -> Html Msg
+customizeForm ({ options } as state) =
     let
         coloringAttrs opt rName =
             [ Radio.checked <| opt == options.coloring
             , Radio.name rName
-            , Radio.onClick <| toMsg { state | options = { options | coloring = opt } }
+            , Radio.onClick <| OptionsMsg { options | coloring = opt }
             ]
 
         sizeAttrs opt =
             [ Radio.inline
             , Radio.name "sizes"
             , Radio.checked <| opt == options.size
-            , Radio.onClick <| toMsg { state | options = { options | size = opt } }
+            , Radio.onClick <| OptionsMsg { options | size = opt }
             ]
     in
         Form.form [ class "container mt-3" ]
@@ -227,8 +259,7 @@ customizeForm ({ options } as state) toMsg =
                     [ Chk.custom
                         [ Chk.inline
                         , Chk.checked options.dropUp
-                        , Chk.onCheck
-                            (\b -> toMsg { state | options = { options | dropUp = b } })
+                        , Chk.onCheck (\b -> OptionsMsg { options | dropUp = b })
                         ]
                         "Dropdown.dropUp"
                     ]
@@ -337,15 +368,15 @@ customizedButtonOptions { options } =
            )
 
 
-split : State -> (State -> msg) -> List (Html msg)
-split state toMsg =
+split : State -> List (Html Msg)
+split state =
     [ h2 [] [ text "Split button dropdowns" ]
     , p [] [ text "You can also create split button dropdowns. The left button has a normal button action, whilst the right (caret) button toggles the dropdown menu." ]
     , Util.example
         [ Dropdown.splitDropdown
             state.splitState
             { options = []
-            , toggleMsg = (\dd -> toMsg { state | splitState = dd })
+            , toggleMsg = SplitMsg
             , toggleButton =
                 Dropdown.splitToggle
                     { options = [ Button.secondary ]
@@ -383,15 +414,15 @@ Dropdown.splitDropdown
 """
 
 
-menu : State -> (State -> msg) -> List (Html msg)
-menu state toMsg =
+menu : State -> List (Html Msg)
+menu state =
     [ h2 [] [ text "Menu headers and dividers" ]
     , p [] [ text "You may use menu header and divder elements to organize your dropdown items." ]
     , Util.example
         [ Dropdown.dropdown
             state.menuState
             { options = []
-            , toggleMsg = (\dd -> toMsg { state | menuState = dd })
+            , toggleMsg = MenuMsg
             , toggleButton =
                 Dropdown.toggle [ Button.warning ] [ text "My dropdown" ]
             , items =

@@ -131,21 +131,13 @@ tooltips state =
     , p [] [ text "You can also use the popovers as tooltips by changing from using onClick to onHover for triggering elements." ]
     , Util.example
         [ tooltipButton "Top" state.popTop Msg.PopTop
-            --(\s -> toMsg { state | popTop = s })
-            |>
-                popover Popover.top state.popTop
+            |> popover Popover.top state.popTop
         , tooltipButton "Bottom" state.popBottom Msg.PopBottom
-            --(\s -> toMsg { state | popBottom = s })
-            |>
-                popover Popover.bottom state.popBottom
+            |> popover Popover.bottom state.popBottom
         , tooltipButton "Left" state.popLeft Msg.PopLeft
-            -- (\s -> toMsg { state | popLeft = s })
-            |>
-                popover Popover.left state.popLeft
+            |> popover Popover.left state.popLeft
         , tooltipButton "Right" state.popRight Msg.PopRight
-            -- (\s -> toMsg { state | popRight = s })
-            |>
-                popover Popover.right state.popRight
+            |> popover Popover.right state.popRight
         ]
     ]
 

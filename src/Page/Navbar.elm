@@ -2,6 +2,8 @@ module Page.Navbar exposing
     ( view
     , initialState
     , subscriptions
+    , update
+    , Msg
     , State
     )
 
@@ -20,13 +22,19 @@ type alias State =
     , customState : Navbar.State
     }
 
-initialState : (State -> msg) -> (State, Cmd msg)
-initialState toMsg =
+
+type Msg
+    = BasicMsg Navbar.State
+    | CustomMsg Navbar.State
+
+
+initialState : (State, Cmd Msg)
+initialState =
     let
         (basicState, cmdBasic) =
-            Navbar.initialState (\ns -> toMsg { basicState = ns, customState = ns})
+            Navbar.initialState BasicMsg
         (customState, cmdCustom) =
-            Navbar.initialState (\ns -> toMsg { customState = ns, basicState = ns})
+            Navbar.initialState CustomMsg
     in
         ({ basicState = basicState
          , customState = customState
@@ -35,37 +43,47 @@ initialState toMsg =
 
 
 
-subscriptions : State -> (State -> msg) -> Sub msg
-subscriptions state toMsg =
+subscriptions : State -> Sub Msg
+subscriptions state =
     Sub.batch
-        [ Navbar.subscriptions state.basicState (\ns -> toMsg { state | basicState = ns})
-        , Navbar.subscriptions state.customState (\ns -> toMsg { state | customState = ns})
+        [ Navbar.subscriptions state.basicState BasicMsg
+        , Navbar.subscriptions state.customState CustomMsg
         ]
 
 
-view : State -> (State -> msg) -> Util.PageContent msg
-view state toMsg =
+update : Msg -> State -> State
+update msg state =
+    case msg of
+        BasicMsg newState ->
+            { state | basicState = newState }
+
+        CustomMsg newState ->
+            { state | customState = newState }
+
+
+view : State -> Util.PageContent Msg
+view state =
     { title = "Navbar"
     , description =
         """The navbar is a wrapper that positions branding, navigation, and other elements in a concise header.
         It’s easily extensible and supports responsive behavior."""
     , children =
-        (basic state toMsg
-            ++ custom state toMsg
+        (basic state
+            ++ custom state
         )
     }
 
 
 
-basic : State -> (State -> msg) -> List (Html msg)
-basic state toMsg =
+basic : State -> List (Html Msg)
+basic state =
     [ h2 [] [ text "Basic example" ]
     , p [] [ text """Navbars supports a variety of content. We'll start off with a relatively simple example.
                   Since navbars require state and special care to handle responsibe behavior, there is a bit of wiring
                   needed to set one up.""" ]
 
     , Util.example
-        [ Navbar.config (\ns -> toMsg { state | basicState = ns})
+        [ Navbar.config BasicMsg
             |> Navbar.withAnimation
             |> Navbar.collapseMedium
             |> Navbar.brand [ href "javascript:void()"] [ text "Brand"]
@@ -154,8 +172,8 @@ subscriptions model =
 """
 
 
-custom : State -> (State -> msg) -> List (Html msg)
-custom state toMsg =
+custom : State ->  List (Html Msg)
+custom state =
     [ h2 [] [ text "Options, dropdowns and custom content" ]
     , p [] [ text """You can twist and tweak the navbar quite a bit using a pipeline friendly syntax.
                   You may configure coloring with handy helper functions, add dropdowns as menu items and you can add a few flavors of custom content as well.
@@ -163,7 +181,7 @@ custom state toMsg =
     , Util.example
         [ Grid.container []
             [
-         Navbar.config (\ns -> toMsg { state | customState = ns })
+         Navbar.config CustomMsg
             |> Navbar.withAnimation
             |> Navbar.collapseMedium
             |> Navbar.info

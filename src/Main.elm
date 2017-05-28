@@ -25,6 +25,7 @@ import Page.Navbar as PageNav
 import Page.Form as Form
 import Page.InputGroup as InputGroup
 import Page.Popover as Popover
+import Page.Carousel as Carousel
 import Page.GettingStarted as GettingStarted
 import Util
 import Bootstrap.Grid as Grid
@@ -54,17 +55,27 @@ type alias Model =
     , popBottom : Pop.State
     , popLeft : Pop.State
     , popRight : Pop.State
+    , carouselState : Carousel.State
     }
 
 
 init : Navigation.Location -> ( Model, Cmd Msg )
 init location =
     let
+        tabInitialState =
+            case (Route.decode location) of
+                Just (Route.Tab (Just hash)) ->
+                    Tab.initialStateWithHash hash
+                _ ->
+                    Tab.initialState
+
+
+
         ( navbarState, navbarCmd ) =
             Navbar.initialState NavbarMsg
 
         ( pageNavState, pageNavCmd ) =
-            PageNav.initialState PageNavMsg
+            PageNav.initialState
 
         ( model, urlCmd ) =
             urlUpdate location
@@ -73,7 +84,7 @@ init location =
                 , tableState = Table.initialState
                 , progressState = Progress.initialState
                 , gridState = Grid.initialState
-                , tabState = Tab.initialState
+                , tabState = tabInitialState
                 , dropdownState = Dropdown.initialState
                 , accordionState = Accordion.initialState
                 , modalState = Modal.initialState
@@ -84,9 +95,10 @@ init location =
                 , popRight = Pop.initialState
                 , popTop = Pop.initialState
                 , popBottom = Pop.initialState
+                , carouselState = Carousel.initialState
                 }
     in
-        ( model, Cmd.batch [ navbarCmd, urlCmd, pageNavCmd ] )
+        ( model, Cmd.batch [ navbarCmd, urlCmd, Cmd.map PageNavMsg pageNavCmd ] )
 
 
 main : Program Never Model Msg
@@ -103,10 +115,11 @@ subscriptions : Model -> Sub Msg
 subscriptions model =
     Sub.batch
         [ Navbar.subscriptions model.navbarState NavbarMsg
-        , Tab.subscriptions model.tabState TabMsg
-        , Dropdown.subscriptions model.dropdownState DropdownMsg
-        , Accordion.subscriptions model.accordionState AccordionMsg
-        , PageNav.subscriptions model.pageNavState PageNavMsg
+        , Sub.map TabMsg <| Tab.subscriptions model.tabState
+        , Sub.map DropdownMsg <| Dropdown.subscriptions model.dropdownState
+        , Sub.map AccordionMsg <| Accordion.subscriptions model.accordionState
+        , Sub.map PageNavMsg <| PageNav.subscriptions model.pageNavState
+        , Sub.map CarouselMsg <| Carousel.subscriptions model.carouselState
         ]
 
 
@@ -131,14 +144,14 @@ update msg model =
         GridMsg state ->
             ( { model | gridState = state }, Cmd.none )
 
-        TabMsg state ->
-            ( { model | tabState = state }, Cmd.none )
+        TabMsg subMsg ->
+            ( { model | tabState = Tab.update subMsg model.tabState }, Cmd.none )
 
-        DropdownMsg state ->
-            ( { model | dropdownState = state }, Cmd.none )
+        DropdownMsg subMsg ->
+            ( { model | dropdownState = Dropdown.update subMsg model.dropdownState }, Cmd.none )
 
-        AccordionMsg state ->
-            ( { model | accordionState = state }, Cmd.none )
+        AccordionMsg subMsg ->
+            ( { model | accordionState = Accordion.update subMsg model.accordionState }, Cmd.none )
 
         ModalMsg state ->
             ( { model | modalState = state }, Cmd.none )
@@ -147,8 +160,8 @@ update msg model =
             ( { model | buttonGroupState = state }, Cmd.none )
 
 
-        PageNavMsg state ->
-            ( { model | pageNavState = state }, Cmd.none )
+        PageNavMsg subMsg ->
+            ( { model | pageNavState = PageNav.update subMsg model.pageNavState }, Cmd.none )
 
         PopBasic state ->
             ( { model | popBasic = state }, Cmd.none )
@@ -164,6 +177,9 @@ update msg model =
 
         PopBottom state ->
             ( { model | popBottom = state }, Cmd.none )
+
+        CarouselMsg subMsg ->
+            ({ model | carouselState = Carousel.update subMsg model.carouselState}, Cmd.none)
 
 
 urlUpdate : Navigation.Location -> Model -> ( Model, Cmd Msg )
@@ -252,8 +268,9 @@ viewPage model =
                 ListGroup.view
                     |> wrap
 
-            Route.Tab ->
-                Tab.view model.tabState TabMsg
+            Route.Tab hash ->
+                Tab.view model.tabState
+                    |> mapPageContent TabMsg
                     |> wrap
 
             Route.Button ->
@@ -264,11 +281,13 @@ viewPage model =
                     |> wrap
 
             Route.Dropdown ->
-                Dropdown.view model.dropdownState DropdownMsg
+                Dropdown.view model.dropdownState
+                    |> mapPageContent DropdownMsg
                     |> wrap
 
             Route.Accordion ->
-                Accordion.view model.accordionState AccordionMsg
+                Accordion.view model.accordionState
+                    |> mapPageContent AccordionMsg
                     |> wrap
 
             Route.Modal ->
@@ -276,7 +295,8 @@ viewPage model =
                     |> wrap
 
             Route.Navbar ->
-                PageNav.view model.pageNavState PageNavMsg
+                PageNav.view model.pageNavState
+                    |> mapPageContent PageNavMsg
                     |> wrap
 
             Route.Form ->
@@ -289,8 +309,18 @@ viewPage model =
                 Popover.view model
                     |> wrap
 
+            Route.Carousel ->
+                Carousel.view model.carouselState
+                    |> mapPageContent CarouselMsg
+                    |> wrap
+
             Route.NotFound ->
                 NotFound.view
+
+
+mapPageContent : (msg -> Msg) -> Util.PageContent msg -> Util.PageContent Msg
+mapPageContent toMsg content =
+    { content | children = List.map (\c -> Html.map toMsg c) content.children }
 
 
 wrapPageLayout : Model -> Util.PageContent Msg -> List (Html Msg)
@@ -325,6 +355,7 @@ viewSidebar model =
                    , link Route.Button "Button"
                    , link Route.ButtonGroup "Button group"
                    , link Route.Card "Card"
+                   , link Route.Carousel "Carousel"
                    , link Route.Dropdown "Dropdown"
                    , link Route.Form "Form"
                    , link Route.Grid "Grid"
@@ -334,7 +365,7 @@ viewSidebar model =
                    , link Route.Navbar "Navbar"
                    , link Route.Popover "Popover"
                    , link Route.Progress "Progress"
-                   , link Route.Tab "Tab"
+                   , link (Route.Tab Nothing) "Tab"
                    , link Route.Table "Table"
                    ]
                 ]

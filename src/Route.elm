@@ -1,9 +1,7 @@
 module Route exposing (decode, encode, clickTo, Route(..))
 
-
-import UrlParser exposing (Parser, parseHash, s, top, (</>))
+import UrlParser exposing (Parser, parseHash, s, top, custom, (</>))
 import Navigation exposing (Location)
-
 import Html
 import Html.Attributes as Attr
 import Html.Events as Events exposing (defaultOptions)
@@ -19,7 +17,7 @@ type Route
     | Alert
     | Badge
     | ListGroup
-    | Tab
+    | Tab (Maybe String)
     | Card
     | Button
     | ButtonGroup
@@ -30,7 +28,18 @@ type Route
     | Form
     | InputGroup
     | Popover
+    | Carousel
     | NotFound
+
+
+maybeHash : Parser (Maybe String -> a) a
+maybeHash =
+    UrlParser.custom "MAYBESTRING" <|
+        \hash ->
+            if String.startsWith "#" hash then
+                Ok (Just <| String.dropLeft 1 hash)
+            else
+                Ok Nothing
 
 
 routeParser : Parser (Route -> a) a
@@ -44,7 +53,7 @@ routeParser =
         , UrlParser.map Alert (s "alert")
         , UrlParser.map Badge (s "badge")
         , UrlParser.map ListGroup (s "listgroup")
-        , UrlParser.map Tab (s "tab")
+        , UrlParser.map Tab (s "tab" </> maybeHash)
         , UrlParser.map Card (s "card")
         , UrlParser.map Button (s "button")
         , UrlParser.map ButtonGroup (s "buttongroup")
@@ -55,11 +64,15 @@ routeParser =
         , UrlParser.map Form (s "form")
         , UrlParser.map InputGroup (s "inputgroup")
         , UrlParser.map Popover (s "popover")
+        , UrlParser.map Carousel (s "carousel")
         ]
+
 
 decode : Location -> Maybe Route
 decode location =
-    UrlParser.parsePath routeParser location
+    UrlParser.parsePath
+        routeParser
+        { location | pathname = String.concat [ location.pathname, "/", location.hash ] }
 
 
 encode : Route -> String
@@ -89,7 +102,7 @@ encode route =
         ListGroup ->
             "/listgroup"
 
-        Tab ->
+        Tab _ ->
             "/tab"
 
         Card ->
@@ -122,16 +135,17 @@ encode route =
         Popover ->
             "/popover"
 
+        Carousel ->
+            "/carousel"
+
         NotFound ->
             "/notfound"
-
-
 
 
 clickTo : Route -> (String -> msg) -> List (Html.Attribute msg)
 clickTo route pageChengeMsg =
     [ Attr.href (encode route)
-    , onPreventDefaultClick (encode route |> pageChengeMsg )
+    , onPreventDefaultClick (encode route |> pageChengeMsg)
     ]
 
 
@@ -139,7 +153,7 @@ onPreventDefaultClick : msg -> Html.Attribute msg
 onPreventDefaultClick message =
     Events.onWithOptions "click"
         { defaultOptions | preventDefault = True }
-        ( preventDefault2
+        (preventDefault2
             |> Json.Decode.andThen (maybePreventDefault message)
         )
 

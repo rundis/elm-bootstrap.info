@@ -28,7 +28,11 @@ quickStart =
     , h4 [] [ text "Start a new project" ]
     , Util.code setupCode
     , h4 [] [ text "Module code" ]
+    , p [] [ text "Create a Main.elm file with the following content"]
     , Util.code quickStartCode
+    , h4 [] [ text "Running the example" ]
+    , Util.code runQuickStartCode
+    , p [] [ text "Navigate to http://localhost:8000/Main.elm"]
     , Util.calloutWarning
         [ p [] [ text """Don't use this method when you want to deploy your app for real life usage.
                          It's not very efficient, the payload for your page will be pretty big and you want get the benefits of caching the CSS.""" ]
@@ -55,14 +59,14 @@ elm-package install --yes rundis/elm-bootstrap
 quickStartCode : Html msg
 quickStartCode =
     Util.toMarkdownElm """
--- module declaration omitted
+module Main exposing (main)
 
+import Html exposing (..)
 import Bootstrap.CDN as CDN
 import Bootstrap.Grid as Grid
 
 
-view : Model -> Html Msg
-view model =
+main =
     Grid.container []
         [ CDN.stylesheet -- creates an inline style node with the Bootstrap CSS
         , Grid.row []
@@ -72,6 +76,19 @@ view model =
 
         ]
 """
+
+runQuickStartCode : Html msg
+runQuickStartCode =
+    Util.toMarkdown """
+```bash
+
+elm-reactor
+
+```
+"""
+
+
+
 
 
 embedding : List (Html msg)

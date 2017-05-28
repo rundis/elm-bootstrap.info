@@ -1,4 +1,4 @@
-module Page.Tab exposing (view, initialState, subscriptions, State)
+module Page.Tab exposing (view, initialState, initialStateWithHash, subscriptions, update, State, Msg)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
@@ -27,39 +27,95 @@ type Layout
 
 initialState : State
 initialState =
-    { tabState = Tab.initialState
-    , pillState = Tab.initialState
-    , animatedState = Tab.initialState
-    , customizedState = Tab.initialState
+    initialStateWithHash ""
+
+
+initialStateWithHash : String -> State
+initialStateWithHash hash =
+    { tabState =
+        if String.startsWith "tab" hash then
+            Tab.customInitialState hash
+        else
+            Tab.initialState
+    , pillState =
+        if String.startsWith "pill" hash then
+            Tab.customInitialState hash
+        else
+            Tab.initialState
+    , animatedState =
+        if String.startsWith "animated" hash then
+            Tab.customInitialState hash
+        else
+            Tab.initialState
+    , customizedState =
+        if String.startsWith "customized" hash then
+            Tab.customInitialState hash
+        else
+            Tab.initialState
     , layout = None
     }
 
 
-subscriptions : State -> (State -> msg) -> Sub msg
-subscriptions state toMsg =
-    Tab.subscriptions state.animatedState (\ts -> toMsg { state | animatedState = ts })
+
+type Msg
+    = TabMsg Tab.State
+    | PillMsg Tab.State
+    | AnimatedMsg Tab.State
+    | CustomizedMsg Tab.State
+    | LayoutMsg Layout
 
 
-view : State -> (State -> msg) -> Util.PageContent msg
-view state toMsg =
+subscriptions : State -> Sub Msg
+subscriptions state =
+    Tab.subscriptions state.animatedState AnimatedMsg
+
+
+
+update : Msg -> State -> State
+update msg state =
+    case msg of
+        TabMsg newState ->
+            { state | tabState = newState }
+
+        PillMsg newState ->
+            { state | pillState = newState }
+
+        AnimatedMsg newState ->
+            { state | animatedState = newState }
+
+
+        CustomizedMsg newState ->
+            { state | customizedState = newState }
+
+        LayoutMsg layout ->
+            { state | layout = layout}
+
+
+view : State -> Util.PageContent Msg
+view state =
     { title = "Tab"
     , description =
         """Use the Tab module when you want to create a tabbed interface element with tabbable regions of content."""
     , children =
-        (tabs state toMsg ++ pills state toMsg ++ animated state toMsg ++ customized state toMsg)
+        (tabs state
+            ++ pills state
+            ++ animated state
+            ++ customized state
+        )
     }
 
 
-tabs : State -> (State -> msg) -> List (Html msg)
-tabs state toMsg =
+tabs : State -> List (Html Msg)
+tabs state =
     [ h2 [] [ text "Tabs" ]
     , p [] [ text """Create a classic tabbed control using the tabs function.
                     Since the Tabs require some internal view state, you will need to do a little bit of wiring to get it working.""" ]
     , Util.example
-        [ Tab.config (\ts -> toMsg { state | tabState = ts })
+        [ Tab.config TabMsg
             |> Tab.items
                 [ Tab.item
-                    { link = Tab.link [] [ text "Tab 1" ]
+                    { id = "tabItem1"
+                    , link = Tab.link [] [ text "Tab 1" ]
                     , pane =
                         Tab.pane [ class "mt-3" ]
                             [ h4 [] [ text "Tab 1 Heading" ]
@@ -67,7 +123,8 @@ tabs state toMsg =
                             ]
                     }
                 , Tab.item
-                    { link = Tab.link [] [ text "Tab 2" ]
+                    { id = "tabItem2"
+                    , link = Tab.link [] [ text "Tab 2" ]
                     , pane =
                         Tab.pane [ class "mt-3" ]
                             [ h4 [] [ text "Tab 2 Heading" ]
@@ -75,7 +132,6 @@ tabs state toMsg =
                             ]
                     }
                 ]
-
             |> Tab.view state.tabState
         ]
     , Util.code tabsCode
@@ -95,7 +151,7 @@ type alias Model =
 
 init : ( Model, Cmd Msg )
 init =
-    ( { tabState : Tab.initalState}, Cmd.none )
+    ( { tabState = Tab.initalState}, Cmd.none )
 
 
 --  To step the state forward for the Tabs control we need to have a Message
@@ -122,7 +178,8 @@ view model =
     Tab.config TabMsg
         |> Tab.items
             [ Tab.item
-                { link = Tab.link [] [ text "Tab 1" ]
+                { id = "tabItem1"
+                , link = Tab.link [] [ text "Tab 1" ]
                 , pane =
                     Tab.pane [ class "mt-3" ]
                         [ h4 [] [ text "Tab 1 Heading" ]
@@ -130,7 +187,8 @@ view model =
                         ]
                 }
             , Tab.item
-                { link = Tab.link [] [ text "Tab 2" ]
+                { id = "tabItem2"
+                , link = Tab.link [] [ text "Tab 2" ]
                 , pane =
                     Tab.pane [ class "mt-3" ]
                         [ h4 [] [ text "Tab 2 Heading" ]
@@ -142,16 +200,17 @@ view model =
 """
 
 
-pills : State -> (State -> msg) -> List (Html msg)
-pills state toMsg =
+pills : State -> List (Html Msg)
+pills state =
     [ h2 [] [ text "Pills" ]
     , p [] [ text "Pills are just like tabs but gives a pill look to the tabs " ]
     , Util.example
-        [ Tab.config (\ts -> toMsg { state | pillState = ts })
+        [ Tab.config PillMsg
             |> Tab.pills
             |> Tab.items
                 [ Tab.item
-                    { link = Tab.link [] [ text "Tab 1" ]
+                    { id = "pillItem1"
+                    , link = Tab.link [] [ text "Tab 1" ]
                     , pane =
                         Tab.pane [ class "mt-3" ]
                             [ h4 [] [ text "Tab 1 Heading" ]
@@ -159,7 +218,8 @@ pills state toMsg =
                             ]
                     }
                 , Tab.item
-                    { link = Tab.link [] [ text "Tab 2" ]
+                    { id = "pillItem2"
+                    , link = Tab.link [] [ text "Tab 2" ]
                     , pane =
                         Tab.pane [ class "mt-3" ]
                             [ h4 [] [ text "Tab 2 Heading" ]
@@ -180,7 +240,8 @@ Tab.config TabMsg
     |> Tab.pills
     |> Tab.items
         [ Tab.item
-            { link = Tab.link [] [ text "Tab 1" ]
+            { id = "pillItem1"
+            , link = Tab.link [] [ text "Tab 1" ]
             , pane =
                 Tab.pane [ class "mt-3" ]
                     [ h4 [] [ text "Tab 1 Heading" ]
@@ -188,7 +249,8 @@ Tab.config TabMsg
                     ]
             }
         , Tab.item
-            { link = Tab.link [] [ text "Tab 2" ]
+            { id = "pillItem2"
+            , link = Tab.link [] [ text "Tab 2" ]
             , pane =
                 Tab.pane [ class "mt-3" ]
                     [ h4 [] [ text "Tab 2 Heading" ]
@@ -200,16 +262,17 @@ Tab.config TabMsg
 """
 
 
-animated : State -> (State -> msg) -> List (Html msg)
-animated state toMsg =
+animated : State -> List (Html Msg)
+animated state =
     [ h2 [] [ text "Adding an animation effect" ]
     , p [] [ text "You can add an fade in animation effect, by adding a little bit more of wiring." ]
     , Util.example
-        [ Tab.config (\ts -> toMsg { state | animatedState = ts })
+        [ Tab.config AnimatedMsg
             |> Tab.withAnimation
             |> Tab.items
                 [ Tab.item
-                    { link = Tab.link [] [ text "Tab 1" ]
+                    { id = "animatedTabItem1"
+                    , link = Tab.link [] [ text "Tab 1" ]
                     , pane =
                         Tab.pane [ class "mt-3" ]
                             [ h4 [] [ text "Tab 1 Heading" ]
@@ -217,7 +280,8 @@ animated state toMsg =
                             ]
                     }
                 , Tab.item
-                    { link = Tab.link [] [ text "Tab 2" ]
+                    { id = "animatedTabItem2"
+                    , link = Tab.link [] [ text "Tab 2" ]
                     , pane =
                         Tab.pane [ class "mt-3" ]
                             [ h4 [] [ text "Tab 2 Heading" ]
@@ -254,7 +318,8 @@ view model =
         |> Tab.withAnimation
         |> Tab.items
             [ Tab.item
-                { link = Tab.link [] [ text "Tab 1" ]
+                { id = "animatedTabItem1"
+                , link = Tab.link [] [ text "Tab 1" ]
                 , pane =
                     Tab.pane [ class "mt-3" ]
                         [ h4 [] [ text "Tab 1 Heading" ]
@@ -262,7 +327,8 @@ view model =
                         ]
                 }
             , Tab.item
-                { link = Tab.link [] [ text "Tab 2" ]
+                { id = "animatedTabItem2"
+                , link = Tab.link [] [ text "Tab 2" ]
                 , pane =
                     Tab.pane [ class "mt-3" ]
                         [ h4 [] [ text "Tab 2 Heading" ]
@@ -274,12 +340,12 @@ view model =
 """
 
 
-customized : State -> (State -> msg) -> List (Html msg)
-customized state toMsg =
+customized : State -> List (Html Msg)
+customized state =
     let
         radioAttrs layout =
             [ Radio.inline
-            , Radio.onClick <| toMsg { state | layout = layout }
+            , Radio.onClick <| LayoutMsg layout
             , Radio.checked <| layout == state.layout
             ]
 
@@ -317,18 +383,20 @@ customized state toMsg =
                     ]
                 , hr [] []
                 ]
-            , Tab.config (\ts -> toMsg { state | customizedState = ts })
+            , Tab.config CustomizedMsg
                 |> tabLayout
                 |> Tab.items
                     [ Tab.item
-                        { link = Tab.link [] [ text "First tab" ]
+                        { id = "customizedTabItem1"
+                        , link = Tab.link [] [ text "First tab" ]
                         , pane =
                             Tab.pane [ class "mt-3" ]
                                 [ p [] [ text """Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit. Keytar helvetica VHS salvia yr, vero magna velit sapiente labore stumptown. Vegan fanny pack odio cillum wes anderson 8-bit, sustainable jean shorts beard ut DIY ethical culpa terry richardson biodiesel. Art party scenester stumptown, tumblr butcher vero sint qui sapiente accusamus tattooed echo park.""" ]
                                 ]
                         }
                     , Tab.item
-                        { link = Tab.link [] [ text "Second tab" ]
+                        { id = "customizedTabItem2"
+                        , link = Tab.link [] [ text "Second tab" ]
                         , pane =
                             Tab.pane [ class "mt-3" ]
                                 [ h4 [] [ text "Tab 2 Heading" ]
@@ -336,7 +404,8 @@ customized state toMsg =
                                 ]
                         }
                     , Tab.item
-                        { link = Tab.link [] [ text "Yet another tab" ]
+                        { id = "customizedTabItem3"
+                        , link = Tab.link [] [ text "Yet another tab" ]
                         , pane =
                             Tab.pane [ class "mt-3" ]
                                 [ h4 [] [ text "Tab 3 Heading" ]

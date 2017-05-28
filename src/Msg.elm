@@ -13,6 +13,7 @@ import Page.Accordion as Accordion
 import Page.Modal as Modal
 import Page.Navbar as PageNav
 import Page.ButtonGroup as ButtonGroup
+import Page.Carousel as Carousel
 
 import Bootstrap.Popover as Popover
 
@@ -24,12 +25,13 @@ type Msg
     | TableMsg Table.State
     | ProgressMsg Progress.State
     | GridMsg Grid.State
-    | TabMsg Tab.State
-    | DropdownMsg Dropdown.State
-    | AccordionMsg Accordion.State
+    | TabMsg Tab.Msg
+    | DropdownMsg Dropdown.Msg
+    | AccordionMsg Accordion.Msg
     | ModalMsg Modal.State
-    | PageNavMsg PageNav.State
+    | PageNavMsg PageNav.Msg
     | ButtonGroupMsg ButtonGroup.State
+    | CarouselMsg Carousel.Msg
 
     -- Popover related
     | PopBasic Popover.State

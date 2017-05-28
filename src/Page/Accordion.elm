@@ -1,7 +1,9 @@
 module Page.Accordion
     exposing
         ( view
+        , update
         , State
+        , Msg
         , initialState
         , subscriptions
         )
@@ -22,6 +24,11 @@ type alias State =
     }
 
 
+type Msg
+    = ExampleMsg Accordion.State
+    | AdvancedMsg Accordion.State
+
+
 initialState : State
 initialState =
     { exampleState = Accordion.initialState
@@ -29,31 +36,41 @@ initialState =
     }
 
 
-subscriptions : State -> (State -> msg) -> Sub msg
-subscriptions state toMsg =
+subscriptions : State -> Sub Msg
+subscriptions state =
     Sub.batch
-        [ Accordion.subscriptions state.exampleState (\ac -> toMsg { state | exampleState = ac })
-        , Accordion.subscriptions state.advancedState (\ac -> toMsg { state | advancedState = ac })
+        [ Accordion.subscriptions state.exampleState ExampleMsg
+        , Accordion.subscriptions state.advancedState AdvancedMsg
         ]
 
 
-view : State -> (State -> msg) -> Util.PageContent msg
-view state toMsg =
+update : Msg -> State -> State
+update msg state =
+    case msg of
+        ExampleMsg newState ->
+            { state | exampleState = newState}
+
+        AdvancedMsg newState ->
+            { state | advancedState = newState }
+
+
+view : State -> Util.PageContent Msg
+view state =
     { title = "Accordion"
     , description = """An accordion is a group of stacked cards where you can toggle the visibility (slide up/down) of each card."""
     , children =
-        (example state toMsg
-            ++ advanced state toMsg
+        (example state
+            ++ advanced state
         )
     }
 
 
-example : State -> (State -> msg) -> List (Html msg)
-example state toMsg =
+example : State -> List (Html Msg)
+example state =
     [ h2 [] [ text "Basic example" ]
     , p [] [ text "Accordions are interactive elements and needs view state to work. To use an accordion there is a little bit of wiring involved." ]
     , Util.example
-        [ Accordion.config (\ac -> toMsg { state | exampleState = ac })
+        [ Accordion.config ExampleMsg
             |> Accordion.withAnimation
             |> Accordion.cards
                 [ Accordion.card
@@ -157,15 +174,15 @@ subscriptions model =
 """
 
 
-advanced : State -> (State -> msg) -> List (Html msg)
-advanced state toMsg =
+advanced : State -> List (Html Msg)
+advanced state =
     [ h2 [] [ text "Customized headers and content" ]
     , p []
         [ text """You can customize the individual accordion cards quite a bit.
                   Accordion cards reuses quite a bit of functionality from the Card module, so you will be using function from that module when writing the view for an accordion."""
         ]
     , Util.example
-        [ Accordion.config (\ac -> toMsg { state | advancedState = ac })
+        [ Accordion.config AdvancedMsg
             |> Accordion.withAnimation
             |> Accordion.cards
                 [ Accordion.card
