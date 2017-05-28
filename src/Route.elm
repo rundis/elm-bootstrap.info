@@ -72,7 +72,10 @@ decode : Location -> Maybe Route
 decode location =
     UrlParser.parsePath
         routeParser
-        { location | pathname = String.concat [ location.pathname, "/", location.hash ] }
+        (if location.pathname /= "/" then
+            { location | pathname = String.concat [ location.pathname, "/", location.hash ] }
+         else
+             location)
 
 
 encode : Route -> String
