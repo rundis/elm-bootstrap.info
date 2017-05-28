@@ -56,7 +56,6 @@ initialStateWithHash hash =
     }
 
 
-
 type Msg
     = TabMsg Tab.State
     | PillMsg Tab.State
@@ -68,7 +67,6 @@ type Msg
 subscriptions : State -> Sub Msg
 subscriptions state =
     Tab.subscriptions state.animatedState AnimatedMsg
-
 
 
 update : Msg -> State -> State
@@ -83,12 +81,11 @@ update msg state =
         AnimatedMsg newState ->
             { state | animatedState = newState }
 
-
         CustomizedMsg newState ->
             { state | customizedState = newState }
 
         LayoutMsg layout ->
-            { state | layout = layout}
+            { state | layout = layout }
 
 
 view : State -> Util.PageContent Msg
@@ -207,6 +204,7 @@ pills state =
     , Util.example
         [ Tab.config PillMsg
             |> Tab.pills
+            |> Tab.useHash True
             |> Tab.items
                 [ Tab.item
                     { id = "pillItem1"
@@ -230,7 +228,26 @@ pills state =
             |> Tab.view state.pillState
         ]
     , Util.code pillsCode
+    , Util.calloutInfo
+        [ h4 [] [ text "Updating the hash when selecting tab items" ]
+        , hashRef
+        ]
     ]
+
+
+hashRef : Html msg
+hashRef =
+    Util.toMarkdown """`Tab.useHash True`, will ensure that the URL is updated with a hash representing the given tab items id.
+This is handy when you want to provide "deep-linking" support in your SPA.
+
+
+When you click the pill items, you will see that the url is updated. If you try to refresh the browser with a (valid) pill hash in the URL you will see that the correct item is selected.
+
+It's up to you to implement the route matching needed to support deep linking. Once you have the hash(id) for the tab item,
+you may specify which tab item is active initially by calling `Tab.customInitialState <somehash>` (where `<somehash>` is the given id for the tab item).
+
+[Check out the elm-bootstrap.info source for inpsiration, starting here](https://github.com/rundis/elm-bootstrap.info/blob/master/src/Main.elm#L65)"""
+
 
 
 pillsCode : Html msg
@@ -238,6 +255,7 @@ pillsCode =
     Util.toMarkdownElm """
 Tab.config TabMsg
     |> Tab.pills
+    |> Tab.useHash True
     |> Tab.items
         [ Tab.item
             { id = "pillItem1"
