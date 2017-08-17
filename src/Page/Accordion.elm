@@ -13,6 +13,7 @@ import Html.Attributes exposing (..)
 import Bootstrap.Accordion as Accordion
 import Bootstrap.ListGroup as ListGroup
 import Bootstrap.Card as Card
+import Bootstrap.Card.Block as Block
 import Bootstrap.ListGroup as ListGroup
 import Bootstrap.Text as Text
 import Util
@@ -80,7 +81,7 @@ example state =
                         Accordion.header [] <| Accordion.toggle [] [ text "Card 1" ]
                     , blocks =
                         [ Accordion.block []
-                            [ Card.text [] [ text "Lorem ipsum etc" ] ]
+                            [ Block.text [] [ text "Lorem ipsum etc" ] ]
                         ]
                     }
                 , Accordion.card
@@ -90,7 +91,7 @@ example state =
                         Accordion.header [] <| Accordion.toggle [] [ text "Card 2" ]
                     , blocks =
                         [ Accordion.block []
-                            [ Card.text [] [ text "Lorem ipsum etc" ] ]
+                            [ Block.text [] [ text "Lorem ipsum etc" ] ]
                         ]
                     }
                 ]
@@ -149,7 +150,7 @@ view model =
                     Accordion.header [] <| Accordion.toggle [] [ text "Card 1" ]
                 , blocks =
                     [ Accordion.block []
-                        [ Card.text [] [ text "Lorem ipsum etc" ] ]
+                        [ Block.text [] [ text "Lorem ipsum etc" ] ]
                     ]
                 }
             , Accordion.card
@@ -159,7 +160,7 @@ view model =
                     Accordion.header [] <| Accordion.toggle [] [ text "Card 2" ]
                 , blocks =
                     [ Accordion.block []
-                        [ Card.text [] [ text "Lorem ipsum etc" ] ]
+                        [ Block.text [] [ text "Lorem ipsum etc" ] ]
                     ]
                 }
             ]
@@ -194,12 +195,12 @@ advanced state =
                             |> Accordion.prependHeader
                                 [ span [ class "fa fa-car" ] [] ]
                     , blocks =
-                        [ Accordion.block [ Card.blockAlign Text.alignXsLeft ]
-                            [ Card.titleH4 [] [ text "Block title" ]
-                            , Card.text [] [ text "Lorem ipsum etc" ] ]
-                        , Accordion.block [ Card.blockAlign Text.alignXsRight ]
-                            [ Card.titleH4 [] [ text "Block2 title" ]
-                            , Card.text [] [ text "Lorem ipsum etc" ] ]
+                        [ Accordion.block [ Block.align Text.alignXsLeft ]
+                            [ Block.titleH4 [] [ text "Block title" ]
+                            , Block.text [] [ text "Lorem ipsum etc" ] ]
+                        , Accordion.block [ Block.align Text.alignXsRight ]
+                            [ Block.titleH4 [] [ text "Block2 title" ]
+                            , Block.text [] [ text "Lorem ipsum etc" ] ]
                         ]
                     }
                 , Accordion.card
@@ -212,7 +213,7 @@ advanced state =
                                 [ span [ class "fa fa-taxi" ] [] ]
                     , blocks =
                         [ Accordion.block []
-                            [ Card.text [] [ text "Lorem ipsum etc" ] ]
+                            [ Block.text [] [ text "Lorem ipsum etc" ] ]
                         , Accordion.listGroup
                             [ ListGroup.li [] [ text "List item 1"]
                             , ListGroup.li [] [ text "List item 2"]
@@ -241,12 +242,12 @@ Accordion.config AccordionMsg
                     |> Accordion.prependHeader
                         [ span [ class "fa fa-car" ] [] ]
             , blocks =
-                [ Accordion.block [ Card.blockAlign Text.alignXsLeft ]
-                    [ Card.titleH4 [] [ text "Block title" ]
-                    , Card.text [] [ text "Lorem ipsum etc" ] ]
-                , Accordion.block [ Card.blockAlign Text.alignXsRight ]
-                    [ Card.titleH4 [] [ text "Block2 title" ]
-                    , Card.text [] [ text "Lorem ipsum etc" ] ]
+                [ Accordion.block [ Block.align Text.alignXsLeft ]
+                    [ Block.titleH4 [] [ text "Block title" ]
+                    , Block.text [] [ text "Lorem ipsum etc" ] ]
+                , Accordion.block [ Block.align Text.alignXsRight ]
+                    [ Block.titleH4 [] [ text "Block2 title" ]
+                    , Block.text [] [ text "Lorem ipsum etc" ] ]
                 ]
             }
         , Accordion.card
@@ -259,7 +260,7 @@ Accordion.config AccordionMsg
                         [ span [ class "fa fa-taxi" ] [] ]
             , blocks =
                 [ Accordion.block []
-                    [ Card.text [] [ text "Lorem ipsum etc" ] ]
+                    [ Block.text [] [ text "Lorem ipsum etc" ] ]
                 , Accordion.listGroup
                     [ ListGroup.li [] [ text "List item 1"]
                     , ListGroup.li [] [ text "List item 2"]

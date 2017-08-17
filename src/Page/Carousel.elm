@@ -6,6 +6,7 @@ import Util
 import Bootstrap.Carousel as Carousel exposing (defaultStateOptions)
 import Bootstrap.Carousel.Slide as Slide
 import Bootstrap.Card as Card
+import Bootstrap.Card.Block as Block
 import Bootstrap.Text as Text
 
 
@@ -322,9 +323,9 @@ cardSlide title =
                 , Card.align Text.alignSmCenter
                 ]
                 |> Card.headerH4 [] [ text title ]
-                |> Card.block [ Card.blockAlign Text.alignSmCenter ]
-                    [ Card.titleH5 [] [ text "A card block title" ]
-                    , Card.text [] [ text "Something something card" ]
+                |> Card.block [ Block.align Text.alignSmCenter ]
+                    [ Block.titleH5 [] [ text "A card block title" ]
+                    , Block.text [] [ text "Something something card" ]
                     ]
                 |> Card.footer [] [ text "A footer" ]
                 |> Card.view
@@ -357,9 +358,9 @@ cardSlide title =
                 , Card.align Text.alignSmCenter
                 ]
                 |> Card.headerH4 [] [ text title ]
-                |> Card.block [ Card.blockAlign Text.alignSmCenter ]
-                    [ Card.titleH5 [] [ text "A card block title" ]
-                    , Card.text [] [ text "Something something card" ]
+                |> Card.block [ Block.align Text.alignSmCenter ]
+                    [ Block.titleH5 [] [ text "A card block title" ]
+                    , Block.text [] [ text "Something something card" ]
                     ]
                 |> Card.footer [] [ text "A footer" ]
                 |> Card.view

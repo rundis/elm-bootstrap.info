@@ -20,12 +20,12 @@ example =
     [ h2 [] [ text "Example" ]
     , p [] [ text "Badges scale to match the size of the immediate parent element by using relative font sizing and em units" ]
     , Util.example
-        [ h1 [] [ text "Heading 1 ", Badge.badge [] [ text "New" ] ]
-        , h2 [] [ text "Heading 2 ", Badge.badge [] [ text "New" ] ]
-        , h3 [] [ text "Heading 3 ", Badge.badge [] [ text "New" ] ]
-        , h4 [] [ text "Heading 4 ", Badge.badge [] [ text "New" ] ]
-        , h5 [] [ text "Heading 5 ", Badge.badge [] [ text "New" ] ]
-        , h6 [] [ text "Heading 6 ", Badge.badge [] [ text "New" ] ]
+        [ h1 [] [ text "Heading 1 ", Badge.badgeSecondary [] [ text "New" ] ]
+        , h2 [] [ text "Heading 2 ", Badge.badgeSecondary [] [ text "New" ] ]
+        , h3 [] [ text "Heading 3 ", Badge.badgeSecondary [] [ text "New" ] ]
+        , h4 [] [ text "Heading 4 ", Badge.badgeSecondary [] [ text "New" ] ]
+        , h5 [] [ text "Heading 5 ", Badge.badgeSecondary [] [ text "New" ] ]
+        , h6 [] [ text "Heading 6 ", Badge.badgeSecondary [] [ text "New" ] ]
         ]
     , div [ class "highlight" ]
         [ exampleCode ]
@@ -37,12 +37,12 @@ exampleCode =
     Util.toMarkdown """
 ```elm
 div []
-    [ h1 [] [ text "Heading 1 ", Badge.badge [] [ text "New"] ]
-    , h2 [] [ text "Heading 2 ", Badge.badge [] [ text "New"] ]
-    , h3 [] [ text "Heading 3 ", Badge.badge [] [ text "New"] ]
-    , h4 [] [ text "Heading 4 ", Badge.badge [] [ text "New"] ]
-    , h5 [] [ text "Heading 5 ", Badge.badge [] [ text "New"] ]
-    , h6 [] [ text "Heading 6 ", Badge.badge [] [ text "New"] ]
+    [ h1 [] [ text "Heading 1 ", Badge.badgeSecondary [] [ text "New"] ]
+    , h2 [] [ text "Heading 2 ", Badge.badgeSecondary [] [ text "New"] ]
+    , h3 [] [ text "Heading 3 ", Badge.badgeSecondary [] [ text "New"] ]
+    , h4 [] [ text "Heading 4 ", Badge.badgeSecondary [] [ text "New"] ]
+    , h5 [] [ text "Heading 5 ", Badge.badgeSecondary [] [ text "New"] ]
+    , h6 [] [ text "Heading 6 ", Badge.badgeSecondary [] [ text "New"] ]
     ]
 
 ```
@@ -54,12 +54,14 @@ contextual =
     [ h2 [] [ text "Contextual variations" ]
     , p [] [ text "Use the following functions to change the appearance of a badge." ]
     , Util.example
-        [ Badge.badge [] [ text "Default" ]
-        , Badge.badgePrimary [ class "ml-1" ] [ text "Primary" ]
+        [ Badge.badgePrimary [ ] [ text "Primary" ]
+        , Badge.badgeSecondary [ class "ml-1" ] [ text "Secondary" ]
         , Badge.badgeSuccess [ class "ml-1" ] [ text "Success" ]
         , Badge.badgeInfo [ class "ml-1" ] [ text "Info" ]
         , Badge.badgeWarning [ class "ml-1" ] [ text "Warning" ]
         , Badge.badgeDanger [ class "ml-1" ] [ text "Danger" ]
+        , Badge.badgeLight [ class "ml-1" ] [ text "Light" ]
+        , Badge.badgeDark [ class "ml-1" ] [ text "Dark" ]
         ]
     , div [ class "highlight" ]
         [ contextualCode ]
@@ -71,12 +73,14 @@ contextualCode =
     Util.toMarkdown """
 ```elm
 div []
-    [ Badge.badge [] [ text "Default" ]
-    , Badge.badgePrimary [ class "ml-1" ] [ text "Primary" ]
+    [ Badge.badgePrimary [ ] [ text "Primary" ]
+    , Badge.badgeSecondary [ class "ml-1" ] [ text "Secondary" ]
     , Badge.badgeSuccess [ class "ml-1" ] [ text "Success" ]
     , Badge.badgeInfo [ class "ml-1" ] [ text "Info" ]
     , Badge.badgeWarning [ class "ml-1" ] [ text "Warning" ]
     , Badge.badgeDanger [ class "ml-1" ] [ text "Danger" ]
+    , Badge.badgeLight [ class "ml-1" ] [ text "Light" ]
+    , Badge.badgeDark [ class "ml-1" ] [ text "Dark" ]
     ]
 
 ```
@@ -88,12 +92,14 @@ pills =
     [ h2 [] [ text "Pill badges" ]
     , p [] [ text "To create more rounded badges use the pill* functions." ]
     , Util.example
-        [ Badge.pill [] [ text "Default" ]
-        , Badge.pillPrimary [ class "ml-1" ] [ text "Primary" ]
+        [ Badge.pillPrimary [ ] [ text "Primary" ]
+        , Badge.pillSecondary [ class "ml-1" ] [ text "Secondary" ]
         , Badge.pillSuccess [ class "ml-1" ] [ text "Success" ]
         , Badge.pillInfo [ class "ml-1" ] [ text "Info" ]
         , Badge.pillWarning [ class "ml-1" ] [ text "Warning" ]
         , Badge.pillDanger [ class "ml-1" ] [ text "Danger" ]
+        , Badge.pillLight [ class "ml-1" ] [ text "Light" ]
+        , Badge.pillDark [ class "ml-1" ] [ text "Dark" ]
         ]
     , div [ class "highlight" ]
         [ pillsCode ]
@@ -105,12 +111,14 @@ pillsCode =
     Util.toMarkdown """
 ```elm
 div []
-    [ Badge.pill [] [ text "Default" ]
-    , Badge.pillPrimary [ class "ml-1" ] [ text "Primary" ]
+    [ Badge.pillPrimary [ ] [ text "Primary" ]
+    , Badge.pillSecondary [ class "ml-1" ] [ text "Secondary" ]
     , Badge.pillSuccess [ class "ml-1" ] [ text "Success" ]
     , Badge.pillInfo [ class "ml-1" ] [ text "Info" ]
     , Badge.pillWarning [ class "ml-1" ] [ text "Warning" ]
     , Badge.pillDanger [ class "ml-1" ] [ text "Danger" ]
+    , Badge.pillLight [ class "ml-1" ] [ text "Light" ]
+    , Badge.pillDark [ class "ml-1" ] [ text "Dark" ]
     ]
 
 ```

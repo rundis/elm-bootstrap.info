@@ -3,11 +3,11 @@ module Page.Card exposing (view)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Bootstrap.Card as Card
+import Bootstrap.Card.Block as Block
 import Bootstrap.Button as Button
 import Bootstrap.ListGroup as ListGroup
 import Bootstrap.Text as Text
 import Util
-import Color
 
 
 view : Util.PageContent msg
@@ -23,7 +23,6 @@ view =
             ++ listGroups
             ++ headerAndFooter
             ++ alignment
-            ++ inverted
             ++ backgrounds
             ++ outlines
             ++ groups
@@ -45,9 +44,9 @@ example =
                 , h3 [ class "mt-2" ] [ text "Custom Card Header" ]
                 ]
             |> Card.block []
-                [ Card.titleH4 [] [ text "Card title" ]
-                , Card.text [] [ text "Some quick example text to build on the card title and make up the bulk of the card's content." ]
-                , Card.custom <|
+                [ Block.titleH4 [] [ text "'Card' title" ]
+                , Block.text [] [ text "Some quick example text to build on the card title and make up the bulk of the card's content." ]
+                , Block.custom <|
                     Button.button [ Button.primary ] [ text "Go somewhere" ]
                 ]
             |> Card.view
@@ -65,9 +64,9 @@ Card.config [ Card.attrs [ style [ ( "width", "20rem" ) ] ] ]
         , h3 [ class "mt-2" ] [ text "Custom Card Header" ]
         ]
     |> Card.block []
-        [ Card.titleH4 [] [ text "Card title" ]
-        , Card.text [] [ text "Some quick example text to build on the card title and make up the bulk of the card's content." ]
-        , Card.custom <|
+        [ Block.titleH4 [] [ text "Card title" ]
+        , Block.text [] [ text "Some quick example text to build on the card title and make up the bulk of the card's content." ]
+        , Block.custom <|
             Button.button [ Button.primary ] [ text "Go somewhere" ]
         ]
     |> Card.view
@@ -81,7 +80,7 @@ blocks =
     , Util.example
         [ Card.config []
             |> Card.block []
-                [ Card.text [] [ text "This is some text within a card block." ] ]
+                [ Block.text [] [ text "This is some text within a card block." ] ]
             |> Card.view
         ]
     , Util.code blocksCode
@@ -93,7 +92,7 @@ blocksCode =
     Util.toMarkdownElm """
 Card.config []
     |> Card.block []
-        [ Card.text [] [ text "This is some text within a card block." ] ]
+        [ Block.text [] [ text "This is some text within a card block." ] ]
     |> Card.view
 """
 
@@ -108,10 +107,10 @@ blockContents =
     , Util.example
         [ Card.config []
             |> Card.block []
-                [ Card.titleH4 [] [ text "Card title" ]
-                , Card.text [] [ text "This is some text within a card block." ]
-                , Card.link [ href "javascript:void()" ] [ text "Card link" ]
-                , Card.link [ href "javascript:void()" ] [ text "Another link" ]
+                [ Block.titleH4 [] [ text "Card title" ]
+                , Block.text [] [ text "This is some text within a card block." ]
+                , Block.link [ href "javascript:void()" ] [ text "Card link" ]
+                , Block.link [ href "javascript:void()" ] [ text "Another link" ]
                 ]
             |> Card.view
         ]
@@ -124,10 +123,10 @@ blockContentsCode =
     Util.toMarkdownElm """
 Card.config []
     |> Card.block []
-        [ Card.titleH4 [] [ text "Card title" ]
-        , Card.text [] [ text "This is some text within a card block." ]
-        , Card.link [ href "#"] [ text "Card link" ]
-        , Card.link [ href "#"] [ text "Another link" ]
+        [ Block.titleH4 [] [ text "Card title" ]
+        , Block.text [] [ text "This is some text within a card block." ]
+        , Block.link [ href "#"] [ text "Card link" ]
+        , Block.link [ href "#"] [ text "Another link" ]
         ]
     |> Card.view
 """
@@ -141,9 +140,9 @@ headerAndFooter =
         [ Card.config []
             |> Card.header [] [ text "Featured" ]
             |> Card.block []
-                [ Card.titleH3 [] [ text "Special title treatment" ]
-                , Card.text [] [ text "With supporting text below as a natural lead-in to additional content." ]
-                , Card.custom <|
+                [ Block.titleH3 [] [ text "Special title treatment" ]
+                , Block.text [] [ text "With supporting text below as a natural lead-in to additional content." ]
+                , Block.custom <|
                     Button.button [ Button.primary ] [ text "Go somewhere" ]
                 ]
             |> Card.view
@@ -154,9 +153,9 @@ headerAndFooter =
         [ Card.config []
             |> Card.headerH3 [] [ text "Featured" ]
             |> Card.block []
-                [ Card.titleH3 [] [ text "Special title treatment" ]
-                , Card.text [] [ text "With supporting text below as a natural lead-in to additional content." ]
-                , Card.custom <|
+                [ Block.titleH3 [] [ text "Special title treatment" ]
+                , Block.text [] [ text "With supporting text below as a natural lead-in to additional content." ]
+                , Block.custom <|
                     Button.button [ Button.primary ] [ text "Go somewhere" ]
                 ]
             |> Card.view
@@ -167,9 +166,9 @@ headerAndFooter =
         [ Card.config []
             |> Card.headerH3 [] [ text "Featured" ]
             |> Card.block []
-                [ Card.titleH3 [] [ text "Special title treatment" ]
-                , Card.text [] [ text "With supporting text below as a natural lead-in to additional content." ]
-                , Card.custom <|
+                [ Block.titleH3 [] [ text "Special title treatment" ]
+                , Block.text [] [ text "With supporting text below as a natural lead-in to additional content." ]
+                , Block.custom <|
                     Button.button [ Button.primary ] [ text "Go somewhere" ]
                 ]
             |> Card.footer [] [ text "2 days ago" ]
@@ -185,9 +184,9 @@ headerSimpleCode =
 Card.config []
     |> Card.header [] [ text "Featured" ]
     |> Card.block []
-        [ Card.titleH3 [] [ text "Special title treatment" ]
-        , Card.text [] [ text "With supporting text below as a natural lead-in to additional content." ]
-        , Card.custom <|
+        [ Block.titleH3 [] [ text "Special title treatment" ]
+        , Block.text [] [ text "With supporting text below as a natural lead-in to additional content." ]
+        , Block.custom <|
             Button.button [ Button.primary ] [ text "Go somewhere" ]
         ]
     |> Card.view
@@ -200,9 +199,9 @@ headerCode =
 Card.config []
     |> Card.headerH3 [] [ text "Featured" ]
     |> Card.block []
-        [ Card.titleH3 [] [ text "Special title treatment" ]
-        , Card.text [] [ text "With supporting text below as a natural lead-in to additional content." ]
-        , Card.custom <|
+        [ Block.titleH3 [] [ text "Special title treatment" ]
+        , Block.text [] [ text "With supporting text below as a natural lead-in to additional content." ]
+        , Block.custom <|
             Button.button [ Button.primary ] [ text "Go somewhere" ]
         ]
     |> Card.view
@@ -215,9 +214,9 @@ footerCode =
 Card.config []
     |> Card.headerH3 [] [ text "Featured"]
     |> Card.block []
-        [ Card.titleH3 [] [ text "Special title treatment" ]
-        , Card.text [] [ text "With supporting text below as a natural lead-in to additional content." ]
-        , Card.custom <|
+        [ Block.titleH3 [] [ text "Special title treatment" ]
+        , Block.text [] [ text "With supporting text below as a natural lead-in to additional content." ]
+        , Block.custom <|
             Button.button [ Button.primary ] [ text "Go somewhere" ]
         ]
     |> Card.footer [] [ text "2 days ago" ]
@@ -238,8 +237,8 @@ alignment =
             |> Card.view
         , Card.config [ Card.align Text.alignXsCenter, Card.attrs [ class "mt-4" ] ]
             |> Card.headerH3 [] [ text "Centered header" ]
-            |> Card.block [ Card.blockAlign Text.alignXsLeft ] sampleBlockContents
-            |> Card.block [ Card.blockAlign Text.alignXsRight ] sampleBlockContents
+            |> Card.block [ Block.align Text.alignXsLeft ] sampleBlockContents
+            |> Card.block [ Block.align Text.alignXsRight ] sampleBlockContents
             |> Card.footer [] [ text "Centered footer" ]
             |> Card.view
         ]
@@ -247,11 +246,11 @@ alignment =
     ]
 
 
-sampleBlockContents : List (Card.BlockItem msg)
+sampleBlockContents : List (Block.Item msg)
 sampleBlockContents =
-    [ Card.titleH3 [] [ text "Special title treatment" ]
-    , Card.text [] [ text "With supporting text below as a natural lead-in to additional content." ]
-    , Card.custom <|
+    [ Block.titleH3 [] [ text "Special title treatment" ]
+    , Block.text [] [ text "With supporting text below as a natural lead-in to additional content." ]
+    , Block.custom <|
         Button.button [ Button.primary ] [ text "Go somewhere" ]
     ]
 
@@ -269,17 +268,17 @@ div []
 
     , Card.config [ Card.align Text.alignXsCenter, Card.attrs [class "mt-4"] ]
         |> Card.headerH3 [] [ text "Centered header" ]
-        |> Card.block [ Card.blockAlign Text.alignXsLeft ] sampleBlockContents
-        |> Card.block [ Card.blockAlign Text.alignXsRight ] sampleBlockContents
+        |> Card.block [ Block.align Text.alignXsLeft ] sampleBlockContents
+        |> Card.block [ Block.align Text.alignXsRight ] sampleBlockContents
         |> Card.footer [] [ text "Centered footer" ]
         |> Card.view
     ]
 
-sampleBlockContents : List (Card.BlockItem msg)
+sampleBlockContents : List (Block.Item msg)
 sampleBlockContents =
-    [ Card.titleH3 [] [ text "Special title treatment" ]
-    , Card.text [] [ text "With supporting text below as a natural lead-in to additional content." ]
-    , Card.custom <|
+    [ Block.titleH3 [] [ text "Special title treatment" ]
+    , Block.text [] [ text "With supporting text below as a natural lead-in to additional content." ]
+    , Block.custom <|
         Button.button [ Button.primary ] [ text "Go somewhere" ]
     ]
 """
@@ -311,44 +310,9 @@ Card.config []
         , ListGroup.li [ ListGroup.info ] [ text "Dapibus ac facilisis in" ]
         , ListGroup.li [ ListGroup.warning ] [ text "Vestibulum at eros" ]
         ]
-    |> Card.view
-"""
+    |> Card.view"""
 
 
-inverted : List (Html msg)
-inverted =
-    [ h2 [] [ text "Inverted text" ]
-    , p [] [ text """By default, cards use dark text and assume a light background.
-                    You can reverse that by toggling the color of text within, as well as that of the card’s subcomponents, using the inverted function.
-                    This will change the background color and border color of your card to the specified color.
-
-You can also use .card-inverse with the contextual backgrounds variants.""" ]
-    , Util.example
-        [ Card.config [ Card.inverted Color.brown ]
-            |> Card.block []
-                [ Card.titleH3 [] [ text "Special title treatment" ]
-                , Card.text [] [ text "With supporting text below as a natural lead-in to additional content." ]
-                , Card.custom <|
-                    Button.button [ Button.primary ] [ text "Go somewhere" ]
-                ]
-            |> Card.view
-        ]
-    , Util.example [ invertedCode ]
-    ]
-
-
-invertedCode : Html msg
-invertedCode =
-    Util.toMarkdownElm """
-Card.config [ Card.inverted Color.brown ]
-    |> Card.block []
-        [ Card.titleH3 [] [ text "Special title treatment" ]
-        , Card.text [] [ text "With supporting text below as a natural lead-in to additional content." ]
-        , Card.custom <|
-            Button.button [ Button.primary ] [ text "Go somewhere" ]
-        ]
-    |> Card.view
-"""
 
 
 backgrounds : List (Html msg)
@@ -356,26 +320,83 @@ backgrounds =
     [ h2 [] [ text "Background variants" ]
     , p [] [ text "You can quickly add a background color and border using appropriate helper functions." ]
     , Util.example
-        [ Card.config [ Card.primary, Card.attrs [ class "mb-3" ] ]
-            |> Card.block []
-                [ quote ]
+        [ Card.config
+            [ Card.primary
+            , Card.textColor Text.white
+            , Card.attrs [ class "mb-3" ]
+            ]
+            |> Card.header [] [ text "Header"]
+            |> Card.block [] [ quote ]
             |> Card.view
-        , Card.config [ Card.success, Card.attrs [ class "mb-3" ] ]
-            |> Card.block []
-                [ quote ]
+        , Card.config
+            [ Card.secondary
+            , Card.textColor Text.white
+            , Card.attrs [ class "mb-3" ]
+            ]
+            |> Card.header [] [ text "Header"]
+            |> Card.block [] [ quote ]
             |> Card.view
-        , Card.config [ Card.info, Card.attrs [ class "mb-3" ] ]
-            |> Card.block []
-                [ quote ]
+        , Card.config
+            [ Card.success
+            , Card.textColor Text.white
+            , Card.attrs [ class "mb-3" ]
+            ]
+            |> Card.header [] [ text "Header"]
+            |> Card.block [] [ quote ]
             |> Card.view
-        , Card.config [ Card.warning, Card.attrs [ class "mb-3" ] ]
-            |> Card.block []
-                [ quote ]
+        , Card.config
+            [ Card.info
+            , Card.textColor Text.white
+            , Card.attrs [ class "mb-3" ]
+            ]
+            |> Card.header [] [ text "Header"]
+            |> Card.block [] [ quote ]
             |> Card.view
-        , Card.config [ Card.danger ]
-            |> Card.block []
-                [ quote ]
+        , Card.config
+            [ Card.warning
+            , Card.textColor Text.white
+            , Card.attrs [ class "mb-3" ]
+            ]
+            |> Card.header [] [ text "Header"]
+            |> Card.block [] [ quote ]
             |> Card.view
+        , Card.config
+            [ Card.danger
+            , Card.textColor Text.white
+            , Card.attrs [ class "mb-3" ]
+            ]
+            |> Card.header [] [ text "Header"]
+            |> Card.block [] [ quote ]
+            |> Card.view
+        , Card.config
+            [ Card.light
+            , Card.textColor Text.primary
+            , Card.attrs [ class "mb-3" ]
+            ]
+            |> Card.header [] [ text "Header"]
+            |> Card.block [] [ quote ]
+            |> Card.view
+        , Card.config
+            [ Card.dark
+            , Card.textColor Text.white
+            , Card.attrs [ class "mb-3" ]
+            ]
+            |> Card.header [] [ text "Header"]
+            |> Card.block [] [ quote ]
+            |> Card.view
+        , Card.config
+            [ Card.primary
+            , Card.textColor Text.light
+            ]
+            |> Card.header [] [ text "Header"]
+            |> Card.block
+                [ Block.danger ] [ quote ]
+            |> Card.block []
+                [ Block.text [] [ text "Using card level coloring"]]
+            |> Card.block
+                [ Block.light, Block.textColor Text.success] [ Block.text [] [text "Success"]]
+            |> Card.view
+
         ]
     , Util.code backgroundsCode
     ]
@@ -385,32 +406,89 @@ backgroundsCode : Html msg
 backgroundsCode =
     Util.toMarkdownElm """
 div []
-    [ Card.config [ Card.primary, Card.attrs [ class "mb-3" ] ]
-        |> Card.block []
-            [ quote ]
+    [ Card.config
+        [ Card.primary
+        , Card.textColor Text.white
+        , Card.attrs [ class "mb-3" ]
+        ]
+        |> Card.header [] [ text "Header"]
+        |> Card.block [] [ quote ]
         |> Card.view
-    , Card.config [ Card.success, Card.attrs [ class "mb-3" ] ]
-        |> Card.block []
-            [ quote ]
+    , Card.config
+        [ Card.secondary
+        , Card.textColor Text.white
+        , Card.attrs [ class "mb-3" ]
+        ]
+        |> Card.header [] [ text "Header"]
+        |> Card.block [] [ quote ]
         |> Card.view
-    , Card.config [ Card.info, Card.attrs [ class "mb-3" ] ]
-        |> Card.block []
-            [ quote ]
+    , Card.config
+        [ Card.success
+        , Card.textColor Text.white
+        , Card.attrs [ class "mb-3" ]
+        ]
+        |> Card.header [] [ text "Header"]
+        |> Card.block [] [ quote ]
         |> Card.view
-    , Card.config [ Card.warning, Card.attrs [ class "mb-3" ] ]
-        |> Card.block []
-            [ quote ]
+    , Card.config
+        [ Card.info
+        , Card.textColor Text.white
+        , Card.attrs [ class "mb-3" ]
+        ]
+        |> Card.header [] [ text "Header"]
+        |> Card.block [] [ quote ]
         |> Card.view
-    , Card.config [ Card.danger ]
-        |> Card.block []
-            [ quote ]
+    , Card.config
+        [ Card.warning
+        , Card.textColor Text.white
+        , Card.attrs [ class "mb-3" ]
+        ]
+        |> Card.header [] [ text "Header"]
+        |> Card.block [] [ quote ]
         |> Card.view
+    , Card.config
+        [ Card.danger
+        , Card.textColor Text.white
+        , Card.attrs [ class "mb-3" ]
+        ]
+        |> Card.header [] [ text "Header"]
+        |> Card.block [] [ quote ]
+        |> Card.view
+    , Card.config
+        [ Card.light
+        , Card.textColor Text.primary
+        , Card.attrs [ class "mb-3" ]
+        ]
+        |> Card.header [] [ text "Header"]
+        |> Card.block [] [ quote ]
+        |> Card.view
+    , Card.config
+        [ Card.dark
+        , Card.textColor Text.white
+        , Card.attrs [ class "mb-3" ]
+        ]
+        |> Card.header [] [ text "Header"]
+        |> Card.block [] [ quote ]
+        |> Card.view
+    , Card.config
+        [ Card.primary
+        , Card.textColor Text.light
+        ]
+        |> Card.header [] [ text "Header"]
+        |> Card.block
+            [ Block.danger ] [ quote ]
+        |> Card.block []
+            [ Block.text [] [ text "Using card level coloring"]]
+        |> Card.block
+            [ Block.light, Block.textColor Text.success] [ Block.text [] [text "Success"]]
+        |> Card.view
+
     ]
 
 
-quote : Card.BlockItem msg
+quote : Block.Item msg
 quote =
-    Card.blockQuote []
+    Block.quote []
         [ p [] [ text "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante." ]
         , footer []
             [ text "Someone famous in "
@@ -427,24 +505,40 @@ outlines =
     , p [] [ text "in need of a colored card, but not the hefty background colors they bring? Use the outline* functions to give cards a colored border" ]
     , Util.example
         [ Card.config [ Card.outlinePrimary, Card.attrs [ class "mb-3" ] ]
-            |> Card.block []
-                [ quote ]
+            |> Card.header [] [ text "Header" ]
+            |> Card.block [] [ quote ]
+            |> Card.view
+        , Card.config [ Card.outlineSecondary, Card.attrs [ class "mb-3" ] ]
+            |> Card.header [] [ text "Header" ]
+            |> Card.block [] [ quote ]
             |> Card.view
         , Card.config [ Card.outlineSuccess, Card.attrs [ class "mb-3" ] ]
-            |> Card.block []
-                [ quote ]
+            |> Card.header [] [ text "Header" ]
+            |> Card.block [] [ quote ]
             |> Card.view
         , Card.config [ Card.outlineInfo, Card.attrs [ class "mb-3" ] ]
-            |> Card.block []
-                [ quote ]
+            |> Card.header [] [ text "Header" ]
+            |> Card.block [] [ quote ]
             |> Card.view
         , Card.config [ Card.outlineWarning, Card.attrs [ class "mb-3" ] ]
-            |> Card.block []
-                [ quote ]
+            |> Card.header [] [ text "Header" ]
+            |> Card.block [] [ quote ]
             |> Card.view
-        , Card.config [ Card.outlineDanger ]
-            |> Card.block []
-                [ quote ]
+        , Card.config [ Card.outlineDanger, Card.attrs [ class "mb-3" ] ]
+            |> Card.header [] [ text "Header" ]
+            |> Card.block [] [ quote ]
+            |> Card.view
+        , Card.config
+            [ Card.outlineLight
+            , Card.textColor Text.primary
+            , Card.attrs [ class "mb-3" ]
+            ]
+            |> Card.header [] [ text "Header" ]
+            |> Card.block [] [ quote ]
+            |> Card.view
+        , Card.config [ Card.outlineDark ]
+            |> Card.header [] [ text "Header" ]
+            |> Card.block [] [ quote ]
             |> Card.view
         ]
     , Util.code outlinesCode
@@ -456,32 +550,48 @@ outlinesCode =
     Util.toMarkdownElm """
 Util.example
     [ Card.config [ Card.outlinePrimary, Card.attrs [ class "mb-3" ] ]
-        |> Card.block []
-            [ quote ]
+        |> Card.header [] [ text "Header" ]
+        |> Card.block [] [ quote ]
+        |> Card.view
+    , Card.config [ Card.outlineSecondary, Card.attrs [ class "mb-3" ] ]
+        |> Card.header [] [ text "Header" ]
+        |> Card.block [] [ quote ]
         |> Card.view
     , Card.config [ Card.outlineSuccess, Card.attrs [ class "mb-3" ] ]
-        |> Card.block []
-            [ quote ]
+        |> Card.header [] [ text "Header" ]
+        |> Card.block [] [ quote ]
         |> Card.view
     , Card.config [ Card.outlineInfo, Card.attrs [ class "mb-3" ] ]
-        |> Card.block []
-            [ quote ]
+        |> Card.header [] [ text "Header" ]
+        |> Card.block [] [ quote ]
         |> Card.view
     , Card.config [ Card.outlineWarning, Card.attrs [ class "mb-3" ] ]
-        |> Card.block []
-            [ quote ]
+        |> Card.header [] [ text "Header" ]
+        |> Card.block [] [ quote ]
         |> Card.view
-    , Card.config [ Card.outlineDanger ]
-        |> Card.block []
-            [ quote ]
+    , Card.config [ Card.outlineDanger, Card.attrs [ class "mb-3" ] ]
+        |> Card.header [] [ text "Header" ]
+        |> Card.block [] [ quote ]
+        |> Card.view
+    , Card.config
+        [ Card.outlineLight
+        , Card.textColor Text.primary
+        , Card.attrs [ class "mb-3" ]
+        ]
+        |> Card.header [] [ text "Header" ]
+        |> Card.block [] [ quote ]
+        |> Card.view
+    , Card.config [ Card.outlineDark ]
+        |> Card.header [] [ text "Header" ]
+        |> Card.block [] [ quote ]
         |> Card.view
     ]
 """
 
 
-quote : Card.BlockItem msg
+quote : Block.Item msg
 quote =
-    Card.blockQuote []
+    Block.quote []
         [ p [] [ text "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante." ]
         , footer []
             [ text "Someone famous in "
@@ -512,19 +622,19 @@ cardList =
     [ Card.config []
         |> Card.headerH3 [] [ text "Card header" ]
         |> Card.block []
-            [ Card.text [] [ text "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante." ] ]
+            [ Block.text [] [ text "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante." ] ]
         |> Card.footer []
             [ small [ class "text-muted" ] [ text "Last updated 3 mins ago" ] ]
     , Card.config []
         |> Card.headerH3 [] [ text "Card2 header" ]
         |> Card.block []
-            [ Card.text [] [ text "Lorem ipsum dolor sit amet, consectetur adipiscing elit." ] ]
+            [ Block.text [] [ text "Lorem ipsum dolor sit amet, consectetur adipiscing elit." ] ]
         |> Card.footer []
             [ small [ class "text-muted" ] [ text "Last updated 3 mins ago" ] ]
     , Card.config []
         |> Card.headerH3 [] [ text "Card3 header" ]
         |> Card.block []
-            [ Card.text [] [ text "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit." ] ]
+            [ Block.text [] [ text "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit." ] ]
         |> Card.footer []
             [ small [ class "text-muted" ] [ text "Last updated 3 mins ago" ] ]
     ]
@@ -571,19 +681,19 @@ cardList =
     [ Card.config []
         |> Card.headerH3 [] [ text "Card header" ]
         |> Card.block []
-            [ Card.text [] [ text "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante." ] ]
+            [ Block.text [] [ text "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante." ] ]
         |> Card.footer []
             [ small [ class "text-muted" ] [ text "Last updated 3 mins ago" ] ]
     , Card.config []
         |> Card.headerH3 [] [ text "Card2 header" ]
         |> Card.block []
-            [ Card.text [] [ text "Lorem ipsum dolor sit amet, consectetur adipiscing elit." ] ]
+            [ Block.text [] [ text "Lorem ipsum dolor sit amet, consectetur adipiscing elit." ] ]
         |> Card.footer []
             [ small [ class "text-muted" ] [ text "Last updated 3 mins ago" ] ]
     , Card.config []
         |> Card.headerH3 [] [ text "Card3 header" ]
         |> Card.block []
-            [ Card.text [] [ text "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit." ] ]
+            [ Block.text [] [ text "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit." ] ]
         |> Card.footer []
             [ small [ class "text-muted" ] [ text "Last updated 3 mins ago" ] ]
     ]

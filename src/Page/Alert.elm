@@ -20,10 +20,14 @@ basic =
     [ h2 [] [ text "Basic alert messages " ]
     , p [] [ text """Alerts are available for any length of text. Use one of the 4 available functions in the Alert module.""" ]
     , Util.example
-        [ Alert.success [ text "This is a success message." ]
+        [ Alert.primary [ text "This is a primary message." ]
+        , Alert.secondary [ text "This is a secondary message." ]
+        , Alert.success [ text "This is a success message." ]
         , Alert.info [ text "Just a heads up info message." ]
         , Alert.warning [ text "Warning, you shouldn't be doing this." ]
         , Alert.danger [ text "Something bad happened." ]
+        , Alert.light [ text "Make it really light." ]
+        , Alert.dark [ text "I prefer the dark." ]
         ]
     , div [ class "highlight" ]
         [ basicCode ]
@@ -35,10 +39,14 @@ basicCode =
     Util.toMarkdown """
 ```elm
 div []
-    [ Alert.success [ text "This is a success message." ]
+    [ Alert.primary [ text "This is a primary message." ]
+    , Alert.secondary [ text "This is a secondary message." ]
+    , Alert.success [ text "This is a success message." ]
     , Alert.info [ text "Just a heads up info message." ]
     , Alert.warning [ text "Warning, you shouldn't be doing this." ]
     , Alert.danger [ text "Something bad happened." ]
+    , Alert.light [ text "Make it really light." ]
+    , Alert.dark [ text "I prefer the dark." ]
     ]
 
 

@@ -33,6 +33,8 @@ examples =
         , Button.button [ Button.info, Button.attrs [ class "ml-1" ] ] [ text "Info" ]
         , Button.button [ Button.warning, Button.attrs [ class "ml-1" ] ] [ text "Warning" ]
         , Button.button [ Button.danger, Button.attrs [ class "ml-1" ] ] [ text "Danger" ]
+        , Button.button [ Button.light, Button.attrs [ class "ml-1" ] ] [ text "Light" ]
+        , Button.button [ Button.dark, Button.attrs [ class "ml-1" ] ] [ text "Dark" ]
         , Button.button [ Button.roleLink, Button.attrs [ class "ml-1" ] ] [ text "Link" ]
         ]
     , Util.code examplesCode
@@ -49,6 +51,8 @@ div []
     , Button.button [ Button.info, Button.attrs [ class "ml-1"] ] [ text "Info" ]
     , Button.button [ Button.warning, Button.attrs [ class "ml-1"] ] [ text "Warning" ]
     , Button.button [ Button.danger, Button.attrs [ class "ml-1"] ] [ text "Danger" ]
+    , Button.button [ Button.light, Button.attrs [ class "ml-1"] ] [ text "Light" ]
+    , Button.button [ Button.dark, Button.attrs [ class "ml-1"] ] [ text "Dark" ]
     , Button.button [ Button.roleLink, Button.attrs [ class "ml-1"] ] [ text "Link" ]
     ]
 """
@@ -83,6 +87,8 @@ outlines =
         , Button.button [ Button.outlineInfo, Button.attrs [ class "ml-1" ] ] [ text "Info" ]
         , Button.button [ Button.outlineWarning, Button.attrs [ class "ml-1" ] ] [ text "Warning" ]
         , Button.button [ Button.outlineDanger, Button.attrs [ class "ml-1" ] ] [ text "Danger" ]
+        , Button.button [ Button.outlineLight, Button.attrs [ class "ml-1" ] ] [ text "Light" ]
+        , Button.button [ Button.outlineDark, Button.attrs [ class "ml-1" ] ] [ text "Dark" ]
         ]
     , Util.code outlinesCode
     ]
@@ -98,6 +104,8 @@ div []
     , Button.button [ Button.outlineInfo, Button.attrs [ class "ml-1" ] ] [ text "Info" ]
     , Button.button [ Button.outlineWarning, Button.attrs [ class "ml-1" ] ] [ text "Warning" ]
     , Button.button [ Button.outlineDanger, Button.attrs [ class "ml-1" ] ] [ text "Danger" ]
+    , Button.button [ Button.outlineLight, Button.attrs [ class "ml-1" ] ] [ text "Light" ]
+    , Button.button [ Button.outlineDark, Button.attrs [ class "ml-1" ] ] [ text "Dark" ]
     ]
 """
 

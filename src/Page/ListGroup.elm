@@ -220,12 +220,12 @@ badges =
             [ ListGroup.li
                 [ ListGroup.attrs [ class "justify-content-between" ] ]
                 [ text "List item 1"
-                , Badge.pill [] [ text "14" ]
+                , Badge.pillSuccess [] [ text "14" ]
                 ]
             , ListGroup.li
                 [ ListGroup.attrs [ class "justify-content-between" ] ]
                 [ text "List item 2"
-                , Badge.pill [] [ text "1" ]
+                , Badge.pillSuccess [] [ text "1" ]
                 ]
             , ListGroup.li
                 [ ListGroup.attrs [ class "justify-content-between" ]

@@ -5,7 +5,7 @@ import Bootstrap.Table as Table
 import Bootstrap.Accordion as Accordion
 import Util
 import Bootstrap.Form.Checkbox as Checkbox
-import Bootstrap.Card as Card
+import Bootstrap.Card.Block as Block
 
 
 type alias State =
@@ -84,7 +84,7 @@ viewSimpleTable state toMsg =
                 , options = []
                 , header = Accordion.header [] <| Accordion.toggle [] [ text "View code" ]
                 , blocks =
-                    [ Accordion.block [] [ Card.custom simpleTableSampleCode ] ]
+                    [ Accordion.block [] [ Block.custom simpleTableSampleCode ] ]
                 }
             ]
         |> Accordion.view state.simpleState
@@ -168,7 +168,7 @@ viewOptionedTable state toMsg =
                 , header = Accordion.header [] <| Accordion.toggle [] [ text "View code" ]
                 , blocks =
                     [ Accordion.block []
-                        [ Card.custom optionedTableSampleCode ]
+                        [ Block.custom optionedTableSampleCode ]
                     ]
                 }
             ]
