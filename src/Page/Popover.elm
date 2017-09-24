@@ -45,7 +45,6 @@ example state =
                         , Button.primary
                         , Button.attrs <|
                             Popover.onClick state.popBasic Msg.PopBasic
-                          --(\s -> toMsg { state | popBasic = s })
                         ]
                         [ span [ class "fa fa-question-circle" ]
                             []
