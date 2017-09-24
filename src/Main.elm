@@ -120,6 +120,7 @@ subscriptions model =
         , Sub.map AccordionMsg <| Accordion.subscriptions model.accordionState
         , Sub.map PageNavMsg <| PageNav.subscriptions model.pageNavState
         , Sub.map CarouselMsg <| Carousel.subscriptions model.carouselState
+        , Sub.map ModalMsg <| Modal.subscriptions model.modalState
         ]
 
 
@@ -153,8 +154,8 @@ update msg model =
         AccordionMsg subMsg ->
             ( { model | accordionState = Accordion.update subMsg model.accordionState }, Cmd.none )
 
-        ModalMsg state ->
-            ( { model | modalState = state }, Cmd.none )
+        ModalMsg subMsg ->
+            ( { model | modalState = Modal.update subMsg model.modalState }, Cmd.none )
 
         ButtonGroupMsg state ->
             ( { model | buttonGroupState = state }, Cmd.none )
@@ -291,7 +292,8 @@ viewPage model =
                     |> wrap
 
             Route.Modal ->
-                Modal.view model.modalState ModalMsg
+                Modal.view model.modalState
+                    |> mapPageContent ModalMsg
                     |> wrap
 
             Route.Navbar ->

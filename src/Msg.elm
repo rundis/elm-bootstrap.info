@@ -28,7 +28,7 @@ type Msg
     | TabMsg Tab.Msg
     | DropdownMsg Dropdown.Msg
     | AccordionMsg Accordion.Msg
-    | ModalMsg Modal.State
+    | ModalMsg Modal.Msg
     | PageNavMsg PageNav.Msg
     | ButtonGroupMsg ButtonGroup.State
     | CarouselMsg Carousel.Msg
