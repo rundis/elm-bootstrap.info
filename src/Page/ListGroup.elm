@@ -166,21 +166,13 @@ contextual =
     , p [] [ text "You can give your list items contextual colors." ]
     , Util.example
         [ ListGroup.ul
-            [ ListGroup.li [ ListGroup.success ] [ text "List Item 1" ]
-            , ListGroup.li [ ListGroup.info ] [ text "List Item 2" ]
-            , ListGroup.li [ ListGroup.warning ] [ text "List Item 3" ]
-            , ListGroup.li [ ListGroup.danger ] [ text "List Item 4" ]
-            ]
+            (contextualOptions ListGroup.li)
         ]
     , Util.code contextualCode
     , p [] [ text "Contextual colors also work with actionable items. Note the addtion of the hover styles not present in the previous example." ]
     , Util.example
         [ ListGroup.custom
-            [ ListGroup.button [ ListGroup.success ] [ text "List Item 1" ]
-            , ListGroup.button [ ListGroup.info ] [ text "List Item 2" ]
-            , ListGroup.button [ ListGroup.warning ] [ text "List Item 3" ]
-            , ListGroup.button [ ListGroup.danger ] [ text "List Item 4" ]
-            ]
+            (contextualOptions ListGroup.button)
         ]
     , Util.code contextualActionsCode
     ]
@@ -190,10 +182,14 @@ contextualCode : Html msg
 contextualCode =
     Util.toMarkdownElm """
 ListGroup.ul
-    [ ListGroup.li [ ListGroup.success ] [ text "List Item 1" ]
-    , ListGroup.li [ ListGroup.info ] [ text "List Item 2" ]
-    , ListGroup.li [ ListGroup.warning ] [ text "List Item 3" ]
-    , ListGroup.li [ ListGroup.danger ] [ text "List Item 4" ]
+    [ ListGroup.li [ ListGroup.primary ] [ text "Primary" ]
+    , ListGroup.li [ ListGroup.secondary ] [ text "Secondary" ]
+    , ListGroup.li [ ListGroup.success ] [ text "Success" ]
+    , ListGroup.li [ ListGroup.info ] [ text "Info" ]
+    , ListGroup.li [ ListGroup.warning ] [ text "Warning" ]
+    , ListGroup.li [ ListGroup.danger ] [ text "Danger" ]
+    , ListGroup.li [ ListGroup.light ] [ text "Light" ]
+    , ListGroup.li [ ListGroup.dark ] [ text "Dark" ]
     ]
 """
 
@@ -202,12 +198,31 @@ contextualActionsCode : Html msg
 contextualActionsCode =
     Util.toMarkdownElm """
 ListGroup.custom
-    [ ListGroup.button [ ListGroup.success ] [ text "List Item 1" ]
-    , ListGroup.button [ ListGroup.info ] [ text "List Item 2" ]
-    , ListGroup.button [ ListGroup.warning ] [ text "List Item 3" ]
-    , ListGroup.button [ ListGroup.danger ] [ text "List Item 4" ]
+    [ ListGroup.button [ ListGroup.primary ] [ text "Primary" ]
+    , ListGroup.button [ ListGroup.secondary ] [ text "Secondary" ]
+    , ListGroup.button [ ListGroup.success ] [ text "Success" ]
+    , ListGroup.button [ ListGroup.info ] [ text "Info" ]
+    , ListGroup.button [ ListGroup.warning ] [ text "Warning" ]
+    , ListGroup.button [ ListGroup.danger ] [ text "Danger" ]
+    , ListGroup.button [ ListGroup.light ] [ text "Light" ]
+    , ListGroup.button [ ListGroup.dark ] [ text "Dark" ]
     ]
 """
+
+contextualOptions
+    : (List (ListGroup.ItemOption msg) -> List (Html msg) -> a)
+    -> List a
+contextualOptions fn =
+    [ fn [ ListGroup.primary ] [ text "Primary" ]
+    , fn [ ListGroup.secondary ] [ text "Secondary" ]
+    , fn [ ListGroup.success ] [ text "Success" ]
+    , fn [ ListGroup.info ] [ text "Info" ]
+    , fn [ ListGroup.warning ] [ text "Warning" ]
+    , fn [ ListGroup.danger ] [ text "Danger" ]
+    , fn [ ListGroup.light ] [ text "Light" ]
+    , fn [ ListGroup.dark ] [ text "Dark" ]
+    ]
+
 
 
 badges : List (Html msg)
@@ -218,17 +233,17 @@ badges =
     , Util.example
         [ ListGroup.ul
             [ ListGroup.li
-                [ ListGroup.attrs [ class "justify-content-between" ] ]
+                [ ListGroup.attrs [ class "justify-content-between d-flex align-items-center" ] ]
                 [ text "List item 1"
                 , Badge.pillSuccess [] [ text "14" ]
                 ]
             , ListGroup.li
-                [ ListGroup.attrs [ class "justify-content-between" ] ]
+                [ ListGroup.attrs [ class "justify-content-between d-flex align-items-center" ] ]
                 [ text "List item 2"
                 , Badge.pillSuccess [] [ text "1" ]
                 ]
             , ListGroup.li
-                [ ListGroup.attrs [ class "justify-content-between" ]
+                [ ListGroup.attrs [ class "justify-content-between d-flex align-items-center" ]
                 , ListGroup.success
                 ]
                 [ text "List item 3"
@@ -245,17 +260,17 @@ badgesCode =
     Util.toMarkdownElm """
 ListGroup.ul
     [ ListGroup.li
-        [ ListGroup.attrs [ class "justify-content-between" ] ]
+        [ ListGroup.attrs [ class "justify-content-between d-flex align-items-center" ] ]
         [ text "List item 1"
         , Badge.pill [] [ text "14" ]
         ]
     , ListGroup.li
-        [ ListGroup.attrs [ class "justify-content-between" ] ]
+        [ ListGroup.attrs [ class "justify-content-between d-flex align-items-center" ] ]
         [ text "List item 2"
         , Badge.pill [] [ text "1" ]
         ]
     , ListGroup.li
-        [ ListGroup.attrs [ class "justify-content-between" ]
+        [ ListGroup.attrs [ class "justify-content-between d-flex align-items-center" ]
         , ListGroup.success
         ]
         [ text "List item 3"
