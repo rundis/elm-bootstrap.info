@@ -100,6 +100,7 @@ example state =
             [ text "Open modal" ]
         , Modal.config CloseModal
             |> Modal.small
+            |> Modal.hideOnBackdropClick True
             |> Modal.h3 [] [ text "Modal header" ]
             |> Modal.body [] [ p [] [ text "This is a modal for you !" ] ]
             |> Modal.footer []
@@ -177,6 +178,7 @@ view model =
             [ text "Open modal"]
         , Modal.config CloseModal
             |> Modal.small
+            |> Modal.hideOnBackdropClick True
             |> Modal.h3 [] [ text "Modal header" ]
             |> Modal.body [] [ p [] [ text "This is a modal for you !"] ]
             |> Modal.footer []
