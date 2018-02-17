@@ -33,7 +33,7 @@ type Msg
 initialState : State
 initialState =
     { exampleState = Accordion.initialState
-    , advancedState = Accordion.initialState
+    , advancedState = Accordion.initialStateCardOpen "card2"
     }
 
 
@@ -115,10 +115,10 @@ type alias Model =
         { accordionState = Accordion.state }
 
 
--- Initialize the accordion state in your init function
+-- Initialize the accordion state in your init function. Here we start with card2 opened!
 
 init: (Model, Cmd Msg)
-    ( { accordionState = Accordion.initialState }, Cmd.none )
+    ( { accordionState = Accordion.initialStateCardOpen "card2" }, Cmd.none )
 
 
 -- To step the view state of the accordion forward, you'll need a msg

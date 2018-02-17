@@ -71,13 +71,13 @@ controls =
                 |> Fieldset.legend [] [ text "Radio buttons" ]
                 |> Fieldset.children
                     (Radio.radioList "myradios"
-                        [ Radio.create [] "Option one"
-                        , Radio.create [] "Option two"
-                        , Radio.create [ Radio.disabled True ] "I'm disabled"
+                        [ Radio.create [ Radio.id "rd1" ] "Option one"
+                        , Radio.create [ Radio.id "rd2" ] "Option two"
+                        , Radio.create [ Radio.id "rd3", Radio.disabled True ] "I'm disabled"
                         ]
                     )
                 |> Fieldset.view
-            , Checkbox.checkbox [] "Check me out"
+            , Checkbox.checkbox [ Checkbox.id "checkout" ] "Check me out"
             , Button.button [ Button.primary ] [ text "Submit" ]
             ]
         ]
@@ -133,13 +133,13 @@ Form.form []
         |> Fieldset.legend [] [ text "Radio buttons" ]
         |> Fieldset.children
             ( Radio.radioList "myradios"
-                [ Radio.create [] "Option one"
-                , Radio.create [] "Option two"
-                , Radio.create [ Radio.disabled True] "I'm disabled"
+                [ Radio.create [ Radio.id "rd1" ] "Option one"
+                , Radio.create [ Radio.id "rd2" ] "Option two"
+                , Radio.create [ Radio.id "rd3", Radio.disabled True ] "I'm disabled"
                 ]
             )
         |> Fieldset.view
-    , Checkbox.checkbox [] "Check me out"
+    , Checkbox.checkbox [ Checkbox.id "checkout" ] "Check me out"
     , Button.button [ Button.primary] [ text "Submit" ]
     ]
 """
@@ -318,7 +318,7 @@ grid =
                     ]
                 , Form.row []
                     [ Form.col [ Col.offsetSm2, Col.sm10 ]
-                        [ Checkbox.checkbox [] "Check me" ]
+                        [ Checkbox.checkbox [ Checkbox.id "checkout-grid" ] "Check me" ]
                     ]
                 , Form.row [ Row.rightSm ]
                     [ Form.col [ Col.sm2 ]
@@ -353,7 +353,7 @@ Grid.container []
             ]
         , Form.row []
             [ Form.col [ Col.offsetSm2, Col.sm10 ]
-                [ Checkbox.checkbox [] "Check me" ]
+                [ Checkbox.checkbox [ Checkbox.id "checkout-grid" ] "Check me" ]
             ]
         , Form.row [ Row.rightSm ]
             [ Form.col [ Col.sm2 ]
@@ -414,15 +414,16 @@ columnSizing =
     , Util.example
         [ Grid.row []
             [ Grid.col [ Col.xs2 ]
-                [ Input.text [ Input.attrs [ placeholder ".col-2"] ] ]
+                [ Input.text [ Input.attrs [ placeholder ".col-2" ] ] ]
             , Grid.col [ Col.xs3 ]
-                [ Input.text [ Input.attrs [ placeholder ".col-3"] ] ]
+                [ Input.text [ Input.attrs [ placeholder ".col-3" ] ] ]
             , Grid.col [ Col.xs4 ]
-                [ Input.text [ Input.attrs [ placeholder ".col-4"] ] ]
+                [ Input.text [ Input.attrs [ placeholder ".col-4" ] ] ]
             ]
         ]
     , Util.code columnSizingCode
     ]
+
 
 columnSizingCode : Html msg
 columnSizingCode =
@@ -440,7 +441,7 @@ Grid.row []
 
 help : List (Html msg)
 help =
-    [ h2 [] [ text "Help text"]
+    [ h2 [] [ text "Help text" ]
     , p [] [ text "Provide context relateded help text by using convenience functions in the Form module." ]
     , Util.example
         [ h4 [] [ text "Block level" ]
@@ -450,7 +451,7 @@ help =
         ]
     , Util.code helpCode
     , Util.example
-        [ h4 [] [ text "Inline"]
+        [ h4 [] [ text "Inline" ]
         , Form.formInline []
             [ Form.label [] [ text "Password" ]
             , Input.password [ Input.attrs [ class "mx-sm-3" ] ]
@@ -459,6 +460,7 @@ help =
         ]
     , Util.code helpInlineCode
     ]
+
 
 helpCode : Html msg
 helpCode =
@@ -469,6 +471,7 @@ div []
     , Form.help [] [ text "Your password must be minumum 8 characters" ]
     ]
 """
+
 
 helpInlineCode : Html msg
 helpInlineCode =
@@ -487,39 +490,32 @@ validation =
     , p [] [ text """You can add validation styles to your forms and form elements to provide feedback to your users.""" ]
     , Util.example
         [ Form.form []
-            [ Form.group [ Form.groupSuccess ]
+            [ Form.group []
                 [ Form.label [] [ text "Success" ]
                 , Input.text [ Input.success ]
-                , Form.validationText [] [ text "All good !" ]
+                , Form.validFeedback [] [ text "All good !" ]
                 , Form.help [] [ text "Help text" ]
                 ]
-            , Form.group [ Form.groupWarning ]
-                [ Form.label [] [ text "Warning" ]
-                , Input.text [ Input.warning ]
-                , Form.validationText [] [ text "Hm... are you sure about this ?" ]
-                , Form.help [] [ text "Help text" ]
-                ]
-            , Form.group [ Form.groupDanger ]
+            , Form.group []
                 [ Form.label [] [ text "Danger" ]
                 , Input.text [ Input.danger ]
-                , Form.validationText [] [ text "Something not quite right." ]
+                , Form.invalidFeedback [] [ text "Something not quite right." ]
                 , Form.help [] [ text "Help text" ]
                 ]
-            , Form.group [ Form.groupSuccess ]
+            , Form.group []
                 [ Form.label [] [ text "Select success" ]
-                , Select.select []
+                , Select.select [ Select.success ]
                     [ Select.item [] [ text "Option" ] ]
-                , Form.validationText [] [ text "Excellent choice" ]
+                , Form.validFeedback [] [ text "Excellent choice" ]
                 , Form.help [] [ text "Help text" ]
                 ]
-            , Form.group [ Form.groupDanger ]
+            , Form.group []
                 [ Form.label [] [ text "Danger Area" ]
-                , Textarea.textarea [ Textarea.rows 2 ]
-                , Form.validationText [] [ text "Too much stuff" ]
+                , Textarea.textarea [ Textarea.rows 2, Textarea.danger ]
+                , Form.invalidFeedback [] [ text "Too much stuff" ]
                 , Form.help [] [ text "Help text" ]
                 ]
-
-            , Checkbox.checkbox [ Checkbox.warning ] "Check me"
+            , Checkbox.checkbox [ Checkbox.id "chk-invalid", Checkbox.danger ] "Check me"
             ]
         ]
     , Util.code validationInlineCode
@@ -534,48 +530,46 @@ validation =
             , textLi "For checkboxes, you set the validation state on the checkbox itself."
             ]
         ]
-    , h4 [] [ text  "Validation in horizontal forms"]
+    , h4 [] [ text "Validation in horizontal forms" ]
     , Util.example
         [ Form.form []
-            [ Form.row [ Form.rowSuccess ]
+            [ Form.row []
                 [ Form.colLabel [ Col.sm2 ] [ text "Password" ]
                 , Form.col [ Col.sm10 ]
                     [ Input.password [ Input.success ]
-                    , Form.validationText [] [ text "Nice one !" ]
+                    , Form.validFeedback [] [ text "Nice one !" ]
                     , Form.help [] [ text "Make sure it's kept safe..." ]
                     ]
                 ]
-            , Form.row [ Form.rowDanger ]
+            , Form.row []
                 [ Form.colLabel [ Col.sm2 ] [ text "Password" ]
                 , Form.col [ Col.sm10 ]
                     [ Input.password [ Input.danger ]
-                    , Form.validationText [] [ text "Nice try, but no sigar !" ]
+                    , Form.invalidFeedback [] [ text "Nice try, but no sigar !" ]
                     , Form.help [] [ text "Make sure it's kept safe..." ]
                     ]
                 ]
-            , Form.row [ Form.rowWarning ]
+            , Form.row []
                 [ Form.colLabel [ Col.sm2 ] [ text "Choose carefully" ]
                 , Form.col [ Col.sm10 ]
                     [ Fieldset.config
                         |> Fieldset.children
                             [ Checkbox.checkbox
-                                [ Checkbox.inline ]
+                                [ Checkbox.id "chk-invalid-1", Checkbox.inline ]
                                 "Choose me"
                             , Checkbox.checkbox
-                                [ Checkbox.inline ]
+                                [ Checkbox.id "chk-invalid-2", Checkbox.inline ]
                                 "No me"
                             , Checkbox.checkbox
-                                [ Checkbox.inline]
+                                [ Checkbox.id "chk-invalid-3", Checkbox.inline ]
                                 "Correct choice"
                             ]
                         |> Fieldset.view
                     ]
-
-
                 ]
             ]
         ]
-    , Util.code validationInlineCode
+    , Util.code validationHorizontalCode
     ]
 
 
@@ -583,47 +577,88 @@ validationInlineCode : Html msg
 validationInlineCode =
     Util.toMarkdownElm """
 Form.form []
-    [ Form.group [ Form.groupSuccess ]
+    [ Form.group []
         [ Form.label [] [ text "Success" ]
         , Input.text [ Input.success ]
         , Form.validationText [] [ text "All good !" ]
         , Form.help [] [ text "Help text" ]
         ]
-    , Form.group [ Form.groupWarning ]
+    , Form.group []
         [ Form.label [] [ text "Warning" ]
         , Input.text [ Input.warning ]
         , Form.validationText [] [ text "Hm... are you sure about this ?" ]
         , Form.help [] [ text "Help text" ]
         ]
-    , Form.group [ Form.groupDanger ]
+    , Form.group []
         [ Form.label [] [ text "Danger" ]
         , Input.text [ Input.danger ]
         , Form.validationText [] [ text "Something not quite right." ]
         , Form.help [] [ text "Help text" ]
         ]
-    , Form.group [ Form.groupSuccess ]
+    , Form.group []
         [ Form.label [] [ text "Select success" ]
         , Select.select []
             [ Select.item [] [ text "Option" ] ]
         , Form.validationText [] [ text "Excellent choice" ]
         , Form.help [] [ text "Help text" ]
         ]
-    , Form.group [ Form.groupDanger ]
+    , Form.group []
         [ Form.label [] [ text "Danger Area" ]
         , Textarea.textarea [ Textarea.rows 2 ]
         , Form.validationText [] [ text "Too much stuff" ]
         , Form.help [] [ text "Help text" ]
         ]
 
-    , Checkbox.checkbox [ Checkbox.warning ] "Check me"
+    , Checkbox.checkbox [ Checkbox.id "chk-invalid", Checkbox.warning ] "Check me"
     ]
 """
 
 
+validationHorizontalCode : Html msg
+validationHorizontalCode =
+    Util.toMarkdownElm """
+Form.form []
+    [ Form.row []
+        [ Form.colLabel [ Col.sm2 ] [ text "Password" ]
+        , Form.col [ Col.sm10 ]
+            [ Input.password [ Input.success ]
+            , Form.validFeedback [] [ text "Nice one !" ]
+            , Form.help [] [ text "Make sure it's kept safe..." ]
+            ]
+        ]
+    , Form.row []
+        [ Form.colLabel [ Col.sm2 ] [ text "Password" ]
+        , Form.col [ Col.sm10 ]
+            [ Input.password [ Input.danger ]
+            , Form.invalidFeedback [] [ text "Nice try, but no sigar !" ]
+            , Form.help [] [ text "Make sure it's kept safe..." ]
+            ]
+        ]
+    , Form.row []
+        [ Form.colLabel [ Col.sm2 ] [ text "Choose carefully" ]
+        , Form.col [ Col.sm10 ]
+            [ Fieldset.config
+                |> Fieldset.children
+                    [ Checkbox.checkbox
+                        [ Checkbox.id "chk-invalid-1", Checkbox.inline ]
+                        "Choose me"
+                    , Checkbox.checkbox
+                        [ Checkbox.id "chk-invalid-2", Checkbox.inline ]
+                        "No me"
+                    , Checkbox.checkbox
+                        [ Checkbox.id "chk-invalid-3", Checkbox.inline ]
+                        "Correct choice"
+                    ]
+                |> Fieldset.view
+            ]
+        ]
+    ]
+"""
+
 
 customControls : List (Html msg)
 customControls =
-    [ h2 [] [ text "Custom controls"]
+    [ h2 [] [ text "Custom controls" ]
     , p [] [ text """Bootstrap provides a few custom controls to make std Html Form elements appear a bit nicer across browsers.
                 You can choose to opt in on using custom selects, radios and checkboxes fairly seamlessly""" ]
     , Util.example
@@ -631,18 +666,32 @@ customControls =
             [ Form.group []
                 [ Form.label [] [ text "Custom select" ]
                 , Select.custom []
-                    [ Select.item [] [ text "Item 1"]
-                    , Select.item [] [ text "Item 2"]
+                    [ Select.item [] [ text "Item 1" ]
+                    , Select.item [] [ text "Item 2" ]
+                    ]
+                ]
+            , Form.group []
+                [ Form.label [] [ text "Custom Large Select" ]
+                , Select.custom [ Select.large ]
+                    [ Select.item [] [ text "Item 1" ]
+                    , Select.item [] [ text "Item 2" ]
+                    ]
+                ]
+            , Form.group []
+                [ Form.label [] [ text "Custom Small Select" ]
+                , Select.custom [ Select.small ]
+                    [ Select.item [] [ text "Item 1" ]
+                    , Select.item [] [ text "Item 2" ]
                     ]
                 ]
             , Form.group []
                 [ Form.label [] [ text "Custom radios" ]
                 , Fieldset.config
                     |> Fieldset.children
-                        ( Radio.radioList "customradiogroup"
-                            [ Radio.createCustom [ Radio.inline ] "Radio 1"
-                            , Radio.createCustom [ Radio.inline ] "Radio 2"
-                            , Radio.createCustom [ Radio.inline ] "Radio 3"
+                        (Radio.radioList "customradiogroup"
+                            [ Radio.createCustom [ Radio.id "rdi1", Radio.inline ] "Radio 1"
+                            , Radio.createCustom [ Radio.id "rdi2", Radio.inline ] "Radio 2"
+                            , Radio.createCustom [ Radio.id "rdi3", Radio.inline ] "Radio 3"
                             ]
                         )
                     |> Fieldset.view
@@ -651,19 +700,15 @@ customControls =
                 [ Form.label [] [ text "Custom checkboxes" ]
                 , Fieldset.config
                     |> Fieldset.children
-                        [ Checkbox.custom [ Checkbox.inline ] "Check 1"
-                        , Checkbox.custom [ Checkbox.inline ] "Check 2"
-                        , Checkbox.custom [ Checkbox.inline ] "Check 3"
+                        [ Checkbox.custom [ Checkbox.id "chk1", Checkbox.inline ] "Check 1"
+                        , Checkbox.custom [ Checkbox.id "chk2", Checkbox.inline ] "Check 2"
+                        , Checkbox.custom [ Checkbox.id "chk3", Checkbox.inline ] "Check 3"
                         ]
                     |> Fieldset.view
                 ]
             ]
         ]
     , Util.code customControlsCode
-    , Util.calloutInfo
-        [ p [] [ text """In Elm Bootstrap custom controls are block level by default as opposed to in Twitter Bootstrap 4, where they are inline.
-                         By making them block level by default, they behave just like their non custom counterparts, which is hopefully less confusing !""" ]
-        ]
     ]
 
 
@@ -679,13 +724,27 @@ Form.form []
             ]
         ]
     , Form.group []
+        [ Form.label [] [ text "Custom Large Select" ]
+        , Select.custom [ Select.large ]
+            [ Select.item [] [ text "Item 1" ]
+            , Select.item [] [ text "Item 2" ]
+            ]
+        ]
+    , Form.group []
+        [ Form.label [] [ text "Custom Small Select" ]
+        , Select.custom [ Select.small ]
+            [ Select.item [] [ text "Item 1" ]
+            , Select.item [] [ text "Item 2" ]
+            ]
+        ]
+    , Form.group []
         [ Form.label [] [ text "Custom radios" ]
         , Fieldset.config
             |> Fieldset.children
                 ( Radio.radioList "customradiogroup"
-                    [ Radio.createCustom [ Radio.inline ] "Radio 1"
-                    , Radio.createCustom [ Radio.inline ] "Radio 2"
-                    , Radio.createCustom [ Radio.inline ] "Radio 3"
+                    [ Radio.createCustom [ Radio.id "rdi1", Radio.inline ] "Radio 1"
+                    , Radio.createCustom [ Radio.id "rdi2", Radio.inline ] "Radio 2"
+                    , Radio.createCustom [ Radio.id "rdi3", Radio.inline ] "Radio 3"
                     ]
                 )
             |> Fieldset.view
@@ -694,16 +753,14 @@ Form.form []
         [ Form.label [] [ text "Custom checkboxes" ]
         , Fieldset.config
             |> Fieldset.children
-                [ Checkbox.custom [ Checkbox.inline ] "Check 1"
-                , Checkbox.custom [ Checkbox.inline ] "Check 2"
-                , Checkbox.custom [ Checkbox.inline ] "Check 3"
+                [ Checkbox.custom [ Checkbox.id "chk1", Checkbox.inline ] "Check 1"
+                , Checkbox.custom [ Checkbox.id "chk1", Checkbox.inline ] "Check 2"
+                , Checkbox.custom [ Checkbox.id "chk1", Checkbox.inline ] "Check 3"
                 ]
             |> Fieldset.view
         ]
     ]
 """
-
-
 
 
 textLi : String -> Html msg

@@ -193,13 +193,13 @@ custom state =
                     , style [ ( "width", "30px" ) ]
                     ]
                     []
-                , text " Elm Bootstrap"
+                , text " Elm"
                 ]
             |> Navbar.items
                 [ Navbar.itemLink [ href "javascript:void()" ] [ text "Item 1" ]
                 , Navbar.dropdown
                     { id = "mydropdown"
-                    , toggle = Navbar.dropdownToggle [] [ text "My dropdown" ]
+                    , toggle = Navbar.dropdownToggle [] [ text "Dropdown" ]
                     , items =
                         [ Navbar.dropdownHeader [ text "Heading" ]
                         , Navbar.dropdownItem
