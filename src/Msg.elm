@@ -14,6 +14,7 @@ import Page.Modal as Modal
 import Page.Navbar as PageNav
 import Page.ButtonGroup as ButtonGroup
 import Page.Carousel as Carousel
+import Page.InputGroup as InputGroup
 
 import Bootstrap.Popover as Popover
 
@@ -32,6 +33,7 @@ type Msg
     | PageNavMsg PageNav.Msg
     | ButtonGroupMsg ButtonGroup.State
     | CarouselMsg Carousel.Msg
+    | InputGroupMsg InputGroup.Msg
 
     -- Popover related
     | PopBasic Popover.State

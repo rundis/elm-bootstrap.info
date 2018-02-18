@@ -56,6 +56,7 @@ type alias Model =
     , popLeft : Pop.State
     , popRight : Pop.State
     , carouselState : Carousel.State
+    , inputGroupState : InputGroup.State
     }
 
 
@@ -96,6 +97,7 @@ init location =
                 , popTop = Pop.initialState
                 , popBottom = Pop.initialState
                 , carouselState = Carousel.initialState
+                , inputGroupState = InputGroup.initialState
                 }
     in
         ( model, Cmd.batch [ navbarCmd, urlCmd, Cmd.map PageNavMsg pageNavCmd ] )
@@ -121,6 +123,7 @@ subscriptions model =
         , Sub.map PageNavMsg <| PageNav.subscriptions model.pageNavState
         , Sub.map CarouselMsg <| Carousel.subscriptions model.carouselState
         , Sub.map ModalMsg <| Modal.subscriptions model.modalState
+        , Sub.map InputGroupMsg <| InputGroup.subscriptions model.inputGroupState
         ]
 
 
@@ -181,6 +184,9 @@ update msg model =
 
         CarouselMsg subMsg ->
             ({ model | carouselState = Carousel.update subMsg model.carouselState}, Cmd.none)
+
+        InputGroupMsg subMsg ->
+            ({ model | inputGroupState = InputGroup.update subMsg model.inputGroupState}, Cmd.none)
 
 
 urlUpdate : Navigation.Location -> Model -> ( Model, Cmd Msg )
@@ -305,7 +311,9 @@ viewPage model =
                 Form.view |> wrap
 
             Route.InputGroup ->
-                InputGroup.view |> wrap
+                InputGroup.view model.inputGroupState
+                    |> mapPageContent InputGroupMsg
+                    |> wrap
 
             Route.Popover ->
                 Popover.view model
