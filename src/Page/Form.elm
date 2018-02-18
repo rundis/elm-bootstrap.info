@@ -561,7 +561,7 @@ validation =
                                 [ Checkbox.id "chk-invalid-2", Checkbox.inline ]
                                 "No me"
                             , Checkbox.checkbox
-                                [ Checkbox.id "chk-invalid-3", Checkbox.inline ]
+                                [ Checkbox.id "chk-invalid-3", Checkbox.inline, Checkbox.success, Checkbox.checked True ]
                                 "Correct choice"
                             ]
                         |> Fieldset.view
@@ -577,39 +577,34 @@ validationInlineCode : Html msg
 validationInlineCode =
     Util.toMarkdownElm """
 Form.form []
-    [ Form.group []
-        [ Form.label [] [ text "Success" ]
-        , Input.text [ Input.success ]
-        , Form.validationText [] [ text "All good !" ]
-        , Form.help [] [ text "Help text" ]
+    [ Form.form []
+        [ Form.group []
+            [ Form.label [] [ text "Success" ]
+            , Input.text [ Input.success ]
+            , Form.validFeedback [] [ text "All good !" ]
+            , Form.help [] [ text "Help text" ]
+            ]
+        , Form.group []
+            [ Form.label [] [ text "Danger" ]
+            , Input.text [ Input.danger ]
+            , Form.invalidFeedback [] [ text "Something not quite right." ]
+            , Form.help [] [ text "Help text" ]
+            ]
+        , Form.group []
+            [ Form.label [] [ text "Select success" ]
+            , Select.select [ Select.success ]
+                [ Select.item [] [ text "Option" ] ]
+            , Form.validFeedback [] [ text "Excellent choice" ]
+            , Form.help [] [ text "Help text" ]
+            ]
+        , Form.group []
+            [ Form.label [] [ text "Danger Area" ]
+            , Textarea.textarea [ Textarea.rows 2, Textarea.danger ]
+            , Form.invalidFeedback [] [ text "Too much stuff" ]
+            , Form.help [] [ text "Help text" ]
+            ]
+        , Checkbox.checkbox [ Checkbox.id "chk-invalid", Checkbox.danger ] "Check me"
         ]
-    , Form.group []
-        [ Form.label [] [ text "Warning" ]
-        , Input.text [ Input.warning ]
-        , Form.validationText [] [ text "Hm... are you sure about this ?" ]
-        , Form.help [] [ text "Help text" ]
-        ]
-    , Form.group []
-        [ Form.label [] [ text "Danger" ]
-        , Input.text [ Input.danger ]
-        , Form.validationText [] [ text "Something not quite right." ]
-        , Form.help [] [ text "Help text" ]
-        ]
-    , Form.group []
-        [ Form.label [] [ text "Select success" ]
-        , Select.select []
-            [ Select.item [] [ text "Option" ] ]
-        , Form.validationText [] [ text "Excellent choice" ]
-        , Form.help [] [ text "Help text" ]
-        ]
-    , Form.group []
-        [ Form.label [] [ text "Danger Area" ]
-        , Textarea.textarea [ Textarea.rows 2 ]
-        , Form.validationText [] [ text "Too much stuff" ]
-        , Form.help [] [ text "Help text" ]
-        ]
-
-    , Checkbox.checkbox [ Checkbox.id "chk-invalid", Checkbox.warning ] "Check me"
     ]
 """
 
@@ -646,7 +641,7 @@ Form.form []
                         [ Checkbox.id "chk-invalid-2", Checkbox.inline ]
                         "No me"
                     , Checkbox.checkbox
-                        [ Checkbox.id "chk-invalid-3", Checkbox.inline ]
+                        [ Checkbox.id "chk-invalid-3", Checkbox.inline, Checkbox.success, Checkbox.checked True ]
                         "Correct choice"
                     ]
                 |> Fieldset.view
