@@ -6,6 +6,7 @@ import Bootstrap.Tab as Tab
 import Util
 import Bootstrap.Form as Form
 import Bootstrap.Form.Radio as Radio
+import Bootstrap.Utilities.Spacing as Spacing
 
 
 type alias State =
@@ -114,7 +115,7 @@ tabs state =
                     { id = "tabItem1"
                     , link = Tab.link [] [ text "Tab 1" ]
                     , pane =
-                        Tab.pane [ class "mt-3" ]
+                        Tab.pane [ Spacing.mt3 ]
                             [ h4 [] [ text "Tab 1 Heading" ]
                             , p [] [ text "Contents of tab 1." ]
                             ]
@@ -123,7 +124,7 @@ tabs state =
                     { id = "tabItem2"
                     , link = Tab.link [] [ text "Tab 2" ]
                     , pane =
-                        Tab.pane [ class "mt-3" ]
+                        Tab.pane [ Spacing.mt3 ]
                             [ h4 [] [ text "Tab 2 Heading" ]
                             , p [] [ text "This is something completely different." ]
                             ]
@@ -178,7 +179,7 @@ view model =
                 { id = "tabItem1"
                 , link = Tab.link [] [ text "Tab 1" ]
                 , pane =
-                    Tab.pane [ class "mt-3" ]
+                    Tab.pane [ Spacing.mt3 ]
                         [ h4 [] [ text "Tab 1 Heading" ]
                         , p [] [ text "Contents of tab 1." ]
                         ]
@@ -187,7 +188,7 @@ view model =
                 { id = "tabItem2"
                 , link = Tab.link [] [ text "Tab 2" ]
                 , pane =
-                    Tab.pane [ class "mt-3" ]
+                    Tab.pane [ Spacing.mt3 ]
                         [ h4 [] [ text "Tab 2 Heading" ]
                         , p [] [ text "This is something completely different." ]
                         ]
@@ -210,7 +211,7 @@ pills state =
                     { id = "pillItem1"
                     , link = Tab.link [] [ text "Tab 1" ]
                     , pane =
-                        Tab.pane [ class "mt-3" ]
+                        Tab.pane [ Spacing.mt3 ]
                             [ h4 [] [ text "Tab 1 Heading" ]
                             , p [] [ text "Contents of tab 1." ]
                             ]
@@ -219,7 +220,7 @@ pills state =
                     { id = "pillItem2"
                     , link = Tab.link [] [ text "Tab 2" ]
                     , pane =
-                        Tab.pane [ class "mt-3" ]
+                        Tab.pane [ Spacing.mt3 ]
                             [ h4 [] [ text "Tab 2 Heading" ]
                             , p [] [ text "This is something completely different." ]
                             ]
@@ -261,7 +262,7 @@ Tab.config TabMsg
             { id = "pillItem1"
             , link = Tab.link [] [ text "Tab 1" ]
             , pane =
-                Tab.pane [ class "mt-3" ]
+                Tab.pane [ Spacing.mt3 ]
                     [ h4 [] [ text "Tab 1 Heading" ]
                     , p [] [ text "Contents of tab 1." ]
                     ]
@@ -270,7 +271,7 @@ Tab.config TabMsg
             { id = "pillItem2"
             , link = Tab.link [] [ text "Tab 2" ]
             , pane =
-                Tab.pane [ class "mt-3" ]
+                Tab.pane [ Spacing.mt3 ]
                     [ h4 [] [ text "Tab 2 Heading" ]
                     , p [] [ text "This is something completely different." ]
                     ]
@@ -292,7 +293,7 @@ animated state =
                     { id = "animatedTabItem1"
                     , link = Tab.link [] [ text "Tab 1" ]
                     , pane =
-                        Tab.pane [ class "mt-3" ]
+                        Tab.pane [ Spacing.mt3 ]
                             [ h4 [] [ text "Tab 1 Heading" ]
                             , p [] [ text "Contents of tab 1." ]
                             ]
@@ -301,7 +302,7 @@ animated state =
                     { id = "animatedTabItem2"
                     , link = Tab.link [] [ text "Tab 2" ]
                     , pane =
-                        Tab.pane [ class "mt-3" ]
+                        Tab.pane [ Spacing.mt3 ]
                             [ h4 [] [ text "Tab 2 Heading" ]
                             , p [] [ text "This is something completely different." ]
                             ]
@@ -339,7 +340,7 @@ view model =
                 { id = "animatedTabItem1"
                 , link = Tab.link [] [ text "Tab 1" ]
                 , pane =
-                    Tab.pane [ class "mt-3" ]
+                    Tab.pane [ Spacing.mt3 ]
                         [ h4 [] [ text "Tab 1 Heading" ]
                         , p [] [ text "Contents of tab 1." ]
                         ]
@@ -348,7 +349,7 @@ view model =
                 { id = "animatedTabItem2"
                 , link = Tab.link [] [ text "Tab 2" ]
                 , pane =
-                    Tab.pane [ class "mt-3" ]
+                    Tab.pane [ Spacing.mt3 ]
                         [ h4 [] [ text "Tab 2 Heading" ]
                         , p [] [ text "This is something completely different." ]
                         ]
@@ -408,7 +409,7 @@ customized state =
                         { id = "customizedTabItem1"
                         , link = Tab.link [] [ text "First tab" ]
                         , pane =
-                            Tab.pane [ class "mt-3" ]
+                            Tab.pane [ Spacing.mt3 ]
                                 [ p [] [ text """Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit. Keytar helvetica VHS salvia yr, vero magna velit sapiente labore stumptown. Vegan fanny pack odio cillum wes anderson 8-bit, sustainable jean shorts beard ut DIY ethical culpa terry richardson biodiesel. Art party scenester stumptown, tumblr butcher vero sint qui sapiente accusamus tattooed echo park.""" ]
                                 ]
                         }
@@ -416,7 +417,7 @@ customized state =
                         { id = "customizedTabItem2"
                         , link = Tab.link [] [ text "Second tab" ]
                         , pane =
-                            Tab.pane [ class "mt-3" ]
+                            Tab.pane [ Spacing.mt3 ]
                                 [ h4 [] [ text "Tab 2 Heading" ]
                                 , p [] [ text "This is something completely different." ]
                                 ]
@@ -425,7 +426,7 @@ customized state =
                         { id = "customizedTabItem3"
                         , link = Tab.link [] [ text "Yet another tab" ]
                         , pane =
-                            Tab.pane [ class "mt-3" ]
+                            Tab.pane [ Spacing.mt3 ]
                                 [ h4 [] [ text "Tab 3 Heading" ]
                                 , p [] [ text "Nothing to see here." ]
                                 ]

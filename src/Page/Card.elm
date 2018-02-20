@@ -7,6 +7,7 @@ import Bootstrap.Card.Block as Block
 import Bootstrap.Button as Button
 import Bootstrap.ListGroup as ListGroup
 import Bootstrap.Text as Text
+import Bootstrap.Utilities.Spacing as Spacing
 import Util
 
 
@@ -41,7 +42,7 @@ example =
         [ Card.config [ Card.attrs [ style [ ( "width", "20rem" ) ] ] ]
             |> Card.header [ class "text-center" ]
                 [ img [ src "assets/images/elm-bootstrap.svg" ] []
-                , h3 [ class "mt-2" ] [ text "Custom Card Header" ]
+                , h3 [ Spacing.mt2 ] [ text "Custom Card Header" ]
                 ]
             |> Card.block []
                 [ Block.titleH4 [] [ text "'Card' title" ]
@@ -61,7 +62,7 @@ exampleCode =
 Card.config [ Card.attrs [ style [ ( "width", "20rem" ) ] ] ]
     |> Card.header [ class "text-center" ]
         [ img [ src "assets/images/elm-bootstrap.svg" ] []
-        , h3 [ class "mt-2" ] [ text "Custom Card Header" ]
+        , h3 [ Spacing.mt2 ] [ text "Custom Card Header" ]
         ]
     |> Card.block []
         [ Block.titleH4 [] [ text "Card title" ]
@@ -323,7 +324,7 @@ backgrounds =
         [ Card.config
             [ Card.primary
             , Card.textColor Text.white
-            , Card.attrs [ class "mb-3" ]
+            , Card.attrs [ Spacing.mb3 ]
             ]
             |> Card.header [] [ text "Header"]
             |> Card.block [] [ quote ]
@@ -331,7 +332,7 @@ backgrounds =
         , Card.config
             [ Card.secondary
             , Card.textColor Text.white
-            , Card.attrs [ class "mb-3" ]
+            , Card.attrs [ Spacing.mb3 ]
             ]
             |> Card.header [] [ text "Header"]
             |> Card.block [] [ quote ]
@@ -339,7 +340,7 @@ backgrounds =
         , Card.config
             [ Card.success
             , Card.textColor Text.white
-            , Card.attrs [ class "mb-3" ]
+            , Card.attrs [ Spacing.mb3 ]
             ]
             |> Card.header [] [ text "Header"]
             |> Card.block [] [ quote ]
@@ -347,7 +348,7 @@ backgrounds =
         , Card.config
             [ Card.info
             , Card.textColor Text.white
-            , Card.attrs [ class "mb-3" ]
+            , Card.attrs [ Spacing.mb3 ]
             ]
             |> Card.header [] [ text "Header"]
             |> Card.block [] [ quote ]
@@ -355,7 +356,7 @@ backgrounds =
         , Card.config
             [ Card.warning
             , Card.textColor Text.white
-            , Card.attrs [ class "mb-3" ]
+            , Card.attrs [ Spacing.mb3 ]
             ]
             |> Card.header [] [ text "Header"]
             |> Card.block [] [ quote ]
@@ -363,7 +364,7 @@ backgrounds =
         , Card.config
             [ Card.danger
             , Card.textColor Text.white
-            , Card.attrs [ class "mb-3" ]
+            , Card.attrs [ Spacing.mb3 ]
             ]
             |> Card.header [] [ text "Header"]
             |> Card.block [] [ quote ]
@@ -371,7 +372,7 @@ backgrounds =
         , Card.config
             [ Card.light
             , Card.textColor Text.primary
-            , Card.attrs [ class "mb-3" ]
+            , Card.attrs [ Spacing.mb3 ]
             ]
             |> Card.header [] [ text "Header"]
             |> Card.block [] [ quote ]
@@ -379,7 +380,7 @@ backgrounds =
         , Card.config
             [ Card.dark
             , Card.textColor Text.white
-            , Card.attrs [ class "mb-3" ]
+            , Card.attrs [ Spacing.mb3 ]
             ]
             |> Card.header [] [ text "Header"]
             |> Card.block [] [ quote ]
@@ -409,7 +410,7 @@ div []
     [ Card.config
         [ Card.primary
         , Card.textColor Text.white
-        , Card.attrs [ class "mb-3" ]
+        , Card.attrs [ Spacing.mb3 ]
         ]
         |> Card.header [] [ text "Header"]
         |> Card.block [] [ quote ]
@@ -417,7 +418,7 @@ div []
     , Card.config
         [ Card.secondary
         , Card.textColor Text.white
-        , Card.attrs [ class "mb-3" ]
+        , Card.attrs [ Spacing.mb3 ]
         ]
         |> Card.header [] [ text "Header"]
         |> Card.block [] [ quote ]
@@ -425,7 +426,7 @@ div []
     , Card.config
         [ Card.success
         , Card.textColor Text.white
-        , Card.attrs [ class "mb-3" ]
+        , Card.attrs [ Spacing.mb3 ]
         ]
         |> Card.header [] [ text "Header"]
         |> Card.block [] [ quote ]
@@ -433,7 +434,7 @@ div []
     , Card.config
         [ Card.info
         , Card.textColor Text.white
-        , Card.attrs [ class "mb-3" ]
+        , Card.attrs [ Spacing.mb3 ]
         ]
         |> Card.header [] [ text "Header"]
         |> Card.block [] [ quote ]
@@ -441,7 +442,7 @@ div []
     , Card.config
         [ Card.warning
         , Card.textColor Text.white
-        , Card.attrs [ class "mb-3" ]
+        , Card.attrs [ Spacing.mb3 ]
         ]
         |> Card.header [] [ text "Header"]
         |> Card.block [] [ quote ]
@@ -449,7 +450,7 @@ div []
     , Card.config
         [ Card.danger
         , Card.textColor Text.white
-        , Card.attrs [ class "mb-3" ]
+        , Card.attrs [ Spacing.mb3 ]
         ]
         |> Card.header [] [ text "Header"]
         |> Card.block [] [ quote ]
@@ -457,7 +458,7 @@ div []
     , Card.config
         [ Card.light
         , Card.textColor Text.primary
-        , Card.attrs [ class "mb-3" ]
+        , Card.attrs [ Spacing.mb3 ]
         ]
         |> Card.header [] [ text "Header"]
         |> Card.block [] [ quote ]
@@ -465,7 +466,7 @@ div []
     , Card.config
         [ Card.dark
         , Card.textColor Text.white
-        , Card.attrs [ class "mb-3" ]
+        , Card.attrs [ Spacing.mb3 ]
         ]
         |> Card.header [] [ text "Header"]
         |> Card.block [] [ quote ]
@@ -504,34 +505,34 @@ outlines =
     [ h2 [] [ text "Outline cards" ]
     , p [] [ text "in need of a colored card, but not the hefty background colors they bring? Use the outline* functions to give cards a colored border" ]
     , Util.example
-        [ Card.config [ Card.outlinePrimary, Card.attrs [ class "mb-3" ] ]
+        [ Card.config [ Card.outlinePrimary, Card.attrs [ Spacing.mb3 ] ]
             |> Card.header [] [ text "Header" ]
             |> Card.block [] [ quote ]
             |> Card.view
-        , Card.config [ Card.outlineSecondary, Card.attrs [ class "mb-3" ] ]
+        , Card.config [ Card.outlineSecondary, Card.attrs [ Spacing.mb3 ] ]
             |> Card.header [] [ text "Header" ]
             |> Card.block [] [ quote ]
             |> Card.view
-        , Card.config [ Card.outlineSuccess, Card.attrs [ class "mb-3" ] ]
+        , Card.config [ Card.outlineSuccess, Card.attrs [ Spacing.mb3 ] ]
             |> Card.header [] [ text "Header" ]
             |> Card.block [] [ quote ]
             |> Card.view
-        , Card.config [ Card.outlineInfo, Card.attrs [ class "mb-3" ] ]
+        , Card.config [ Card.outlineInfo, Card.attrs [ Spacing.mb3 ] ]
             |> Card.header [] [ text "Header" ]
             |> Card.block [] [ quote ]
             |> Card.view
-        , Card.config [ Card.outlineWarning, Card.attrs [ class "mb-3" ] ]
+        , Card.config [ Card.outlineWarning, Card.attrs [ Spacing.mb3 ] ]
             |> Card.header [] [ text "Header" ]
             |> Card.block [] [ quote ]
             |> Card.view
-        , Card.config [ Card.outlineDanger, Card.attrs [ class "mb-3" ] ]
+        , Card.config [ Card.outlineDanger, Card.attrs [ Spacing.mb3 ] ]
             |> Card.header [] [ text "Header" ]
             |> Card.block [] [ quote ]
             |> Card.view
         , Card.config
             [ Card.outlineLight
             , Card.textColor Text.primary
-            , Card.attrs [ class "mb-3" ]
+            , Card.attrs [ Spacing.mb3 ]
             ]
             |> Card.header [] [ text "Header" ]
             |> Card.block [] [ quote ]
@@ -549,34 +550,34 @@ outlinesCode : Html msg
 outlinesCode =
     Util.toMarkdownElm """
 Util.example
-    [ Card.config [ Card.outlinePrimary, Card.attrs [ class "mb-3" ] ]
+    [ Card.config [ Card.outlinePrimary, Card.attrs [ Spacing.mb3 ] ]
         |> Card.header [] [ text "Header" ]
         |> Card.block [] [ quote ]
         |> Card.view
-    , Card.config [ Card.outlineSecondary, Card.attrs [ class "mb-3" ] ]
+    , Card.config [ Card.outlineSecondary, Card.attrs [ Spacing.mb3 ] ]
         |> Card.header [] [ text "Header" ]
         |> Card.block [] [ quote ]
         |> Card.view
-    , Card.config [ Card.outlineSuccess, Card.attrs [ class "mb-3" ] ]
+    , Card.config [ Card.outlineSuccess, Card.attrs [ Spacing.mb3 ] ]
         |> Card.header [] [ text "Header" ]
         |> Card.block [] [ quote ]
         |> Card.view
-    , Card.config [ Card.outlineInfo, Card.attrs [ class "mb-3" ] ]
+    , Card.config [ Card.outlineInfo, Card.attrs [ Spacing.mb3 ] ]
         |> Card.header [] [ text "Header" ]
         |> Card.block [] [ quote ]
         |> Card.view
-    , Card.config [ Card.outlineWarning, Card.attrs [ class "mb-3" ] ]
+    , Card.config [ Card.outlineWarning, Card.attrs [ Spacing.mb3 ] ]
         |> Card.header [] [ text "Header" ]
         |> Card.block [] [ quote ]
         |> Card.view
-    , Card.config [ Card.outlineDanger, Card.attrs [ class "mb-3" ] ]
+    , Card.config [ Card.outlineDanger, Card.attrs [ Spacing.mb3 ] ]
         |> Card.header [] [ text "Header" ]
         |> Card.block [] [ quote ]
         |> Card.view
     , Card.config
         [ Card.outlineLight
         , Card.textColor Text.primary
-        , Card.attrs [ class "mb-3" ]
+        , Card.attrs [ Spacing.mb3 ]
         ]
         |> Card.header [] [ text "Header" ]
         |> Card.block [] [ quote ]

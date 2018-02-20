@@ -3,6 +3,7 @@ module Page.Button exposing (view)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Bootstrap.Button as Button
+import Bootstrap.Utilities.Spacing as Spacing
 import Util
 
 
@@ -28,14 +29,14 @@ examples =
     , p [] [ text "Bootstrap includes six predefined button styles, each serving its own semantic purpose." ]
     , Util.example
         [ Button.button [ Button.primary ] [ text "Primary" ]
-        , Button.button [ Button.secondary, Button.attrs [ class "ml-1" ] ] [ text "Secondary" ]
-        , Button.button [ Button.success, Button.attrs [ class "ml-1" ] ] [ text "Success" ]
-        , Button.button [ Button.info, Button.attrs [ class "ml-1" ] ] [ text "Info" ]
-        , Button.button [ Button.warning, Button.attrs [ class "ml-1" ] ] [ text "Warning" ]
-        , Button.button [ Button.danger, Button.attrs [ class "ml-1" ] ] [ text "Danger" ]
-        , Button.button [ Button.light, Button.attrs [ class "ml-1" ] ] [ text "Light" ]
-        , Button.button [ Button.dark, Button.attrs [ class "ml-1" ] ] [ text "Dark" ]
-        , Button.button [ Button.roleLink, Button.attrs [ class "ml-1" ] ] [ text "Link" ]
+        , Button.button [ Button.secondary, Button.attrs [ Spacing.ml1 ] ] [ text "Secondary" ]
+        , Button.button [ Button.success, Button.attrs [ Spacing.ml1 ] ] [ text "Success" ]
+        , Button.button [ Button.info, Button.attrs [ Spacing.ml1 ] ] [ text "Info" ]
+        , Button.button [ Button.warning, Button.attrs [ Spacing.ml1 ] ] [ text "Warning" ]
+        , Button.button [ Button.danger, Button.attrs [ Spacing.ml1 ] ] [ text "Danger" ]
+        , Button.button [ Button.light, Button.attrs [ Spacing.ml1 ] ] [ text "Light" ]
+        , Button.button [ Button.dark, Button.attrs [ Spacing.ml1 ] ] [ text "Dark" ]
+        , Button.button [ Button.roleLink, Button.attrs [ Spacing.ml1 ] ] [ text "Link" ]
         ]
     , Util.code examplesCode
     ]
@@ -46,14 +47,14 @@ examplesCode =
     Util.toMarkdownElm """
 div []
     [ Button.button [ Button.primary ] [ text "Primary" ]
-    , Button.button [ Button.secondary, Button.attrs [ class "ml-1"] ] [ text "Secondary" ]
-    , Button.button [ Button.success, Button.attrs [ class "ml-1"] ] [ text "Success" ]
-    , Button.button [ Button.info, Button.attrs [ class "ml-1"] ] [ text "Info" ]
-    , Button.button [ Button.warning, Button.attrs [ class "ml-1"] ] [ text "Warning" ]
-    , Button.button [ Button.danger, Button.attrs [ class "ml-1"] ] [ text "Danger" ]
-    , Button.button [ Button.light, Button.attrs [ class "ml-1"] ] [ text "Light" ]
-    , Button.button [ Button.dark, Button.attrs [ class "ml-1"] ] [ text "Dark" ]
-    , Button.button [ Button.roleLink, Button.attrs [ class "ml-1"] ] [ text "Link" ]
+    , Button.button [ Button.secondary, Button.attrs [ Spacing.ml1 ] ] [ text "Secondary" ]
+    , Button.button [ Button.success, Button.attrs [ Spacing.ml1 ] ] [ text "Success" ]
+    , Button.button [ Button.info, Button.attrs [ Spacing.ml1 ] ] [ text "Info" ]
+    , Button.button [ Button.warning, Button.attrs [ Spacing.ml1 ] ] [ text "Warning" ]
+    , Button.button [ Button.danger, Button.attrs [ Spacing.ml1 ] ] [ text "Danger" ]
+    , Button.button [ Button.light, Button.attrs [ Spacing.ml1 ] ] [ text "Light" ]
+    , Button.button [ Button.dark, Button.attrs [ Spacing.ml1 ] ] [ text "Dark" ]
+    , Button.button [ Button.roleLink, Button.attrs [ Spacing.ml1 ] ] [ text "Link" ]
     ]
 """
 
@@ -82,13 +83,13 @@ outlines =
     , p [] [ text "In need of a button, but not the hefty background colors they bring? Use the outline* functions to remove all background images and colors on any button." ]
     , Util.example
         [ Button.button [ Button.outlinePrimary ] [ text "Primary" ]
-        , Button.button [ Button.outlineSecondary, Button.attrs [ class "ml-1" ] ] [ text "Secondary" ]
-        , Button.button [ Button.outlineSuccess, Button.attrs [ class "ml-1" ] ] [ text "Success" ]
-        , Button.button [ Button.outlineInfo, Button.attrs [ class "ml-1" ] ] [ text "Info" ]
-        , Button.button [ Button.outlineWarning, Button.attrs [ class "ml-1" ] ] [ text "Warning" ]
-        , Button.button [ Button.outlineDanger, Button.attrs [ class "ml-1" ] ] [ text "Danger" ]
-        , Button.button [ Button.outlineLight, Button.attrs [ class "ml-1" ] ] [ text "Light" ]
-        , Button.button [ Button.outlineDark, Button.attrs [ class "ml-1" ] ] [ text "Dark" ]
+        , Button.button [ Button.outlineSecondary, Button.attrs [ Spacing.ml1 ] ] [ text "Secondary" ]
+        , Button.button [ Button.outlineSuccess, Button.attrs [ Spacing.ml1 ] ] [ text "Success" ]
+        , Button.button [ Button.outlineInfo, Button.attrs [ Spacing.ml1 ] ] [ text "Info" ]
+        , Button.button [ Button.outlineWarning, Button.attrs [ Spacing.ml1 ] ] [ text "Warning" ]
+        , Button.button [ Button.outlineDanger, Button.attrs [ Spacing.ml1 ] ] [ text "Danger" ]
+        , Button.button [ Button.outlineLight, Button.attrs [ Spacing.ml1 ] ] [ text "Light" ]
+        , Button.button [ Button.outlineDark, Button.attrs [ Spacing.ml1 ] ] [ text "Dark" ]
         ]
     , Util.code outlinesCode
     ]
@@ -99,13 +100,13 @@ outlinesCode =
     Util.toMarkdownElm """
 div []
     [ Button.button [ Button.outlinePrimary ] [ text "Primary" ]
-    , Button.button [ Button.outlineSecondary, Button.attrs [ class "ml-1" ] ] [ text "Secondary" ]
-    , Button.button [ Button.outlineSuccess, Button.attrs [ class "ml-1" ] ] [ text "Success" ]
-    , Button.button [ Button.outlineInfo, Button.attrs [ class "ml-1" ] ] [ text "Info" ]
-    , Button.button [ Button.outlineWarning, Button.attrs [ class "ml-1" ] ] [ text "Warning" ]
-    , Button.button [ Button.outlineDanger, Button.attrs [ class "ml-1" ] ] [ text "Danger" ]
-    , Button.button [ Button.outlineLight, Button.attrs [ class "ml-1" ] ] [ text "Light" ]
-    , Button.button [ Button.outlineDark, Button.attrs [ class "ml-1" ] ] [ text "Dark" ]
+    , Button.button [ Button.outlineSecondary, Button.attrs [ Spacing.ml1 ] ] [ text "Secondary" ]
+    , Button.button [ Button.outlineSuccess, Button.attrs [ Spacing.ml1 ] ] [ text "Success" ]
+    , Button.button [ Button.outlineInfo, Button.attrs [ Spacing.ml1 ] ] [ text "Info" ]
+    , Button.button [ Button.outlineWarning, Button.attrs [ Spacing.ml1 ] ] [ text "Warning" ]
+    , Button.button [ Button.outlineDanger, Button.attrs [ Spacing.ml1 ] ] [ text "Danger" ]
+    , Button.button [ Button.outlineLight, Button.attrs [ Spacing.ml1 ] ] [ text "Light" ]
+    , Button.button [ Button.outlineDark, Button.attrs [ Spacing.ml1 ] ] [ text "Dark" ]
     ]
 """
 
@@ -119,7 +120,7 @@ sizes =
             [ Button.large, Button.primary ]
             [ text "Large button " ]
         , Button.button
-            [ Button.small, Button.primary, Button.attrs [ class "ml-1" ] ]
+            [ Button.small, Button.primary, Button.attrs [ Spacing.ml1 ] ]
             [ text "Small button" ]
         ]
     , Util.code sizesCode
@@ -140,7 +141,7 @@ div []
     [ Button.button
         [ Button.large, Button.primary ] [ text "Large button" ]
     , Button.button
-        [ Button.small, Button.primary, Button.attrs [ class "ml-1"] ]
+        [ Button.small, Button.primary, Button.attrs [ Spacing.ml1 ] ]
         [ text "Small button" ]
     ]
 """
@@ -162,13 +163,13 @@ disableds =
     , Util.example
         [ Button.button [ Button.primary, Button.disabled True ] [ text "Button" ]
         , Button.button
-            [ Button.secondary, Button.disabled True, Button.attrs [ class "ml-1" ] ]
+            [ Button.secondary, Button.disabled True, Button.attrs [ Spacing.ml1 ] ]
             [ text "Button" ]
         , Button.linkButton
-            [ Button.primary, Button.disabled True, Button.attrs [ class "ml-1", href "#" ] ]
+            [ Button.primary, Button.disabled True, Button.attrs [ Spacing.ml1, href "#" ] ]
             [ text "Link" ]
         , Button.linkButton
-            [ Button.secondary, Button.disabled True, Button.attrs [ class "ml-1", href "#" ] ]
+            [ Button.secondary, Button.disabled True, Button.attrs [ Spacing.ml1, href "#" ] ]
             [ text "Link" ]
         ]
     , Util.code disabledsCode
@@ -185,13 +186,13 @@ disabledsCode =
 div []
     [ Button.button [ Button.primary, Button.disabled True ] [ text "Button" ]
     , Button.button
-        [ Button.secondary, Button.disabled True, Button.attrs [ class "ml-1" ] ]
+        [ Button.secondary, Button.disabled True, Button.attrs [ Spacing.ml1 ] ]
         [ text "Button" ]
     , Button.linkButton
-        [ Button.primary, Button.disabled True, Button.attrs [ class "ml-1", href "#" ] ]
+        [ Button.primary, Button.disabled True, Button.attrs [ Spacing.ml1, href "#" ] ]
         [ text "Link" ]
     , Button.linkButton
-        [ Button.secondary, Button.disabled True, Button.attrs [ class "ml-1", href "#" ] ]
+        [ Button.secondary, Button.disabled True, Button.attrs [ Spacing.ml1, href "#" ] ]
         [ text "Link" ]
     ]
 """

@@ -4,6 +4,7 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Bootstrap.Button as Button
 import Bootstrap.ButtonGroup as ButtonGroup
+import Bootstrap.Utilities.Spacing as Spacing
 import Util
 
 
@@ -269,8 +270,8 @@ toolbar =
     , Util.example
         [ ButtonGroup.toolbar []
             [ ButtonGroup.buttonGroupItem [] bunchOfButtons
-            , ButtonGroup.buttonGroupItem [ ButtonGroup.attrs [ class "ml-1"] ] bunchOfButtons
-            , ButtonGroup.buttonGroupItem [ ButtonGroup.attrs [ class "ml-3"] ] bunchOfButtons
+            , ButtonGroup.buttonGroupItem [ ButtonGroup.attrs [ Spacing.ml1 ] ] bunchOfButtons
+            , ButtonGroup.buttonGroupItem [ ButtonGroup.attrs [ Spacing.ml1 ] ] bunchOfButtons
             ]
         ]
     , Util.code toolbarCode
@@ -289,8 +290,8 @@ toolbarCode =
     Util.toMarkdownElm """
 ButtonGroup.toolbar []
     [ ButtonGroup.buttonGroupItem [] bunchOfButtons
-    , ButtonGroup.buttonGroupItem [ ButtonGroup.attrs [ class "ml-1"] ] bunchOfButtons
-    , ButtonGroup.buttonGroupItem [ ButtonGroup.attrs [ class "ml-3"] ] bunchOfButtons
+    , ButtonGroup.buttonGroupItem [ ButtonGroup.attrs [ Spacing.ml1 ] ] bunchOfButtons
+    , ButtonGroup.buttonGroupItem [ ButtonGroup.attrs [ Spacing.ml1 ] ] bunchOfButtons
     ]
 """
 

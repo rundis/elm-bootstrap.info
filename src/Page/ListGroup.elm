@@ -5,6 +5,9 @@ import Html.Attributes exposing (..)
 import Util
 import Bootstrap.ListGroup as ListGroup
 import Bootstrap.Badge as Badge
+import Bootstrap.Utilities.Spacing as Spacing
+import Bootstrap.Utilities.Flex as Flex
+import Bootstrap.Utilities.Size as Size
 
 
 view : Util.PageContent msg
@@ -233,17 +236,17 @@ badges =
     , Util.example
         [ ListGroup.ul
             [ ListGroup.li
-                [ ListGroup.attrs [ class "justify-content-between d-flex align-items-center" ] ]
+                [ ListGroup.attrs [ Flex.block, Flex.justifyBetween, Flex.alignItemsCenter ] ]
                 [ text "List item 1"
                 , Badge.pillSuccess [] [ text "14" ]
                 ]
             , ListGroup.li
-                [ ListGroup.attrs [ class "justify-content-between d-flex align-items-center" ] ]
+                [ ListGroup.attrs [ Flex.block, Flex.justifyBetween, Flex.alignItemsCenter ] ]
                 [ text "List item 2"
                 , Badge.pillSuccess [] [ text "1" ]
                 ]
             , ListGroup.li
-                [ ListGroup.attrs [ class "justify-content-between d-flex align-items-center" ]
+                [ ListGroup.attrs [ Flex.block, Flex.justifyBetween, Flex.alignItemsCenter ]
                 , ListGroup.success
                 ]
                 [ text "List item 3"
@@ -260,17 +263,17 @@ badgesCode =
     Util.toMarkdownElm """
 ListGroup.ul
     [ ListGroup.li
-        [ ListGroup.attrs [ class "justify-content-between d-flex align-items-center" ] ]
+        [ ListGroup.attrs [ Flex.block, Flex.justifyBetween, Flex.alignItemsCenter ] ]
         [ text "List item 1"
         , Badge.pill [] [ text "14" ]
         ]
     , ListGroup.li
-        [ ListGroup.attrs [ class "justify-content-between d-flex align-items-center" ] ]
+        [ ListGroup.attrs [ Flex.block, Flex.justifyBetween, Flex.alignItemsCenter ] ]
         [ text "List item 2"
         , Badge.pill [] [ text "1" ]
         ]
     , ListGroup.li
-        [ ListGroup.attrs [ class "justify-content-between d-flex align-items-center" ]
+        [ ListGroup.attrs [ Flex.block, Flex.justifyBetween, Flex.alignItemsCenter ]
         , ListGroup.success
         ]
         [ text "List item 3"
@@ -289,42 +292,31 @@ custom =
         [ ListGroup.custom
             [ ListGroup.anchor
                 [ ListGroup.active
-                , ListGroup.attrs
-                    [ href "#"
-                    , class "flex-column align-items-start"
-                    ]
+                , ListGroup.attrs [ href "#", Flex.col, Flex.alignItemsStart ]
                 ]
-                [ div [ class "d-flex w-100 justify-content-between" ]
-                    [ h5 [ class "mb-1" ] [ text "List group heading" ]
+                [ div [ Flex.block, Flex.justifyBetween, Size.w100 ]
+                    [ h5 [ Spacing.mb1 ] [ text "List group heading" ]
                     , small [] [ text "3 days ago" ]
                     ]
-                , p [ class "mb-1" ] [ text "Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit." ]
+                , p [ Spacing.mb1 ] [ text "Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit." ]
                 , small [] [ text "Oh yea that's neat" ]
                 ]
             , ListGroup.anchor
-                [ ListGroup.attrs
-                    [ href "#"
-                    , class "flex-column align-items-start"
-                    ]
-                ]
-                [ div [ class "d-flex w-100 justify-content-between" ]
-                    [ h5 [ class "mb-1" ] [ text "List group heading" ]
+                [ ListGroup.attrs [ href "#", Flex.col, Flex.alignItemsStart ] ]
+                [ div [ Flex.block, Flex.justifyBetween, Size.w100 ]
+                    [ h5 [ Spacing.mb1 ] [ text "List group heading" ]
                     , small [] [ text "3 days ago" ]
                     ]
-                , p [ class "mb-1" ] [ text "Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit." ]
+                , p [ Spacing.mb1 ] [ text "Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit." ]
                 , small [] [ text "Oh yea that's neat" ]
                 ]
             , ListGroup.anchor
-                [ ListGroup.attrs
-                    [ href "#"
-                    , class "flex-column align-items-start"
-                    ]
-                ]
-                [ div [ class "d-flex w-100 justify-content-between" ]
-                    [ h5 [ class "mb-1" ] [ text "List group heading" ]
+                [ ListGroup.attrs [ href "#", Flex.col, Flex.alignItemsStart ] ]
+                [ div [ Flex.block, Flex.justifyBetween, Size.w100 ]
+                    [ h5 [ Spacing.mb1 ] [ text "List group heading" ]
                     , small [] [ text "3 days ago" ]
                     ]
-                , p [ class "mb-1" ] [ text "Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit." ]
+                , p [ Spacing.mb1 ] [ text "Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit." ]
                 , small [] [ text "Oh yea that's neat" ]
                 ]
             ]
@@ -339,42 +331,31 @@ customCode =
 ListGroup.custom
     [ ListGroup.anchor
         [ ListGroup.active
-        , ListGroup.attrs
-            [ href "#"
-            , class "flex-column align-items-start"
-            ]
+        , ListGroup.attrs [ href "#", Flex.col, Flex.alignItemsStart ]
         ]
-        [ div [ class "d-flex w-100 justify-content-between" ]
-            [ h5 [ class "mb-1" ] [ text "List group heading" ]
+        [ div [ Flex.block, Flex.justifyBetween, Size.w100 ]
+            [ h5 [ Spacing.mb1 ] [ text "List group heading" ]
             , small [] [ text "3 days ago" ]
             ]
-        , p [ class "mb-1" ] [ text "Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit." ]
+        , p [ Spacing.mb1 ] [ text "Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit." ]
         , small [] [ text "Oh yea that's neat" ]
         ]
     , ListGroup.anchor
-        [ ListGroup.attrs
-            [ href "#"
-            , class "flex-column align-items-start"
-            ]
-        ]
-        [ div [ class "d-flex w-100 justify-content-between" ]
-            [ h5 [ class "mb-1" ] [ text "List group heading" ]
+        [ ListGroup.attrs [ href "#", Flex.col, Flex.alignItemsStart ] ]
+        [ div [ Flex.block, Flex.justifyBetween, Size.w100 ]
+            [ h5 [ Spacing.mb1 ] [ text "List group heading" ]
             , small [] [ text "3 days ago" ]
             ]
-        , p [ class "mb-1" ] [ text "Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit." ]
+        , p [ Spacing.mb1 ] [ text "Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit." ]
         , small [] [ text "Oh yea that's neat" ]
         ]
     , ListGroup.anchor
-        [ ListGroup.attrs
-            [ href "#"
-            , class "flex-column align-items-start"
-            ]
-        ]
-        [ div [ class "d-flex w-100 justify-content-between" ]
-            [ h5 [ class "mb-1" ] [ text "List group heading" ]
+        [ ListGroup.attrs [ href "#", Flex.col, Flex.alignItemsStart ] ]
+        [ div [ Flex.block, Flex.justifyBetween, Size.w100 ]
+            [ h5 [ Spacing.mb1 ] [ text "List group heading" ]
             , small [] [ text "3 days ago" ]
             ]
-        , p [ class "mb-1" ] [ text "Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit." ]
+        , p [ Spacing.mb1 ] [ text "Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit." ]
         , small [] [ text "Oh yea that's neat" ]
         ]
     ]

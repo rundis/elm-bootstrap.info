@@ -15,6 +15,7 @@ import Bootstrap.Navbar as Navbar
 import Bootstrap.Form.Input as Input
 import Bootstrap.Button as Button
 import Bootstrap.Grid as Grid
+import Bootstrap.Utilities.Spacing as Spacing
 import Util
 
 type alias State =
@@ -220,11 +221,11 @@ custom state =
                     [ Input.text [ Input.attrs [placeholder "enter" ]]
                     , Button.button
                         [ Button.success
-                        , Button.attrs [ class "ml-sm-2"]
+                        , Button.attrs [ Spacing.ml2Sm]
                         ]
                         [ text "Search"]
                     ]
-                , Navbar.textItem [ class "muted ml-sm-2" ] [ text "Text"]
+                , Navbar.textItem [ Spacing.ml2Sm, class "muted" ] [ text "Text"]
                 ]
             |> Navbar.view state.customState
         ]
@@ -272,16 +273,16 @@ Grid.container [] -- Wrap in a container to center the navbar
                     ]
                 }
             ]
-        |> Navbar.customItems              -- Add custom items
+        |> Navbar.customItems
             [ Navbar.formItem []
-                [ Input.text [ Input.attr <| placeholder "enter" ]
+                [ Input.text [ Input.attrs [placeholder "enter" ]]
                 , Button.button
                     [ Button.success
-                    , Button.attrs [ class "ml-sm-2"]
+                    , Button.attrs [ Spacing.ml2Sm]
                     ]
                     [ text "Search"]
                 ]
-            , Navbar.textItem [ class "muted ml-sm-2" ] [ text "Text"]
+            , Navbar.textItem [ Spacing.ml2Sm, class "muted" ] [ text "Text"]
             ]
         |> Navbar.view state.customState
     ]
