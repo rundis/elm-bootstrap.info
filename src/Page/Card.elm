@@ -507,27 +507,27 @@ outlines =
     , Util.example
         [ Card.config [ Card.outlinePrimary, Card.attrs [ Spacing.mb3 ] ]
             |> Card.header [] [ text "Header" ]
-            |> Card.block [] [ quote ]
+            |> Card.block [ Block.textColor Text.primary ] [ quote ]
             |> Card.view
         , Card.config [ Card.outlineSecondary, Card.attrs [ Spacing.mb3 ] ]
             |> Card.header [] [ text "Header" ]
-            |> Card.block [] [ quote ]
+            |> Card.block [ Block.textColor Text.secondary ] [ quote ]
             |> Card.view
         , Card.config [ Card.outlineSuccess, Card.attrs [ Spacing.mb3 ] ]
             |> Card.header [] [ text "Header" ]
-            |> Card.block [] [ quote ]
+            |> Card.block [ Block.textColor Text.success ] [ quote ]
             |> Card.view
         , Card.config [ Card.outlineInfo, Card.attrs [ Spacing.mb3 ] ]
             |> Card.header [] [ text "Header" ]
-            |> Card.block [] [ quote ]
+            |> Card.block [ Block.textColor Text.info ] [ quote ]
             |> Card.view
         , Card.config [ Card.outlineWarning, Card.attrs [ Spacing.mb3 ] ]
             |> Card.header [] [ text "Header" ]
-            |> Card.block [] [ quote ]
+            |> Card.block [ Block.textColor Text.warning ] [ quote ]
             |> Card.view
         , Card.config [ Card.outlineDanger, Card.attrs [ Spacing.mb3 ] ]
             |> Card.header [] [ text "Header" ]
-            |> Card.block [] [ quote ]
+            |> Card.block [ Block.textColor Text.danger ] [ quote ]
             |> Card.view
         , Card.config
             [ Card.outlineLight
@@ -552,27 +552,27 @@ outlinesCode =
 Util.example
     [ Card.config [ Card.outlinePrimary, Card.attrs [ Spacing.mb3 ] ]
         |> Card.header [] [ text "Header" ]
-        |> Card.block [] [ quote ]
+        |> Card.block [ Block.textColor Text.primary ] [ quote ]
         |> Card.view
     , Card.config [ Card.outlineSecondary, Card.attrs [ Spacing.mb3 ] ]
         |> Card.header [] [ text "Header" ]
-        |> Card.block [] [ quote ]
+        |> Card.block [ Block.textColor Text.secondary ] [ quote ]
         |> Card.view
     , Card.config [ Card.outlineSuccess, Card.attrs [ Spacing.mb3 ] ]
         |> Card.header [] [ text "Header" ]
-        |> Card.block [] [ quote ]
+        |> Card.block [ Block.textColor Text.success ] [ quote ]
         |> Card.view
     , Card.config [ Card.outlineInfo, Card.attrs [ Spacing.mb3 ] ]
         |> Card.header [] [ text "Header" ]
-        |> Card.block [] [ quote ]
+        |> Card.block [ Block.textColor Text.info ] [ quote ]
         |> Card.view
     , Card.config [ Card.outlineWarning, Card.attrs [ Spacing.mb3 ] ]
         |> Card.header [] [ text "Header" ]
-        |> Card.block [] [ quote ]
+        |> Card.block [ Block.textColor Text.warning ] [ quote ]
         |> Card.view
     , Card.config [ Card.outlineDanger, Card.attrs [ Spacing.mb3 ] ]
         |> Card.header [] [ text "Header" ]
-        |> Card.block [] [ quote ]
+        |> Card.block [ Block.textColor Text.danger ] [ quote ]
         |> Card.view
     , Card.config
         [ Card.outlineLight
