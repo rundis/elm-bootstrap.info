@@ -4,6 +4,7 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Util
 import Bootstrap.Badge as Badge
+import Bootstrap.Utilities.Spacing as Spacing
 
 
 view : Util.PageContent msg
@@ -55,13 +56,13 @@ contextual =
     , p [] [ text "Use the following functions to change the appearance of a badge." ]
     , Util.example
         [ Badge.badgePrimary [ ] [ text "Primary" ]
-        , Badge.badgeSecondary [ class "ml-1" ] [ text "Secondary" ]
-        , Badge.badgeSuccess [ class "ml-1" ] [ text "Success" ]
-        , Badge.badgeInfo [ class "ml-1" ] [ text "Info" ]
-        , Badge.badgeWarning [ class "ml-1" ] [ text "Warning" ]
-        , Badge.badgeDanger [ class "ml-1" ] [ text "Danger" ]
-        , Badge.badgeLight [ class "ml-1" ] [ text "Light" ]
-        , Badge.badgeDark [ class "ml-1" ] [ text "Dark" ]
+        , Badge.badgeSecondary [ Spacing.ml1 ] [ text "Secondary" ]
+        , Badge.badgeSuccess [ Spacing.ml1 ] [ text "Success" ]
+        , Badge.badgeInfo [ Spacing.ml1 ] [ text "Info" ]
+        , Badge.badgeWarning [ Spacing.ml1 ] [ text "Warning" ]
+        , Badge.badgeDanger [ Spacing.ml1 ] [ text "Danger" ]
+        , Badge.badgeLight [ Spacing.ml1 ] [ text "Light" ]
+        , Badge.badgeDark [ Spacing.ml1 ] [ text "Dark" ]
         ]
     , div [ class "highlight" ]
         [ contextualCode ]
@@ -74,13 +75,13 @@ contextualCode =
 ```elm
 div []
     [ Badge.badgePrimary [ ] [ text "Primary" ]
-    , Badge.badgeSecondary [ class "ml-1" ] [ text "Secondary" ]
-    , Badge.badgeSuccess [ class "ml-1" ] [ text "Success" ]
-    , Badge.badgeInfo [ class "ml-1" ] [ text "Info" ]
-    , Badge.badgeWarning [ class "ml-1" ] [ text "Warning" ]
-    , Badge.badgeDanger [ class "ml-1" ] [ text "Danger" ]
-    , Badge.badgeLight [ class "ml-1" ] [ text "Light" ]
-    , Badge.badgeDark [ class "ml-1" ] [ text "Dark" ]
+    , Badge.badgeSecondary [ Spacing.ml1 ] [ text "Secondary" ]
+    , Badge.badgeSuccess [ Spacing.ml1 ] [ text "Success" ]
+    , Badge.badgeInfo [ Spacing.ml1 ] [ text "Info" ]
+    , Badge.badgeWarning [ Spacing.ml1 ] [ text "Warning" ]
+    , Badge.badgeDanger [ Spacing.ml1 ] [ text "Danger" ]
+    , Badge.badgeLight [ Spacing.ml1 ] [ text "Light" ]
+    , Badge.badgeDark [ Spacing.ml1 ] [ text "Dark" ]
     ]
 
 ```
@@ -93,13 +94,13 @@ pills =
     , p [] [ text "To create more rounded badges use the pill* functions." ]
     , Util.example
         [ Badge.pillPrimary [ ] [ text "Primary" ]
-        , Badge.pillSecondary [ class "ml-1" ] [ text "Secondary" ]
-        , Badge.pillSuccess [ class "ml-1" ] [ text "Success" ]
-        , Badge.pillInfo [ class "ml-1" ] [ text "Info" ]
-        , Badge.pillWarning [ class "ml-1" ] [ text "Warning" ]
-        , Badge.pillDanger [ class "ml-1" ] [ text "Danger" ]
-        , Badge.pillLight [ class "ml-1" ] [ text "Light" ]
-        , Badge.pillDark [ class "ml-1" ] [ text "Dark" ]
+        , Badge.pillSecondary [ Spacing.ml1 ] [ text "Secondary" ]
+        , Badge.pillSuccess [ Spacing.ml1 ] [ text "Success" ]
+        , Badge.pillInfo [ Spacing.ml1 ] [ text "Info" ]
+        , Badge.pillWarning [ Spacing.ml1 ] [ text "Warning" ]
+        , Badge.pillDanger [ Spacing.ml1 ] [ text "Danger" ]
+        , Badge.pillLight [ Spacing.ml1 ] [ text "Light" ]
+        , Badge.pillDark [ Spacing.ml1 ] [ text "Dark" ]
         ]
     , div [ class "highlight" ]
         [ pillsCode ]
@@ -112,13 +113,13 @@ pillsCode =
 ```elm
 div []
     [ Badge.pillPrimary [ ] [ text "Primary" ]
-    , Badge.pillSecondary [ class "ml-1" ] [ text "Secondary" ]
-    , Badge.pillSuccess [ class "ml-1" ] [ text "Success" ]
-    , Badge.pillInfo [ class "ml-1" ] [ text "Info" ]
-    , Badge.pillWarning [ class "ml-1" ] [ text "Warning" ]
-    , Badge.pillDanger [ class "ml-1" ] [ text "Danger" ]
-    , Badge.pillLight [ class "ml-1" ] [ text "Light" ]
-    , Badge.pillDark [ class "ml-1" ] [ text "Dark" ]
+    , Badge.pillSecondary [ Spacing.ml1 ] [ text "Secondary" ]
+    , Badge.pillSuccess [ Spacing.ml1 ] [ text "Success" ]
+    , Badge.pillInfo [ Spacing.ml1 ] [ text "Info" ]
+    , Badge.pillWarning [ Spacing.ml1 ] [ text "Warning" ]
+    , Badge.pillDanger [ Spacing.ml1 ] [ text "Danger" ]
+    , Badge.pillLight [ Spacing.ml1 ] [ text "Light" ]
+    , Badge.pillDark [ Spacing.ml1 ] [ text "Dark" ]
     ]
 
 ```
