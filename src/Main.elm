@@ -30,12 +30,8 @@ import Page.GettingStarted as GettingStarted
 import Util
 import Bootstrap.Grid as Grid
 import Bootstrap.Grid.Col as Col
-
-
 import Msg exposing (..)
 import Bootstrap.Popover as Pop
-
-
 
 
 type alias Model =
@@ -57,6 +53,7 @@ type alias Model =
     , popRight : Pop.State
     , carouselState : Carousel.State
     , inputGroupState : InputGroup.State
+    , alertState : Alert.State
     }
 
 
@@ -67,10 +64,9 @@ init location =
             case (Route.decode location) of
                 Just (Route.Tab (Just hash)) ->
                     Tab.initialStateWithHash hash
+
                 _ ->
                     Tab.initialState
-
-
 
         ( navbarState, navbarCmd ) =
             Navbar.initialState NavbarMsg
@@ -98,6 +94,7 @@ init location =
                 , popBottom = Pop.initialState
                 , carouselState = Carousel.initialState
                 , inputGroupState = InputGroup.initialState
+                , alertState = Alert.initialState
                 }
     in
         ( model, Cmd.batch [ navbarCmd, urlCmd, Cmd.map PageNavMsg pageNavCmd ] )
@@ -124,6 +121,7 @@ subscriptions model =
         , Sub.map CarouselMsg <| Carousel.subscriptions model.carouselState
         , Sub.map ModalMsg <| Modal.subscriptions model.modalState
         , Sub.map InputGroupMsg <| InputGroup.subscriptions model.inputGroupState
+        , Sub.map AlertMsg <| Alert.subscriptions model.alertState
         ]
 
 
@@ -163,7 +161,6 @@ update msg model =
         ButtonGroupMsg state ->
             ( { model | buttonGroupState = state }, Cmd.none )
 
-
         PageNavMsg subMsg ->
             ( { model | pageNavState = PageNav.update subMsg model.pageNavState }, Cmd.none )
 
@@ -183,10 +180,13 @@ update msg model =
             ( { model | popBottom = state }, Cmd.none )
 
         CarouselMsg subMsg ->
-            ({ model | carouselState = Carousel.update subMsg model.carouselState}, Cmd.none)
+            ( { model | carouselState = Carousel.update subMsg model.carouselState }, Cmd.none )
 
         InputGroupMsg subMsg ->
-            ({ model | inputGroupState = InputGroup.update subMsg model.inputGroupState}, Cmd.none)
+            ( { model | inputGroupState = InputGroup.update subMsg model.inputGroupState }, Cmd.none )
+
+        AlertMsg subMsg ->
+            ( { model | alertState = Alert.update subMsg model.alertState }, Cmd.none )
 
 
 urlUpdate : Navigation.Location -> Model -> ( Model, Cmd Msg )
@@ -199,16 +199,16 @@ urlUpdate location model =
             ( { model | route = route }, updateAnalytics <| Route.encode route )
 
 
-port updateAnalytics: String -> Cmd msg
+port updateAnalytics : String -> Cmd msg
 
 
 view : Model -> Html Msg
 view model =
     div
         []
-        ( [ viewMenu model ]
-         ++ viewPage model
-         ++ [ viewFooter ]
+        ([ viewMenu model ]
+            ++ viewPage model
+            ++ [ viewFooter ]
         )
 
 
@@ -220,7 +220,7 @@ viewMenu model =
         |> Navbar.withAnimation
         |> Navbar.lightCustomClass "bd-navbar"
         |> Navbar.brand
-            ( Route.clickTo Route.Home PageChange )
+            (Route.clickTo Route.Home PageChange)
             [ text "Elm Bootstrap" ]
         |> Navbar.items
             [ menuLink "Getting started" Route.GettingStarted
@@ -232,14 +232,15 @@ viewMenu model =
 menuLink : String -> Route.Route -> Navbar.Item Msg
 menuLink name route =
     Navbar.itemLink
-        (Route.clickTo route PageChange )
+        (Route.clickTo route PageChange)
         [ text name ]
 
 
 viewPage : Model -> List (Html Msg)
 viewPage model =
     let
-        wrap = wrapPageLayout model
+        wrap =
+            wrapPageLayout model
     in
         case model.route of
             Route.Home ->
@@ -264,7 +265,8 @@ viewPage model =
                     |> wrap
 
             Route.Alert ->
-                Alert.view
+                Alert.view model.alertState
+                    |> mapPageContent AlertMsg
                     |> wrap
 
             Route.Badge ->
@@ -342,7 +344,7 @@ wrapPageLayout model pageContent =
                 [ Col.xs12, Col.md2, Col.pushMd10, Col.attrs [ class "bd-sidebar" ] ]
                 [ viewSidebar model ]
             , Grid.col
-                [ Col.xs12, Col.md10, Col.pullMd2, Col.attrs [ class "bd-content"] ]
+                [ Col.xs12, Col.md10, Col.pullMd2, Col.attrs [ class "bd-content" ] ]
                 pageContent.children
             ]
         ]
@@ -359,40 +361,40 @@ viewSidebar model =
             [ div [ class "bd-toc-item active" ]
                 [ text "Modules"
                 , ul [ class "nav bd-sidenav" ]
-                   [ link Route.Accordion "Accordion"
-                   , link Route.Alert "Alert"
-                   , link Route.Badge "Badge"
-                   , link Route.Button "Button"
-                   , link Route.ButtonGroup "Button group"
-                   , link Route.Card "Card"
-                   , link Route.Carousel "Carousel"
-                   , link Route.Dropdown "Dropdown"
-                   , link Route.Form "Form"
-                   , link Route.Grid "Grid"
-                   , link Route.InputGroup "Input group"
-                   , link Route.ListGroup "List group"
-                   , link Route.Modal "Modal"
-                   , link Route.Navbar "Navbar"
-                   , link Route.Popover "Popover"
-                   , link Route.Progress "Progress"
-                   , link (Route.Tab Nothing) "Tab"
-                   , link Route.Table "Table"
-                   ]
+                    [ link Route.Accordion "Accordion"
+                    , link Route.Alert "Alert"
+                    , link Route.Badge "Badge"
+                    , link Route.Button "Button"
+                    , link Route.ButtonGroup "Button group"
+                    , link Route.Card "Card"
+                    , link Route.Carousel "Carousel"
+                    , link Route.Dropdown "Dropdown"
+                    , link Route.Form "Form"
+                    , link Route.Grid "Grid"
+                    , link Route.InputGroup "Input group"
+                    , link Route.ListGroup "List group"
+                    , link Route.Modal "Modal"
+                    , link Route.Navbar "Navbar"
+                    , link Route.Popover "Popover"
+                    , link Route.Progress "Progress"
+                    , link (Route.Tab Nothing) "Tab"
+                    , link Route.Table "Table"
+                    ]
                 ]
             ]
+
 
 sidebarLink : Route.Route -> String -> Bool -> Html Msg
 sidebarLink page label isActive =
     li
         (if isActive then
-             [ class "active bd-sidenav-active" ]
-           else
-                []
+            [ class "active bd-sidenav-active" ]
+         else
+            []
         )
-        [ a (Route.clickTo page PageChange )
+        [ a (Route.clickTo page PageChange)
             [ text label ]
         ]
-
 
 
 viewFooter : Html Msg
@@ -401,11 +403,11 @@ viewFooter =
         [ div [ class "container" ]
             [ ul [ class "bd-footer-links" ]
                 [ li []
-                    [ i [class "fa fa-github", attribute "aria-hidden" "true" ] []
+                    [ i [ class "fa fa-github", attribute "aria-hidden" "true" ] []
                     , externalLink Globals.githubDocsUrl " Docs"
                     ]
                 , li []
-                    [ i [class "fa fa-github", attribute "aria-hidden" "true" ] []
+                    [ i [ class "fa fa-github", attribute "aria-hidden" "true" ] []
                     , externalLink Globals.githubSourceUrl " Source"
                     ]
                 , li []
@@ -414,19 +416,18 @@ viewFooter =
                 , li []
                     [ externalLink Globals.bootstrapUrl "Bootstrap 4" ]
                 ]
-
-            , p [] [ text "Created by Magnus Rundberget "
-                   , i [class "fa fa-twitter", attribute "aria-hidden" "true" ] []
-                   , externalLink "https://twitter.com/mrundberget" "mrundberget"
-                   , text " with help from contributor heroes !"
-                   ]
+            , p []
+                [ text "Created by Magnus Rundberget "
+                , i [ class "fa fa-twitter", attribute "aria-hidden" "true" ] []
+                , externalLink "https://twitter.com/mrundberget" "mrundberget"
+                , text " with help from contributor heroes !"
+                ]
             , p [] [ text "The code is licensed BSD-3 and the documentation is licensed CC BY 3.0." ]
-
             ]
         ]
 
 
 externalLink : String -> String -> Html msg
 externalLink url label =
-    a [ href url, target "_blank"]
+    a [ href url, target "_blank" ]
         [ text label ]
