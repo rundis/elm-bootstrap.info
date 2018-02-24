@@ -523,11 +523,8 @@ validation =
         [ h3 [] [ text "How it works" ]
         , p [] [ text "Here's how it works:" ]
         , ul []
-            [ textLi "Add a validation state to a form group, checkbox or radio."
-            , textLi "Any label or form control within the group will receive the validation style."
-            , textLi "Any validationText (which is optional of course), will also receive the validation style."
-            , textLi "For inputs (and textarea) you can also add a validation state icon to the control itself, by manually setting the validation state on the control."
-            , textLi "For checkboxes, you set the validation state on the checkbox itself."
+            [ textLi "Inputs, selects, checkboxes and radios have a .succees or .danger function (this basically sets the `.valid` or `.invalid` class for the element). Giving the input element an appropriate colored outline."
+            , textLi "If you want to provide additional feedback use the _.validFeedback or _.invalidFeedback functions."
             ]
         ]
     , h4 [] [ text "Validation in horizontal forms" ]
