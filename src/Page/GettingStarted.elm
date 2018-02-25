@@ -111,7 +111,7 @@ embeddingCode =
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
         <!-- Bootstrap CSS -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+        <link rel="stylesheet" <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
       </head>
       <body>
         <h1>Hello, world!</h1>
@@ -192,14 +192,13 @@ Grid.row
     ]
 """
 
-
 example : List (Html msg)
 example =
     [ h2 [] [ text "Example page" ]
     , p [] [ text """In the example below we've made a super simple single page application.
                      It contains basic navigation and a couple of example pages. """ ]
     , iframe
-        [ src "https://embed.ellie-app.com/z6GP8QGKGba1/0"
+        [ src "https://ellie-app.com/embed/53W4KNyCZa1/0"
         , style
             [ ("width","100%")
             , ("height","600px")
