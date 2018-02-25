@@ -28,6 +28,7 @@ subscriptions state =
     Sub.batch
         [ Alert.subscriptions state.animatedVisibility AnimatedMsg ]
 
+
 update : Msg -> State -> State
 update msg state =
     case msg of
@@ -52,58 +53,39 @@ basic =
     [ h2 [] [ text "Basic alert messages " ]
     , p [] [ text """Alerts are available for any length of text. Use one of the 4 available functions in the Alert module.""" ]
     , Util.example
-        [ simpleAlert Alert.primary <| "This is a primary message."
-        , simpleAlert Alert.secondary <| "This is a secondary message."
-        , simpleAlert Alert.success <| "This is a success message."
-        , simpleAlert Alert.info <| "Just a heads up info message."
-        , simpleAlert Alert.warning <| "Warning, you shouldn't be doing this."
-        , simpleAlert Alert.danger <| "Something bad happened."
-        , simpleAlert Alert.light <| "Make it really light."
-        , simpleAlert Alert.dark <| "I prefer the dark."
+        [ Alert.simplePrimary [] [ text "This is a primary message." ]
+        , Alert.simpleSecondary [] [ text "This is a secondary message." ]
+        , Alert.simpleSuccess [] [ text "This is a success message." ]
+        , Alert.simpleInfo [] [ text "Just a heads up info message." ]
+        , Alert.simpleWarning [] [ text "Warning, you shouldn't be doing this." ]
+        , Alert.simpleDanger [] [ text "Something bad happened." ]
+        , Alert.simpleLight [] [ text "Make it really light." ]
+        , Alert.simpleDark [] [ text "I prefer the dark." ]
         ]
     , div [ class "highlight" ]
         [ basicCode ]
     ]
 
 
-simpleAlert : (Alert.Config msg -> Alert.Config msg) -> String -> Html msg
-simpleAlert roleFn txt =
-    Alert.config
-        |> roleFn
-        |> Alert.children
-            [ Alert.text txt ]
-        |> Alert.view Alert.shown
-
 
 basicCode : Html msg
 basicCode =
     Util.toMarkdown """
 ```elm
-
-simpleAlert : (Alert.Config msg -> Alert.Config msg) -> String ->  Html msg
-simpleAlert roleFn txt =
-    Alert.config
-        |> roleFn
-        |> Alert.children
-            [ Alert.text txt ]
-        |> Alert.view Alert.shown
-
 view : Html msg
 view =
     div []
-        [ simpleAlert Alert.primary <|   "This is a primary message."
-        , simpleAlert Alert.secondary <| "This is a secondary message."
-        , simpleAlert Alert.success <| "This is a success message."
-        , simpleAlert Alert.info <| "Just a heads up info message."
-        , simpleAlert Alert.warning <| "Warning, you shouldn't be doing this."
-        , simpleAlert Alert.danger <| "Something bad happened."
-        , simpleAlert Alert.light <| "Make it really light."
-        , simpleAlert Alert.dark <| "I prefer the dark."
+        [ Alert.simplePrimary [] [ text "This is a primary message." ]
+        , Alert.simpleSecondary [] [ text "This is a secondary message." ]
+        , Alert.simpleSuccess [] [ text "This is a success message." ]
+        , Alert.simpleInfo [] [ text "Just a heads up info message." ]
+        , Alert.simpleWarning [] [ text "Warning, you shouldn't be doing this." ]
+        , Alert.simpleDanger [] [ text "Something bad happened." ]
+        , Alert.simpleLight [] [ text "Make it really light." ]
+        , Alert.simpleDark [] [ text "I prefer the dark." ]
         ]
 
-
 ```
-
 """
 
 
@@ -112,15 +94,12 @@ extended =
     [ h2 [] [ text "Styled links and headings" ]
     , p [] [ text "The Alert module provides a couple of helper functions to make your links and headings nicely styled inside alerts." ]
     , Util.example
-        [ Alert.config
-            |> Alert.info
-            |> Alert.children
-                [ Alert.h4 [] [ text "Alert heading" ]
-                , Alert.text "This info message has a "
-                , Alert.link [ href "javascript:void()" ] [ text "link" ]
-                , Alert.p [] [ text "Followed by a paragraph behaving as you'd expect." ]
-                ]
-            |> Alert.view Alert.shown
+        [ Alert.simpleInfo []
+            [ Alert.h4 [] [ text "Alert heading" ]
+            , text "This info message has a "
+            , Alert.link [ href "javascript:void()" ] [ text "link" ]
+            , p [] [ text "Followed by a paragraph behaving as you'd expect." ]
+            ]
         ]
     , div [ class "highlight" ]
         [ extendedCode ]
@@ -131,16 +110,12 @@ extendedCode : Html msg
 extendedCode =
     Util.toMarkdown """
 ```elm
-Alert.config
-    |> Alert.info
-    |> Alert.children
-        [ Alert.h4 [] [ text "Alert heading"]
-        , Alert.text "This info message has a "
-        , Alert.link [ href "javascript:void()" ] [text "link"]
-        , Alert.p [] [ text "Followed by a paragraph behaving as you'd expect."]
-        ]
-    |> Alert.view Alert.shown
-
+Alert.simpleInfo []
+    [ Alert.h4 [] [ text "Alert heading" ]
+    , text "This info message has a "
+    , Alert.link [ href "javascript:void()" ] [ text "link" ]
+    , p [] [ text "Followed by a paragraph behaving as you'd expect." ]
+    ]
 ```
 """
 
@@ -149,39 +124,38 @@ dismissable : State -> List (Html Msg)
 dismissable state =
     [ h2 [] [ text "A dismissable alert" ]
     , p [] [ text "With a little state handling in your model, you may also have dismissable alerts." ]
-    , p [] [ text "Unlike Twitter Bootstrap with JavaScript, the element is not removed from the DOM, it's just set to display:none."]
+    , p [] [ text "Unlike Twitter Bootstrap with JavaScript, the element is not removed from the DOM, it's just set to display:none." ]
     , Util.example
         [ Alert.config
             |> Alert.info
             |> Alert.dismissable AlertMsg
             |> Alert.children
                 [ Alert.h4 [] [ text "I'm dimissable" ]
-                , Alert.text "My visibility is your responsibility to keep track of though!"
+                , text "My visibility is your responsibility to keep track of though!"
                 ]
             |> Alert.view state.dismissableVisibility
         , Button.button
             [ Button.block, Button.primary, Button.onClick (AlertMsg Alert.shown) ]
             [ text "Reset alert" ]
-
         ]
     , div [ class "highlight" ]
         [ dismissableCode ]
-    , h2 [] [ text "Animation support"]
+    , h2 [] [ text "Animation support" ]
     , p [] [ text "With a little tweak and adding a subscription wiring, you can make the alert do a fade out animation when dismissed." ]
     , Util.example
         [ Alert.config
             |> Alert.primary
             -- This enables the dismiss event to run an animation
-            |> Alert.dismissableWithAnimation AnimatedMsg
+            |>
+                Alert.dismissableWithAnimation AnimatedMsg
             |> Alert.children
                 [ Alert.h4 [] [ text "I'm dimissable" ]
-                , Alert.text "I should fade out when dismissed."
+                , text "I should fade out when dismissed."
                 ]
             |> Alert.view state.animatedVisibility
         , Button.button
             [ Button.block, Button.primary, Button.onClick (AnimatedMsg Alert.shown) ]
             [ text "Reset alert" ]
-
         ]
     , div [ class "highlight" ]
         [ animatedCode ]
@@ -253,6 +227,3 @@ view =
 
 ```
 """
-
-
-
