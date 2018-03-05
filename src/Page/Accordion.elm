@@ -107,7 +107,7 @@ exampleCode =
 
 
 import Bootstrap.Accordion as Accordion
-import Bootstrap.Card as Card  -- We reuse functions from the Card module to build/configure accordion content
+import Bootstrap.Card.Block as Block  -- We reuse functions from the Card module to build/configure accordion content
 
 -- You need to keep track of the view state of the Accordion
 
