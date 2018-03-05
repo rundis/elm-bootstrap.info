@@ -70,7 +70,7 @@ ButtonGroup.group []
 checkbox : State -> (State -> msg) -> List (Html msg)
 checkbox state toMsg =
     [ h2 [] [ text "Checkbox buttons"]
-    , p  [] [ text "You can have checboxes as buttons if you like." ]
+    , p  [] [ text "You can have checkboxes as buttons if you like." ]
     , Util.example
         [ ButtonGroup.checkboxButtonGroup []
             [ ButtonGroup.checkboxButton
