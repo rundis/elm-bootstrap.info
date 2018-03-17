@@ -184,7 +184,7 @@ Grid.row
     [ Row.centerXs ] -- Row.centerXs creates a Row.Option
 
     -- The second argument to row is a list of Grid.Column items
-    [ Col.col
+    [ Grid.col
         [ Col.xs12
         , Col.attrs [ class "custom-class" ] -- <module>.attrs function, creates an option to specify a list of custom Elm Html attributes.
         ]
