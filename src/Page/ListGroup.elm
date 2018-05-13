@@ -101,7 +101,7 @@ disabledCode : Html msg
 disabledCode =
     Util.toMarkdownElm """
 ListGroup.ul
-    [ ListGroup.li [ ListGroup.active ] [ text "List item 1 (I'm disabled hover over me)" ]
+    [ ListGroup.li [ ListGroup.disabled ] [ text "List item 1 (I'm disabled hover over me)" ]
     , ListGroup.li [] [ text "List item 2" ]
     , ListGroup.li [] [ text "List item 3" ]
     ]
