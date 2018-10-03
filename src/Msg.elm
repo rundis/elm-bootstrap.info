@@ -1,28 +1,26 @@
-module Msg exposing (Msg (..))
+module Msg exposing (Msg(..))
 
-
-
-import Navigation
 import Bootstrap.Navbar as Navbar
-import Page.Table as Table
-import Page.Progress as Progress
-import Page.Grid as Grid
-import Page.Tab as Tab
-import Page.Dropdown as Dropdown
+import Bootstrap.Popover as Popover
 import Page.Accordion as Accordion
-import Page.Modal as Modal
-import Page.Navbar as PageNav
+import Page.Alert as Alert
 import Page.ButtonGroup as ButtonGroup
 import Page.Carousel as Carousel
+import Page.Dropdown as Dropdown
+import Page.Grid as Grid
 import Page.InputGroup as InputGroup
-import Page.Alert as Alert
-
-import Bootstrap.Popover as Popover
+import Page.Modal as Modal
+import Page.Navbar as PageNav
+import Page.Progress as Progress
+import Page.Tab as Tab
+import Page.Table as Table
+import Url exposing (Url)
+import Browser exposing (UrlRequest)
 
 
 type Msg
-    = UrlChange Navigation.Location
-    | PageChange String
+    = UrlChange Url
+    | ClickedLink UrlRequest
     | NavbarMsg Navbar.State
     | TableMsg Table.State
     | ProgressMsg Progress.State
@@ -36,8 +34,7 @@ type Msg
     | CarouselMsg Carousel.Msg
     | InputGroupMsg InputGroup.Msg
     | AlertMsg Alert.Msg
-
-    -- Popover related
+      -- Popover related
     | PopBasic Popover.State
     | PopTop Popover.State
     | PopBottom Popover.State

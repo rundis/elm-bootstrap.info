@@ -1,18 +1,18 @@
 module Page.Form exposing (view)
 
-import Html exposing (..)
-import Html.Attributes exposing (..)
-import Bootstrap.Form as Form
-import Bootstrap.Form.Input as Input
-import Bootstrap.Form.Select as Select
-import Bootstrap.Form.Checkbox as Checkbox
-import Bootstrap.Form.Radio as Radio
-import Bootstrap.Form.Textarea as Textarea
-import Bootstrap.Form.Fieldset as Fieldset
 import Bootstrap.Button as Button
+import Bootstrap.Form as Form
+import Bootstrap.Form.Checkbox as Checkbox
+import Bootstrap.Form.Fieldset as Fieldset
+import Bootstrap.Form.Input as Input
+import Bootstrap.Form.Radio as Radio
+import Bootstrap.Form.Select as Select
+import Bootstrap.Form.Textarea as Textarea
 import Bootstrap.Grid as Grid
 import Bootstrap.Grid.Col as Col
 import Bootstrap.Grid.Row as Row
+import Html exposing (..)
+import Html.Attributes exposing (..)
 import Util
 
 
@@ -21,7 +21,7 @@ view =
     { title = "Form"
     , description = """Elm Bootstrap provides you functions to easily utilize most of the extensive form support offered by Bootstrap."""
     , children =
-        (controls
+        controls
             ++ formGroups
             ++ fieldsets
             ++ inline
@@ -31,7 +31,6 @@ view =
             ++ help
             ++ validation
             ++ customControls
-        )
     }
 
 

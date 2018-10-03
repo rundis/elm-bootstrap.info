@@ -1,9 +1,9 @@
-module Page.Alert exposing (view, update, initialState, subscriptions, State, Msg)
+module Page.Alert exposing (Msg, State, initialState, subscriptions, update, view)
 
-import Html exposing (..)
-import Html.Attributes exposing (..)
 import Bootstrap.Alert as Alert
 import Bootstrap.Button as Button
+import Html exposing (..)
+import Html.Attributes exposing (..)
 import Util
 
 
@@ -44,7 +44,7 @@ view state =
     { title = "Alert"
     , description = "Provide contextual feedback messages for typical user actions with the handful of available and flexible alert messages."
     , children =
-        (basic ++ extended ++ dismissable state)
+        basic ++ extended ++ dismissable state
     }
 
 
@@ -65,7 +65,6 @@ basic =
     , div [ class "highlight" ]
         [ basicCode ]
     ]
-
 
 
 basicCode : Html msg
@@ -146,8 +145,7 @@ dismissable state =
         [ Alert.config
             |> Alert.primary
             -- This enables the dismiss event to run an animation
-            |>
-                Alert.dismissableWithAnimation AnimatedMsg
+            |> Alert.dismissableWithAnimation AnimatedMsg
             |> Alert.children
                 [ Alert.h4 [] [ text "I'm dimissable" ]
                 , text "I should fade out when dismissed."

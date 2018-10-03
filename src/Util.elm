@@ -1,9 +1,8 @@
-module Util exposing (..)
+module Util exposing (PageContent, calloutInfo, calloutWarning, code, example, exampleAndRow, exampleRow, pageContent, simplePageHeader, toMarkdown, toMarkdownElm)
 
-import Html.Attributes exposing (..)
 import Html exposing (..)
+import Html.Attributes exposing (..)
 import Markdown
-
 
 
 type alias PageContent msg =
@@ -39,16 +38,17 @@ pageContent children =
             ]
         ]
 
+
 example : List (Html msg) -> Html msg
 example children =
     div [ class "bd-example" ]
         children
 
+
 exampleRow : List (Html msg) -> Html msg
 exampleRow children =
     div [ class "bd-example-row" ]
         children
-
 
 
 exampleAndRow : List (Html msg) -> Html msg
@@ -57,26 +57,24 @@ exampleAndRow children =
         children
 
 
-
-
 toMarkdown : String -> Html.Html msg
-toMarkdown code =
+toMarkdown code_ =
     Markdown.toHtml
         []
-        code
+        code_
 
 
 toMarkdownElm : String -> Html.Html msg
-toMarkdownElm code =
+toMarkdownElm code_ =
     Markdown.toHtml
         []
-        ("```elm" ++ code ++ "```")
+        ("```elm" ++ code_ ++ "```")
 
 
 code : Html.Html msg -> Html.Html msg
 code codeElem =
     div
-        [ class "highlight"]
+        [ class "highlight" ]
         [ codeElem ]
 
 
@@ -84,8 +82,7 @@ calloutInfo : List (Html msg) -> Html msg
 calloutInfo children =
     div [ class "bd-callout bd-callout-info" ] children
 
+
 calloutWarning : List (Html msg) -> Html msg
 calloutWarning children =
     div [ class "bd-callout bd-callout-warning" ] children
-
-

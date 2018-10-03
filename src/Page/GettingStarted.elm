@@ -1,38 +1,37 @@
 module Page.GettingStarted exposing (view)
 
-
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Util
 
 
-view : (String -> msg) -> List (Html msg)
-view pageMsg =
+view :  List (Html msg)
+view =
     [ Util.simplePageHeader
         "Getting started"
         """A brief overview of Elm Bootstrap, how to use it and some examples."""
     , Util.pageContent
         (quickStart
-          ++ embedding
-          ++ conventions
-          ++ example
+            ++ embedding
+            ++ conventions
+            ++ example
         )
     ]
 
 
 quickStart : List (Html msg)
 quickStart =
-    [ h2 [] [ text "Quick start"]
+    [ h2 [] [ text "Quick start" ]
     , p [] [ text """The easiest way to get started is to use the Bootstrap.CDN module to inline the Bootstrap CSS.
-                  This way you can quickly get up and running using elm-reactor."""]
+                  This way you can quickly get up and running using elm-reactor.""" ]
     , h4 [] [ text "Start a new project" ]
     , Util.code setupCode
     , h4 [] [ text "Module code" ]
-    , p [] [ text "Create a Main.elm file with the following content"]
+    , p [] [ text "Create a Main.elm file with the following content" ]
     , Util.code quickStartCode
     , h4 [] [ text "Running the example" ]
     , Util.code runQuickStartCode
-    , p [] [ text "Navigate to http://localhost:8000/Main.elm"]
+    , p [] [ text "Navigate to http://localhost:8000/Main.elm" ]
     , Util.calloutWarning
         [ p [] [ text """Don't use this method when you want to deploy your app for real life usage.
                          It's not very efficient, the payload for your page will be pretty big and you want get the benefits of caching the CSS.""" ]
@@ -51,9 +50,6 @@ elm-package install --yes rundis/elm-bootstrap
 
 ```
 """
-
-
-
 
 
 quickStartCode : Html msg
@@ -77,6 +73,7 @@ main =
         ]
 """
 
+
 runQuickStartCode : Html msg
 runQuickStartCode =
     Util.toMarkdown """
@@ -86,9 +83,6 @@ elm-reactor
 
 ```
 """
-
-
-
 
 
 embedding : List (Html msg)
@@ -126,7 +120,7 @@ embeddingCode =
 conventions : List (Html msg)
 conventions =
     [ h2 [] [ text "Conventions" ]
-    , p [] [ text """Just a small note of conventions promoted when using Elm Bootstrap and a quick overview of common conventions used by Elm Bootstrap itself."""  ]
+    , p [] [ text """Just a small note of conventions promoted when using Elm Bootstrap and a quick overview of common conventions used by Elm Bootstrap itself.""" ]
     , h3 [] [ text "Alias imports" ]
     , Util.code aliasCode
     , Util.calloutInfo
@@ -138,7 +132,6 @@ conventions =
     , h3 [] [ text "Options and attributes" ]
     , p [] [ text """Most Html element creating functions in Elm bootstrap take two list arguments. The first is a list of options, the second is a list of child items or a list of child elements.
                   It's probably easier to illustrate with an annotated Code example first to explain further.""" ]
-
     , Util.code optionsCode
     , Util.calloutInfo
         [ ul []
@@ -177,6 +170,7 @@ myViewFn =
 
 """
 
+
 optionsCode : Html msg
 optionsCode =
     Util.toMarkdownElm """
@@ -192,6 +186,7 @@ Grid.row
     ]
 """
 
+
 example : List (Html msg)
 example =
     [ h2 [] [ text "Example page" ]
@@ -199,13 +194,11 @@ example =
                      It contains basic navigation and a couple of example pages. """ ]
     , iframe
         [ src "https://ellie-app.com/embed/53W4KNyCZa1/0"
-        , style
-            [ ("width","100%")
-            , ("height","600px")
-            , ("border", "0")
-            , ("border-radius","3px")
-            , ("overflow","hidden")
-            ]
+        , style "width" "100%"
+        , style "height" "600px"
+        , style "border" "0"
+        , style "border-radius" "3px"
+        , style "overflow" "hidden"
         , attribute "sandbox" "allow-modals allow-forms allow-popups allow-scripts allow-same-origin"
         ]
         []
@@ -214,4 +207,4 @@ example =
 
 textLi : String -> Html msg
 textLi str =
-    li [] [ text str]
+    li [] [ text str ]

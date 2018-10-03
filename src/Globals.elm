@@ -1,5 +1,4 @@
-module Globals exposing (..)
-
+module Globals exposing (bootstrapUrl, githubDocsUrl, githubSourceUrl, packageUrl)
 
 
 bootstrapUrl : String
@@ -15,6 +14,7 @@ githubSourceUrl =
 githubDocsUrl : String
 githubDocsUrl =
     "https://github.com/rundis/elm-bootstrap.info"
+
 
 packageUrl : String
 packageUrl =

@@ -1,12 +1,12 @@
-module Page.Tab exposing (view, initialState, initialStateWithHash, subscriptions, update, State, Msg)
+module Page.Tab exposing (Msg, State, initialState, initialStateWithHash, subscriptions, update, view)
 
-import Html exposing (..)
-import Html.Attributes exposing (..)
-import Bootstrap.Tab as Tab
-import Util
 import Bootstrap.Form as Form
 import Bootstrap.Form.Radio as Radio
+import Bootstrap.Tab as Tab
 import Bootstrap.Utilities.Spacing as Spacing
+import Html exposing (..)
+import Html.Attributes exposing (..)
+import Util
 
 
 type alias State =
@@ -36,21 +36,25 @@ initialStateWithHash hash =
     { tabState =
         if String.startsWith "tab" hash then
             Tab.customInitialState hash
+
         else
             Tab.initialState
     , pillState =
         if String.startsWith "pill" hash then
             Tab.customInitialState hash
+
         else
             Tab.initialState
     , animatedState =
         if String.startsWith "animated" hash then
             Tab.customInitialState hash
+
         else
             Tab.initialState
     , customizedState =
         if String.startsWith "customized" hash then
             Tab.customInitialState hash
+
         else
             Tab.initialState
     , layout = None
@@ -95,11 +99,10 @@ view state =
     , description =
         """Use the Tab module when you want to create a tabbed interface element with tabbable regions of content."""
     , children =
-        (tabs state
+        tabs state
             ++ pills state
             ++ animated state
             ++ customized state
-        )
     }
 
 
@@ -250,7 +253,6 @@ you may specify which tab item is active initially by calling `Tab.customInitial
 [Check out the elm-bootstrap.info source for inpsiration, starting here](https://github.com/rundis/elm-bootstrap.info/blob/master/src/Main.elm#L65)"""
 
 
-
 pillsCode : Html msg
 pillsCode =
     Util.toMarkdownElm """
@@ -385,53 +387,53 @@ customized state =
                 Fill ->
                     Tab.fill conf
     in
-        [ h2 [] [ text "Customizing with options" ]
-        , p [] [ text "You can easily customize spacing and alignement of tabs using helper functions" ]
-        , Util.example
-            [ Form.form []
-                [ h5 [] [ text "Tab layout options" ]
-                , Form.group []
-                    [ Form.label [] [ text "Horizontal alignment" ]
-                    , div []
-                        [ Radio.radio (radioAttrs None) "Default"
-                        , Radio.radio (radioAttrs Center) "Tab.center"
-                        , Radio.radio (radioAttrs Right) "Tab.right"
-                        , Radio.radio (radioAttrs Justified) "Tab.justified"
-                        , Radio.radio (radioAttrs Fill) "Tab.fill"
-                        ]
+    [ h2 [] [ text "Customizing with options" ]
+    , p [] [ text "You can easily customize spacing and alignement of tabs using helper functions" ]
+    , Util.example
+        [ Form.form []
+            [ h5 [] [ text "Tab layout options" ]
+            , Form.group []
+                [ Form.label [] [ text "Horizontal alignment" ]
+                , div []
+                    [ Radio.radio (radioAttrs None) "Default"
+                    , Radio.radio (radioAttrs Center) "Tab.center"
+                    , Radio.radio (radioAttrs Right) "Tab.right"
+                    , Radio.radio (radioAttrs Justified) "Tab.justified"
+                    , Radio.radio (radioAttrs Fill) "Tab.fill"
                     ]
-                , hr [] []
                 ]
-            , Tab.config CustomizedMsg
-                |> tabLayout
-                |> Tab.items
-                    [ Tab.item
-                        { id = "customizedTabItem1"
-                        , link = Tab.link [] [ text "First tab" ]
-                        , pane =
-                            Tab.pane [ Spacing.mt3 ]
-                                [ p [] [ text """Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit. Keytar helvetica VHS salvia yr, vero magna velit sapiente labore stumptown. Vegan fanny pack odio cillum wes anderson 8-bit, sustainable jean shorts beard ut DIY ethical culpa terry richardson biodiesel. Art party scenester stumptown, tumblr butcher vero sint qui sapiente accusamus tattooed echo park.""" ]
-                                ]
-                        }
-                    , Tab.item
-                        { id = "customizedTabItem2"
-                        , link = Tab.link [] [ text "Second tab" ]
-                        , pane =
-                            Tab.pane [ Spacing.mt3 ]
-                                [ h4 [] [ text "Tab 2 Heading" ]
-                                , p [] [ text "This is something completely different." ]
-                                ]
-                        }
-                    , Tab.item
-                        { id = "customizedTabItem3"
-                        , link = Tab.link [] [ text "Yet another tab" ]
-                        , pane =
-                            Tab.pane [ Spacing.mt3 ]
-                                [ h4 [] [ text "Tab 3 Heading" ]
-                                , p [] [ text "Nothing to see here." ]
-                                ]
-                        }
-                    ]
-                |> Tab.view state.customizedState
+            , hr [] []
             ]
+        , Tab.config CustomizedMsg
+            |> tabLayout
+            |> Tab.items
+                [ Tab.item
+                    { id = "customizedTabItem1"
+                    , link = Tab.link [] [ text "First tab" ]
+                    , pane =
+                        Tab.pane [ Spacing.mt3 ]
+                            [ p [] [ text """Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit. Keytar helvetica VHS salvia yr, vero magna velit sapiente labore stumptown. Vegan fanny pack odio cillum wes anderson 8-bit, sustainable jean shorts beard ut DIY ethical culpa terry richardson biodiesel. Art party scenester stumptown, tumblr butcher vero sint qui sapiente accusamus tattooed echo park.""" ]
+                            ]
+                    }
+                , Tab.item
+                    { id = "customizedTabItem2"
+                    , link = Tab.link [] [ text "Second tab" ]
+                    , pane =
+                        Tab.pane [ Spacing.mt3 ]
+                            [ h4 [] [ text "Tab 2 Heading" ]
+                            , p [] [ text "This is something completely different." ]
+                            ]
+                    }
+                , Tab.item
+                    { id = "customizedTabItem3"
+                    , link = Tab.link [] [ text "Yet another tab" ]
+                    , pane =
+                        Tab.pane [ Spacing.mt3 ]
+                            [ h4 [] [ text "Tab 3 Heading" ]
+                            , p [] [ text "Nothing to see here." ]
+                            ]
+                    }
+                ]
+            |> Tab.view state.customizedState
         ]
+    ]

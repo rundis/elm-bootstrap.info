@@ -1,10 +1,10 @@
-module Page.Grid exposing (view, State, initialState)
+module Page.Grid exposing (State, initialState, view)
 
-import Html exposing (..)
-import Html.Attributes exposing (..)
 import Bootstrap.Grid as Grid
 import Bootstrap.Grid.Col as Col
 import Bootstrap.Grid.Row as Row
+import Html exposing (..)
+import Html.Attributes exposing (..)
 import Util
 
 
@@ -25,7 +25,7 @@ view state toMsg =
         It’s based on a 12 column layout and has multiple tiers, one for each media query range.
         You can use it with Sass mixins or our predefined classes."""
     , children =
-        (howItWorks
+        howItWorks
             ++ equalWidth
             ++ oneColWidth
             ++ variableWidth
@@ -36,7 +36,6 @@ view state toMsg =
             ++ horizontalAlign
             ++ offsets
             ++ pushPull
-        )
     }
 
 
@@ -474,6 +473,7 @@ Grid.container []
     ]
 """
 
+
 horizontalAlign : List (Html msg)
 horizontalAlign =
     [ h2 [] [ text "Horizontal alignment" ]
@@ -499,6 +499,7 @@ horizontalAlign =
         ]
     , Util.code horizontalAlignCode
     ]
+
 
 twoSimpleCols : List (Grid.Column msg)
 twoSimpleCols =
@@ -535,6 +536,7 @@ twoSimpleCols =
     List.repeat 2 <|
         Grid.col [ Col.xs4 ] [ text "One of two columns" ]
 """
+
 
 offsets : List (Html msg)
 offsets =
@@ -604,7 +606,7 @@ pushPull =
             [ Grid.row []
                 [ Grid.col
                     [ Col.md9, Col.pushMd3 ]
-                    [ text "col-md-9 push-md-3"]
+                    [ text "col-md-9 push-md-3" ]
                 , Grid.col
                     [ Col.md3, Col.pullMd9 ]
                     [ text "col-md-3 pull-md-9" ]

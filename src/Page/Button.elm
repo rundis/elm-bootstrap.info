@@ -1,9 +1,9 @@
 module Page.Button exposing (view)
 
-import Html exposing (..)
-import Html.Attributes exposing (..)
 import Bootstrap.Button as Button
 import Bootstrap.Utilities.Spacing as Spacing
+import Html exposing (..)
+import Html.Attributes exposing (..)
 import Util
 
 
@@ -14,12 +14,11 @@ view =
         """Use Bootstrap’s custom button styles for actions in forms, dialogs, and more.
            Includes support for a handful of contextual variations, sizes, states, and more."""
     , children =
-        (examples
+        examples
             ++ linkButtons
             ++ outlines
             ++ sizes
             ++ disableds
-        )
     }
 
 

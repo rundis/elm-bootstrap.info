@@ -1,20 +1,19 @@
-module Page.Modal
-    exposing
-        ( view
-        , initialState
-        , update
-        , subscriptions
-        , State
-        , Msg
-        )
+module Page.Modal exposing
+    ( Msg
+    , State
+    , initialState
+    , subscriptions
+    , update
+    , view
+    )
 
-import Html exposing (..)
-import Html.Attributes exposing (..)
-import Html.Events exposing (onClick)
-import Bootstrap.Modal as Modal
 import Bootstrap.Button as Button
 import Bootstrap.Grid as Grid
 import Bootstrap.Grid.Col as Col
+import Bootstrap.Modal as Modal
+import Html exposing (..)
+import Html.Attributes exposing (..)
+import Html.Events exposing (onClick)
 import Util
 
 
@@ -81,10 +80,9 @@ view state =
         """Modals are streamlined, but flexible dialog prompts powered by Elm !
         They support a number of use cases from user notification to completely custom content and feature a handful of helpful subcomponents, sizes, and more."""
     , children =
-        (example state
+        example state
             ++ grid state
             ++ animated state
-        )
     }
 
 

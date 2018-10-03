@@ -1,19 +1,18 @@
-module Page.Dropdown
-    exposing
-        ( view
-        , State
-        , initialState
-        , subscriptions
-        , update
-        , Msg
-        )
+module Page.Dropdown exposing
+    ( Msg
+    , State
+    , initialState
+    , subscriptions
+    , update
+    , view
+    )
 
-import Html exposing (..)
-import Html.Attributes exposing (..)
-import Bootstrap.Dropdown as Dropdown
 import Bootstrap.Button as Button
+import Bootstrap.Dropdown as Dropdown
 import Bootstrap.Form as Form
 import Bootstrap.Form.Radio as Radio
+import Html exposing (..)
+import Html.Attributes exposing (..)
 import Util
 
 
@@ -32,7 +31,6 @@ type Msg
     | SplitMsg Dropdown.State
     | MenuMsg Dropdown.State
     | OptionsMsg Options
-
 
 
 initialState : State
@@ -76,6 +74,7 @@ type DropDir
     = Up
     | Left
     | Right
+
 
 type Size
     = Small
@@ -121,8 +120,6 @@ update msg state =
             { state | options = opts }
 
 
-
-
 view : State -> Util.PageContent Msg
 view state =
     { title = "Dropdown"
@@ -130,11 +127,10 @@ view state =
         """Dropdowns are toggleable, contextual overlays for displaying lists of links and more.
            They’re made interactive with a little bit of Elm. They’re toggled by clicking."""
     , children =
-        (basic state
+        basic state
             ++ customized state
             ++ split state
             ++ menu state
-        )
     }
 
 
@@ -242,7 +238,7 @@ customized state =
                 ]
             }
         ]
-            ++ [customizeForm state]
+            ++ [ customizeForm state ]
     ]
 
 
@@ -272,64 +268,64 @@ customizeForm ({ options } as state) =
             , Radio.onClick <| OptionsMsg { options | dropDir = opt }
             ]
     in
-        Form.form [ class "container mt-3" ]
-            [ h4 [] [ text "Dropdown customization" ]
-            , Form.row []
-                [ Form.col []
-                    [ Radio.custom (dirAttrs "defaultDir" Nothing) "Default"
-                    , Radio.custom (dirAttrs "dropUp" <| Just Up) "Dropdown.dropUp"
-                    , Radio.custom (dirAttrs "dropLeft" <| Just Left) "Dropdown.dropLeft"
-                    , Radio.custom (dirAttrs "dropRight" <| Just Right) "Dropdown.dropRight"
-                    ]
+    Form.form [ class "container mt-3" ]
+        [ h4 [] [ text "Dropdown customization" ]
+        , Form.row []
+            [ Form.col []
+                [ Radio.custom (dirAttrs "defaultDir" Nothing) "Default"
+                , Radio.custom (dirAttrs "dropUp" <| Just Up) "Dropdown.dropUp"
+                , Radio.custom (dirAttrs "dropLeft" <| Just Left) "Dropdown.dropLeft"
+                , Radio.custom (dirAttrs "dropRight" <| Just Right) "Dropdown.dropRight"
                 ]
-            , Form.row []
-                [ Form.col []
-                    [ Form.group []
-                        [ Form.label
-                            [ style [ ( "font-weight", "bold" ) ] ]
-                            [ text "Coloring" ]
-                        , div []
-                            [ Radio.custom (coloringAttrs "primary" Primary "coloring") "Button.primary"
-                            , Radio.custom (coloringAttrs "secondary" Secondary "coloring") "Button.secondary"
-                            , Radio.custom (coloringAttrs "success" Success "coloring") "Button.success"
-                            , Radio.custom (coloringAttrs "info" Info "coloring") "Button.info"
-                            , Radio.custom (coloringAttrs "warning" Warning "coloring") "Button.warning"
-                            , Radio.custom (coloringAttrs "danger" Danger "coloring") "Button.danger"
-                            , Radio.custom (coloringAttrs "light" Light "coloring") "Button.light"
-                            , Radio.custom (coloringAttrs "dark" Dark "coloring") "Button.dark"
-                            ]
-                        ]
-                    ]
-                , Form.col []
-                    [ Form.group []
-                        [ Form.label
-                            [ style [ ( "font-weight", "bold" ) ] ]
-                            [ text "Outlines" ]
-                        , div []
-                            [ Radio.custom (coloringAttrs "outlinePrimary" OutlinePrimary "outlcoloring") "Button.outlinePrimary"
-                            , Radio.custom (coloringAttrs "outlineSecondary" OutlineSecondary "outlcoloring") "Button.outlineSecondary"
-                            , Radio.custom (coloringAttrs "outlineSuccess" OutlineSuccess "outlcoloring") "Button.outlineSuccess"
-                            , Radio.custom (coloringAttrs "outlineInfo" OutlineInfo "outlcoloring") "Button.outlineInfo"
-                            , Radio.custom (coloringAttrs "outlineWarning" OutlineWarning "outlcoloring") "Button.outlineWarning"
-                            , Radio.custom (coloringAttrs "outlineDanger" OutlineDanger "outlcoloring") "Button.outlineDanger"
-                            , Radio.custom (coloringAttrs "outlineLight" OutlineLight "outlcoloring") "Button.outlineLight"
-                            , Radio.custom (coloringAttrs "outlineDark" OutlineDark "outlcoloring") "Button.outlineDark"
-                            ]
-                        ]
-                    ]
-                ]
-            , Form.row []
-                [ Form.col []
+            ]
+        , Form.row []
+            [ Form.col []
+                [ Form.group []
                     [ Form.label
-                        [ style [ ( "font-weight", "bold" ) ]]
-                        [ text "Button sizes" ]
+                        [ style "font-weight" "bold" ]
+                        [ text "Coloring" ]
                     , div []
-                        [ Radio.custom (sizeAttrs "small" Small) "Button.small"
-                        , Radio.custom (sizeAttrs "medium" Medium) "Default"
-                        , Radio.custom (sizeAttrs "larger" Large) "Button.large"
+                        [ Radio.custom (coloringAttrs "primary" Primary "coloring") "Button.primary"
+                        , Radio.custom (coloringAttrs "secondary" Secondary "coloring") "Button.secondary"
+                        , Radio.custom (coloringAttrs "success" Success "coloring") "Button.success"
+                        , Radio.custom (coloringAttrs "info" Info "coloring") "Button.info"
+                        , Radio.custom (coloringAttrs "warning" Warning "coloring") "Button.warning"
+                        , Radio.custom (coloringAttrs "danger" Danger "coloring") "Button.danger"
+                        , Radio.custom (coloringAttrs "light" Light "coloring") "Button.light"
+                        , Radio.custom (coloringAttrs "dark" Dark "coloring") "Button.dark"
                         ]
                     ]
                 ]
+            , Form.col []
+                [ Form.group []
+                    [ Form.label
+                        [ style "font-weight" "bold" ]
+                        [ text "Outlines" ]
+                    , div []
+                        [ Radio.custom (coloringAttrs "outlinePrimary" OutlinePrimary "outlcoloring") "Button.outlinePrimary"
+                        , Radio.custom (coloringAttrs "outlineSecondary" OutlineSecondary "outlcoloring") "Button.outlineSecondary"
+                        , Radio.custom (coloringAttrs "outlineSuccess" OutlineSuccess "outlcoloring") "Button.outlineSuccess"
+                        , Radio.custom (coloringAttrs "outlineInfo" OutlineInfo "outlcoloring") "Button.outlineInfo"
+                        , Radio.custom (coloringAttrs "outlineWarning" OutlineWarning "outlcoloring") "Button.outlineWarning"
+                        , Radio.custom (coloringAttrs "outlineDanger" OutlineDanger "outlcoloring") "Button.outlineDanger"
+                        , Radio.custom (coloringAttrs "outlineLight" OutlineLight "outlcoloring") "Button.outlineLight"
+                        , Radio.custom (coloringAttrs "outlineDark" OutlineDark "outlcoloring") "Button.outlineDark"
+                        ]
+                    ]
+                ]
+            ]
+        , Form.row []
+            [ Form.col []
+                [ Form.label
+                    [ style "font-weight" "bold" ]
+                    [ text "Button sizes" ]
+                , div []
+                    [ Radio.custom (sizeAttrs "small" Small) "Button.small"
+                    , Radio.custom (sizeAttrs "medium" Medium) "Default"
+                    , Radio.custom (sizeAttrs "larger" Large) "Button.large"
+                    ]
+                ]
+            ]
         ]
 
 
@@ -350,6 +346,7 @@ customizedDropOptions { options } =
     )
         ++ (if options.menuRight then
                 [ Dropdown.alignMenuRight ]
+
             else
                 []
            )
@@ -365,7 +362,7 @@ customizedButtonOptions { options } =
             [ Button.secondary ]
 
         Success ->
-            [ Button.success]
+            [ Button.success ]
 
         Info ->
             [ Button.info ]

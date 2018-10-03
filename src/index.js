@@ -2,10 +2,10 @@
 
 
 require('./index.html');
-var Elm = require('./Main');
+const {Elm} = require('./Main.elm');
 
 
-var elm = Elm.Main.fullscreen();
+var elm = Elm.Main.init({});
 
 elm.ports.updateAnalytics.subscribe(function (page) {
     ga('set', 'page', page);
