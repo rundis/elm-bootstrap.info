@@ -93,7 +93,7 @@ disabledItems =
             , ListGroup.li [] [ text "List item 3" ]
             ]
         ]
-    , Util.code activeCode
+    , Util.code disabledCode
     ]
 
 
