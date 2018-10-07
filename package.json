@@ -11,15 +11,17 @@
   "author": "",
   "license": "BSD3",
   "devDependencies": {
+    "clean-webpack-plugin": "^0.1.19",
     "copy-webpack-plugin": "^4.5.2",
+    "elm": "^0.19.0-bugfix2",
     "elm-hot-webpack-loader": "^1.0.0",
     "elm-webpack-loader": "^5.0.0",
     "file-loader": "^2.0.0",
+    "uglify-js": "^3.4.9",
+    "uglifyjs-webpack-plugin": "^2.0.1",
     "webpack": "^4.17.2",
-    "webpack-cli": "^3.1.0"
-  },
-  "dependencies": {
-    "elm": "^0.19.0-bugfix2",
+    "webpack-cli": "^3.1.0",
     "webpack-dev-server": "^3.1.7"
-  }
+  },
+  "dependencies": {}
 }
