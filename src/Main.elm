@@ -149,7 +149,7 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         ClickedLink req ->
-            case Debug.log "Link clicked" req of
+            case req of
                 Browser.Internal url ->
                     case url.fragment of
                         Just "" ->
