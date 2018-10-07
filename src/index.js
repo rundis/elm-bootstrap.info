@@ -2,7 +2,7 @@
 
 
 require('./index.html');
-const {Elm} = require('./Main.elm');
+var Elm = require('./Main.elm').Elm;
 
 
 var elm = Elm.Main.init({});
