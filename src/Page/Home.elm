@@ -39,7 +39,7 @@ view  =
             , text "."
             ]
         , p [ class "version" ]
-            [ text "v4.0.0" ]
+            [ text "v5.0.0" ]
         ]
     , div
         [ class "bd-featurette" ]
