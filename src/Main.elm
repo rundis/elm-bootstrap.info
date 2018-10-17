@@ -64,7 +64,6 @@ type alias Flags =
     {}
 
 
-
 init : Flags -> Url -> Navigation.Key -> ( Model, Cmd Msg )
 init flags url key =
     let
@@ -141,8 +140,6 @@ subscriptions model =
                         []
                )
         )
-
-
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -239,13 +236,11 @@ port updateAnalytics : String -> Cmd msg
 view : Model -> Browser.Document Msg
 view model =
     { title = "Elm Bootstrap"
-    , body = ([ viewMenu model ]
-                         ++ viewPage model
-                         ++ [ viewFooter ]
-                     )
+    , body =
+        [ viewMenu model ]
+            ++ viewPage model
+            ++ [ viewFooter ]
     }
-
-
 
 
 viewMenu : Model -> Html Msg

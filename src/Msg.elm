@@ -2,6 +2,7 @@ module Msg exposing (Msg(..))
 
 import Bootstrap.Navbar as Navbar
 import Bootstrap.Popover as Popover
+import Browser exposing (UrlRequest)
 import Page.Accordion as Accordion
 import Page.Alert as Alert
 import Page.ButtonGroup as ButtonGroup
@@ -15,7 +16,6 @@ import Page.Progress as Progress
 import Page.Tab as Tab
 import Page.Table as Table
 import Url exposing (Url)
-import Browser exposing (UrlRequest)
 
 
 type Msg

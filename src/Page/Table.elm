@@ -221,27 +221,27 @@ optionChecks state toMsg =
             [ Striped, Hover, Small, Inverse, Bordered ]
         )
 
+
 tableOptToString : TableOption -> String
 tableOptToString opt =
     case opt of
-       Striped ->
+        Striped ->
             "Striped"
 
-       Hover ->
+        Hover ->
             "Hover"
 
-       Small ->
+        Small ->
             "Small"
 
-       Inverse ->
+        Inverse ->
             "Inverse"
 
-       Bordered ->
+        Bordered ->
             "Bordered"
 
-       Responsive ->
+        Responsive ->
             "Responsive"
-
 
 
 optionedTableSampleCode : Html msg

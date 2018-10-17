@@ -15,8 +15,8 @@ import Bootstrap.Utilities.Spacing as Spacing
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events as Events
-import Util
 import Json.Decode as Decode
+import Util
 
 
 type alias State =
@@ -90,7 +90,7 @@ basic state =
         [ Navbar.config BasicMsg
             |> Navbar.withAnimation
             |> Navbar.collapseMedium
-            |> Navbar.brand [ href "#", noOpClick ] [ text "Brand"  ]
+            |> Navbar.brand [ href "#", noOpClick ] [ text "Brand" ]
             |> Navbar.items
                 [ Navbar.itemLink [ href "#", noOpClick ] [ text "Item 1" ]
                 , Navbar.itemLink [ href "#", noOpClick ] [ text "Item 2" ]
@@ -110,8 +110,13 @@ basic state =
         ]
     ]
 
+
 noOpClick =
-    Events.custom "click" <| Decode.fail "JALLA" --{ message = NoOp, stopPropagation = True, preventDefault = True }
+    Events.custom "click" <| Decode.fail "JALLA"
+
+
+
+--{ message = NoOp, stopPropagation = True, preventDefault = True }
 
 
 textLi : String -> Html msg

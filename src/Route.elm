@@ -131,6 +131,5 @@ encode route =
 
 
 clickTo : Route -> List (Html.Attribute msg)
-clickTo route  =
-    [ Attr.href (encode route)]
-
+clickTo route =
+    [ Attr.href (encode route) ]

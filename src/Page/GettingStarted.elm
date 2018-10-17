@@ -5,7 +5,7 @@ import Html.Attributes exposing (..)
 import Util
 
 
-view :  List (Html msg)
+view : List (Html msg)
 view =
     [ Util.simplePageHeader
         "Getting started"

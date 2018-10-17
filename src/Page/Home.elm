@@ -7,7 +7,7 @@ import Route
 
 
 view : List (Html msg)
-view  =
+view =
     [ main_
         [ class "bd-masthead", id "content" ]
         [ div
