@@ -46,7 +46,7 @@ setupCode =
 
 mkdir bootstrap-example
 cd bootstrap-example
-elm-package install --yes rundis/elm-bootstrap
+elm install rundis/elm-bootstrap
 
 ```
 """
@@ -79,7 +79,7 @@ runQuickStartCode =
     Util.toMarkdown """
 ```bash
 
-elm-reactor
+elm reactor
 
 ```
 """
