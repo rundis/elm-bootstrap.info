@@ -1,6 +1,5 @@
 module Page.NotFound exposing (view)
 
-
 import Html exposing (..)
 import Html.Attributes exposing (..)
 
@@ -10,15 +9,13 @@ view =
     [ main_
         [ class "bd-masthead", id "content" ]
         [ div
-            [ style [ ( "margin", "0 auto 2rem" ) ] ]
+            [ style "margin" "0 auto 2rem" ]
             [ img
                 [ src "assets/images/elm-bootstrap.svg"
                 , alt "elm-bootstrap"
-                , style
-                    [ ( "border", "1px solid white" )
-                    , ( "width", "120px" )
-                    , ( "border-radius", "15%" )
-                    ]
+                , style "border" "1px solid white"
+                , style "width" "120px"
+                , style "border-radius" "15%"
                 ]
                 []
             ]
@@ -29,7 +26,7 @@ view =
             , a
                 [ href "https://github.com/rundis/elm-bootstrap.info"
                 , target "_blank"
-                , style [("color", "#ffe484")]
+                , style "color" "#ffe484"
                 ]
                 [ text "issue" ]
             , text "."

@@ -1,10 +1,10 @@
-module Page.ButtonGroup exposing (view, initialState, State)
+module Page.ButtonGroup exposing (State, initialState, view)
 
-import Html exposing (..)
-import Html.Attributes exposing (..)
 import Bootstrap.Button as Button
 import Bootstrap.ButtonGroup as ButtonGroup
 import Bootstrap.Utilities.Spacing as Spacing
+import Html exposing (..)
+import Html.Attributes exposing (..)
 import Util
 
 
@@ -21,6 +21,7 @@ type RadioState
     | Two
     | Three
 
+
 initialState : State
 initialState =
     { radio = Two
@@ -31,18 +32,17 @@ initialState =
 
 
 view : State -> (State -> msg) -> Util.PageContent msg
-view  state toMsg =
+view state toMsg =
     { title = "Button group"
-    , description ="""Group a series of buttons together on a single line with the button group, or nest even further to create a button toolbar."""
+    , description = """Group a series of buttons together on a single line with the button group, or nest even further to create a button toolbar."""
     , children =
         basic
-        ++ checkbox state toMsg
-        ++ radios state toMsg
-        ++ sizing
-        ++ vertical
-        ++ toolbar
+            ++ checkbox state toMsg
+            ++ radios state toMsg
+            ++ sizing
+            ++ vertical
+            ++ toolbar
     }
-
 
 
 basic : List (Html msg)
@@ -52,8 +52,8 @@ basic =
     , Util.example
         [ ButtonGroup.buttonGroup [] bunchOfButtons ]
     , Util.code groupBasicCode
-
     ]
+
 
 groupBasicCode : Html msg
 groupBasicCode =
@@ -66,11 +66,10 @@ ButtonGroup.group []
 """
 
 
-
 checkbox : State -> (State -> msg) -> List (Html msg)
 checkbox state toMsg =
-    [ h2 [] [ text "Checkbox buttons"]
-    , p  [] [ text "You can have checkboxes as buttons if you like." ]
+    [ h2 [] [ text "Checkbox buttons" ]
+    , p [] [ text "You can have checkboxes as buttons if you like." ]
     , Util.example
         [ ButtonGroup.checkboxButtonGroup []
             [ ButtonGroup.checkboxButton
@@ -143,10 +142,11 @@ view model =
 
 """
 
+
 radios : State -> (State -> msg) -> List (Html msg)
 radios state toMsg =
-    [ h2 [] [ text "Radio buttons"]
-    , p  [] [ text "You can also have radio inputs as buttons if that makes sense too you." ]
+    [ h2 [] [ text "Radio buttons" ]
+    , p [] [ text "You can also have radio inputs as buttons if that makes sense too you." ]
     , Util.example
         [ ButtonGroup.radioButtonGroup []
             [ ButtonGroup.radioButton
@@ -218,16 +218,17 @@ view model =
 
 sizing : List (Html msg)
 sizing =
-    [ h2 [] [ text "Sizing"]
+    [ h2 [] [ text "Sizing" ]
     , p [] [ text "Instead of applying sizing options to individual buttons, you can apply one size option for all buttons in a group" ]
     , Util.example
         [ ButtonGroup.buttonGroup [ ButtonGroup.large ] bunchOfButtons
         , ButtonGroup.buttonGroup
-            [ ButtonGroup.small, ButtonGroup.attrs [ style [("display", "block")]] ]
+            [ ButtonGroup.small, ButtonGroup.attrs [ style "display" "block" ] ]
             bunchOfButtons
         ]
     , Util.code groupSizingCode
     ]
+
 
 groupSizingCode : Html msg
 groupSizingCode =
@@ -247,6 +248,7 @@ bunchOfButtons =
     ]
 """
 
+
 vertical : List (Html msg)
 vertical =
     [ h2 [] [ text "Vertical variation" ]
@@ -255,6 +257,7 @@ vertical =
         [ ButtonGroup.buttonGroup [ ButtonGroup.vertical ] bunchOfButtons ]
     , Util.code verticalGroupCode
     ]
+
 
 verticalGroupCode : Html msg
 verticalGroupCode =
@@ -277,13 +280,15 @@ toolbar =
     , Util.code toolbarCode
     , Util.calloutWarning
         [ h4 [] [ text "ButtonGroup.*Item functions" ]
-        , p [] [ text """Note the use of the function buttonGroupItem. It has the same signature as the buttonGroup function, except that it doesn't return Html
+        , p []
+            [ text """Note the use of the function buttonGroupItem. It has the same signature as the buttonGroup function, except that it doesn't return Html
                       This separation is in place to ensure type safety and control over what is placed within a button toolbar.
 
                       Also worth noting that you can use radioButtonGroupItem and checkboxButtonGroupItem to include radio groups and checkbox groups in a toolbar."""
-               ]
+            ]
         ]
     ]
+
 
 toolbarCode : Html msg
 toolbarCode =
@@ -298,15 +303,7 @@ ButtonGroup.toolbar []
 
 bunchOfButtons : List (ButtonGroup.ButtonItem msg)
 bunchOfButtons =
-    [ ButtonGroup.button [ Button.secondary ] [  text "Left" ]
-    , ButtonGroup.button [ Button.secondary ] [  text "Middle" ]
-    , ButtonGroup.button [ Button.secondary ] [  text "Right" ]
+    [ ButtonGroup.button [ Button.secondary ] [ text "Left" ]
+    , ButtonGroup.button [ Button.secondary ] [ text "Middle" ]
+    , ButtonGroup.button [ Button.secondary ] [ text "Right" ]
     ]
-
-
-
-
-
-
-
-

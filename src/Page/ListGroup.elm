@@ -1,13 +1,13 @@
 module Page.ListGroup exposing (view)
 
+import Bootstrap.Badge as Badge
+import Bootstrap.ListGroup as ListGroup
+import Bootstrap.Utilities.Flex as Flex
+import Bootstrap.Utilities.Size as Size
+import Bootstrap.Utilities.Spacing as Spacing
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Util
-import Bootstrap.ListGroup as ListGroup
-import Bootstrap.Badge as Badge
-import Bootstrap.Utilities.Spacing as Spacing
-import Bootstrap.Utilities.Flex as Flex
-import Bootstrap.Utilities.Size as Size
 
 
 view : Util.PageContent msg
@@ -18,14 +18,13 @@ view =
         List group items can be modified and extended to support just about any content within.
         They can also be used as navigation with the right modifier class."""
     , children =
-        (basic
+        basic
             ++ active
             ++ disabledItems
             ++ actionable
             ++ contextual
             ++ badges
             ++ custom
-        )
     }
 
 
@@ -212,8 +211,9 @@ ListGroup.custom
     ]
 """
 
-contextualOptions
-    : (List (ListGroup.ItemOption msg) -> List (Html msg) -> a)
+
+contextualOptions :
+    (List (ListGroup.ItemOption msg) -> List (Html msg) -> a)
     -> List a
 contextualOptions fn =
     [ fn [ ListGroup.primary ] [ text "Primary" ]
@@ -225,7 +225,6 @@ contextualOptions fn =
     , fn [ ListGroup.light ] [ text "Light" ]
     , fn [ ListGroup.dark ] [ text "Dark" ]
     ]
-
 
 
 badges : List (Html msg)

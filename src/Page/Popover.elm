@@ -1,13 +1,13 @@
 module Page.Popover exposing (view)
 
-import Html exposing (..)
-import Html.Attributes exposing (..)
-import Bootstrap.Popover as Popover
 import Bootstrap.Button as Button
 import Bootstrap.Form as Form
 import Bootstrap.Form.Input as Input
-import Util
+import Bootstrap.Popover as Popover
+import Html exposing (..)
+import Html.Attributes exposing (..)
 import Msg
+import Util
 
 
 type alias State a =
@@ -18,6 +18,7 @@ type alias State a =
         , popRight : Popover.State
         , popTop : Popover.State
     }
+
 
 view :
     State a

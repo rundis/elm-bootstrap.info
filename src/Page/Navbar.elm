@@ -1,22 +1,23 @@
 module Page.Navbar exposing
-    ( view
+    ( Msg
+    , State
     , initialState
     , subscriptions
     , update
-    , Msg
-    , State
+    , view
     )
 
-
+import Bootstrap.Button as Button
+import Bootstrap.Form.Input as Input
+import Bootstrap.Grid as Grid
+import Bootstrap.Navbar as Navbar
+import Bootstrap.Utilities.Spacing as Spacing
 import Html exposing (..)
 import Html.Attributes exposing (..)
-
-import Bootstrap.Navbar as Navbar
-import Bootstrap.Form.Input as Input
-import Bootstrap.Button as Button
-import Bootstrap.Grid as Grid
-import Bootstrap.Utilities.Spacing as Spacing
+import Html.Events as Events
+import Json.Decode as Decode
 import Util
+
 
 type alias State =
     { basicState : Navbar.State
@@ -25,23 +26,25 @@ type alias State =
 
 
 type Msg
-    = BasicMsg Navbar.State
+    = NoOp
+    | BasicMsg Navbar.State
     | CustomMsg Navbar.State
 
 
-initialState : (State, Cmd Msg)
+initialState : ( State, Cmd Msg )
 initialState =
     let
-        (basicState, cmdBasic) =
+        ( basicState, cmdBasic ) =
             Navbar.initialState BasicMsg
-        (customState, cmdCustom) =
+
+        ( customState, cmdCustom ) =
             Navbar.initialState CustomMsg
     in
-        ({ basicState = basicState
-         , customState = customState
-         }
-        , Cmd.batch [cmdBasic, cmdCustom] )
-
+    ( { basicState = basicState
+      , customState = customState
+      }
+    , Cmd.batch [ cmdBasic, cmdCustom ]
+    )
 
 
 subscriptions : State -> Sub Msg
@@ -55,6 +58,9 @@ subscriptions state =
 update : Msg -> State -> State
 update msg state =
     case msg of
+        NoOp ->
+            state
+
         BasicMsg newState ->
             { state | basicState = newState }
 
@@ -69,11 +75,9 @@ view state =
         """The navbar is a wrapper that positions branding, navigation, and other elements in a concise header.
         It’s easily extensible and supports responsive behavior."""
     , children =
-        (basic state
+        basic state
             ++ custom state
-        )
     }
-
 
 
 basic : State -> List (Html Msg)
@@ -82,24 +86,22 @@ basic state =
     , p [] [ text """Navbars supports a variety of content. We'll start off with a relatively simple example.
                   Since navbars require state and special care to handle responsibe behavior, there is a bit of wiring
                   needed to set one up.""" ]
-
     , Util.example
         [ Navbar.config BasicMsg
             |> Navbar.withAnimation
             |> Navbar.collapseMedium
-            |> Navbar.brand [ href "javascript:void()"] [ text "Brand"]
+            |> Navbar.brand [ href "#", noOpClick ] [ text "Brand" ]
             |> Navbar.items
-                [ Navbar.itemLink [href "javascript:void()"] [ text "Item 1"]
-                , Navbar.itemLink [href "javascript:void()"] [ text "Item 2"]
+                [ Navbar.itemLink [ href "#", noOpClick ] [ text "Item 1" ]
+                , Navbar.itemLink [ href "#", noOpClick ] [ text "Item 2" ]
                 ]
             |> Navbar.view state.basicState
-
         , Util.calloutInfo
             [ p [] [ text " Try resizing the window width to see the menu collapse behavior" ] ]
         ]
     , Util.code basicCode
     , Util.calloutInfo
-        [ h3 [] [ text "Navbar composition"]
+        [ h3 [] [ text "Navbar composition" ]
         , ul []
             [ textLi "You start out by using the config function providing the navbar *Msg as it's argument."
             , textLi "Then you compose your modal with optional options, brand, menu items (links or dropdowns) and/or customItems (see next example)."
@@ -109,10 +111,17 @@ basic state =
     ]
 
 
+noOpClick =
+    Events.custom "click" <| Decode.fail "JALLA"
+
+
+
+--{ message = NoOp, stopPropagation = True, preventDefault = True }
+
+
 textLi : String -> Html msg
 textLi str =
     li [] [ text str ]
-
 
 
 basicCode : Html msg
@@ -173,7 +182,7 @@ subscriptions model =
 """
 
 
-custom : State ->  List (Html Msg)
+custom : State -> List (Html Msg)
 custom state =
     [ h2 [] [ text "Options, dropdowns and custom content" ]
     , p [] [ text """You can twist and tweak the navbar quite a bit using a pipeline friendly syntax.
@@ -181,54 +190,53 @@ custom state =
                   """ ]
     , Util.example
         [ Grid.container []
-            [
-         Navbar.config CustomMsg
-            |> Navbar.withAnimation
-            |> Navbar.collapseMedium
-            |> Navbar.info
-            |> Navbar.brand
-                [ href "javascript:void()" ]
-                [ img
-                    [ src "assets/images/elm-bootstrap.svg"
-                    , class "d-inline-block align-top"
-                    , style [ ( "width", "30px" ) ]
-                    ]
-                    []
-                , text " Elm"
-                ]
-            |> Navbar.items
-                [ Navbar.itemLink [ href "javascript:void()" ] [ text "Item 1" ]
-                , Navbar.dropdown
-                    { id = "mydropdown"
-                    , toggle = Navbar.dropdownToggle [] [ text "Dropdown" ]
-                    , items =
-                        [ Navbar.dropdownHeader [ text "Heading" ]
-                        , Navbar.dropdownItem
-                            [ href "javascript:void()" ]
-                            [ text "Drop item 1" ]
-                        , Navbar.dropdownItem
-                            [ href "javascript:void()" ]
-                            [ text "Drop item 2" ]
-                        , Navbar.dropdownDivider
-                        , Navbar.dropdownItem
-                            [ href "javascript:void()" ]
-                            [ text "Drop item 3" ]
+            [ Navbar.config CustomMsg
+                |> Navbar.withAnimation
+                |> Navbar.collapseMedium
+                |> Navbar.info
+                |> Navbar.brand
+                    [ href "#", noOpClick ]
+                    [ img
+                        [ src "assets/images/elm-bootstrap.svg"
+                        , class "d-inline-block align-top"
+                        , style "width" "30px"
                         ]
-                    }
-                ]
-            |> Navbar.customItems
-                [ Navbar.formItem []
-                    [ Input.text [ Input.attrs [placeholder "enter" ]]
-                    , Button.button
-                        [ Button.success
-                        , Button.attrs [ Spacing.ml2Sm]
-                        ]
-                        [ text "Search"]
+                        []
+                    , text " Elm"
                     ]
-                , Navbar.textItem [ Spacing.ml2Sm, class "muted" ] [ text "Text"]
-                ]
-            |> Navbar.view state.customState
-        ]
+                |> Navbar.items
+                    [ Navbar.itemLink [ href "#", noOpClick ] [ text "Item 1" ]
+                    , Navbar.dropdown
+                        { id = "mydropdown"
+                        , toggle = Navbar.dropdownToggle [] [ text "Dropdown" ]
+                        , items =
+                            [ Navbar.dropdownHeader [ text "Heading" ]
+                            , Navbar.dropdownItem
+                                [ href "#", noOpClick ]
+                                [ text "Drop item 1" ]
+                            , Navbar.dropdownItem
+                                [ href "#", noOpClick ]
+                                [ text "Drop item 2" ]
+                            , Navbar.dropdownDivider
+                            , Navbar.dropdownItem
+                                [ href "#", noOpClick ]
+                                [ text "Drop item 3" ]
+                            ]
+                        }
+                    ]
+                |> Navbar.customItems
+                    [ Navbar.formItem []
+                        [ Input.text [ Input.attrs [ placeholder "enter" ] ]
+                        , Button.button
+                            [ Button.success
+                            , Button.attrs [ Spacing.ml2Sm ]
+                            ]
+                            [ text "Search" ]
+                        ]
+                    , Navbar.textItem [ Spacing.ml2Sm, class "muted" ] [ text "Text" ]
+                    ]
+                |> Navbar.view state.customState
+            ]
         ]
     , Util.code customCode
     ]
@@ -287,4 +295,3 @@ Grid.container [] -- Wrap in a container to center the navbar
         |> Navbar.view state.customState
     ]
 """
-

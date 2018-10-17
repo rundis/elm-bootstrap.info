@@ -1,21 +1,19 @@
-module Page.Accordion
-    exposing
-        ( view
-        , update
-        , State
-        , Msg
-        , initialState
-        , subscriptions
-        )
+module Page.Accordion exposing
+    ( Msg
+    , State
+    , initialState
+    , subscriptions
+    , update
+    , view
+    )
 
-import Html exposing (..)
-import Html.Attributes exposing (..)
 import Bootstrap.Accordion as Accordion
-import Bootstrap.ListGroup as ListGroup
 import Bootstrap.Card as Card
 import Bootstrap.Card.Block as Block
 import Bootstrap.ListGroup as ListGroup
 import Bootstrap.Text as Text
+import Html exposing (..)
+import Html.Attributes exposing (..)
 import Util
 
 
@@ -49,7 +47,7 @@ update : Msg -> State -> State
 update msg state =
     case msg of
         ExampleMsg newState ->
-            { state | exampleState = newState}
+            { state | exampleState = newState }
 
         AdvancedMsg newState ->
             { state | advancedState = newState }
@@ -60,9 +58,8 @@ view state =
     { title = "Accordion"
     , description = """An accordion is a group of stacked cards where you can toggle the visibility (slide up/down) of each card."""
     , children =
-        (example state
+        example state
             ++ advanced state
-        )
     }
 
 
@@ -197,10 +194,12 @@ advanced state =
                     , blocks =
                         [ Accordion.block [ Block.align Text.alignXsLeft ]
                             [ Block.titleH4 [] [ text "Block title" ]
-                            , Block.text [] [ text "Lorem ipsum etc" ] ]
+                            , Block.text [] [ text "Lorem ipsum etc" ]
+                            ]
                         , Accordion.block [ Block.align Text.alignXsRight ]
                             [ Block.titleH4 [] [ text "Block2 title" ]
-                            , Block.text [] [ text "Lorem ipsum etc" ] ]
+                            , Block.text [] [ text "Lorem ipsum etc" ]
+                            ]
                         ]
                     }
                 , Accordion.card
@@ -208,15 +207,15 @@ advanced state =
                     , options = [ Card.outlineSuccess, Card.align Text.alignXsCenter ]
                     , header =
                         Accordion.headerH3 []
-                            (Accordion.toggle [] [ text " Card 2"] )
+                            (Accordion.toggle [] [ text " Card 2" ])
                             |> Accordion.prependHeader
                                 [ span [ class "fa fa-taxi" ] [] ]
                     , blocks =
                         [ Accordion.block []
                             [ Block.text [] [ text "Lorem ipsum etc" ] ]
                         , Accordion.listGroup
-                            [ ListGroup.li [] [ text "List item 1"]
-                            , ListGroup.li [] [ text "List item 2"]
+                            [ ListGroup.li [] [ text "List item 1" ]
+                            , ListGroup.li [] [ text "List item 2" ]
                             ]
                         ]
                     }

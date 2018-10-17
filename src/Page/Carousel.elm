@@ -1,13 +1,13 @@
-module Page.Carousel exposing (..)
+module Page.Carousel exposing (Msg(..), State, basic, basicCode, captions, captionsCode, cardSlide, controlsAndIndicators, controlsCode, custom, customCode, img1, img2, img3, initialState, slideExample, stateOptions, stateOptionsCode, subscriptions, update, view)
 
+import Bootstrap.Card as Card
+import Bootstrap.Card.Block as Block
+import Bootstrap.Carousel as Carousel exposing (defaultStateOptions)
+import Bootstrap.Carousel.Slide as Slide
+import Bootstrap.Text as Text
 import Html exposing (..)
 import Html.Attributes exposing (style)
 import Util
-import Bootstrap.Carousel as Carousel exposing (defaultStateOptions)
-import Bootstrap.Carousel.Slide as Slide
-import Bootstrap.Card as Card
-import Bootstrap.Card.Block as Block
-import Bootstrap.Text as Text
 
 
 type alias State =
@@ -80,12 +80,11 @@ view state =
         It works with a series of images, text, or custom markup. It also includes support for previous/next controls and indicators.
         """
     , children =
-        (basic state
+        basic state
             ++ controlsAndIndicators state
             ++ captions state
             ++ stateOptions state
             ++ custom state
-        )
     }
 
 
@@ -319,7 +318,7 @@ cardSlide title =
         (Slide.customContent
             (Card.config
                 [ Card.info
-                , Card.attrs [ style [ ( "width", "800px" ) ] ]
+                , Card.attrs [ style "width" "800px" ]
                 , Card.align Text.alignSmCenter
                 ]
                 |> Card.headerH4 [] [ text title ]
@@ -372,7 +371,7 @@ cardSlide title =
 slideExample : Html msg -> Html msg
 slideExample carousel =
     Util.example
-        [ div [ style [ ( "max-width", "800px" ) ] ] [ carousel ] ]
+        [ div [ style "max-width" "800px" ] [ carousel ] ]
 
 
 img1 =

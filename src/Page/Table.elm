@@ -1,11 +1,11 @@
-module Page.Table exposing (view, State, initialState)
+module Page.Table exposing (State, initialState, view)
 
-import Html exposing (..)
-import Bootstrap.Table as Table
 import Bootstrap.Accordion as Accordion
-import Util
-import Bootstrap.Form.Checkbox as Checkbox
 import Bootstrap.Card.Block as Block
+import Bootstrap.Form.Checkbox as Checkbox
+import Bootstrap.Table as Table
+import Html exposing (..)
+import Util
 
 
 type alias State =
@@ -13,7 +13,6 @@ type alias State =
     , optionedState : Accordion.State
     , tableOptions : List TableOption
     }
-
 
 
 type TableOption
@@ -40,11 +39,9 @@ view state toMsg =
         """The table module allows you easily create tables with different styling options.
            Currently there is no interactive support (sorting, paging etc)"""
     , children =
-        (viewSimpleTable state toMsg
-                    ++ viewOptionedTable state toMsg
-        )
+        viewSimpleTable state toMsg
+            ++ viewOptionedTable state toMsg
     }
-
 
 
 viewSimpleTable : State -> (State -> msg) -> List (Html msg)
@@ -88,8 +85,6 @@ viewSimpleTable state toMsg =
                 }
             ]
         |> Accordion.view state.simpleState
-
-
     ]
 
 
@@ -131,34 +126,34 @@ viewOptionedTable state toMsg =
     [ h2 [] [ text "Table with options" ]
     , text "When you want to take more control of how your table should be styled you need to use the table function."
     , Util.example
-         [ optionChecks state toMsg
-         , Table.table
-        { options = tableOptions state
-        , thead =
-            Table.simpleThead
-                [ Table.th [] [ text "Col 1" ]
-                , Table.th [] [ text "Col 2" ]
-                , Table.th [] [ text "Col 3" ]
-                ]
-        , tbody =
-            Table.tbody []
-                [ Table.tr []
-                    [ Table.td [] [ text "Hello" ]
-                    , Table.td [] [ text "Hello" ]
-                    , Table.td [] [ text "Hello" ]
+        [ optionChecks state toMsg
+        , Table.table
+            { options = tableOptions state
+            , thead =
+                Table.simpleThead
+                    [ Table.th [] [ text "Col 1" ]
+                    , Table.th [] [ text "Col 2" ]
+                    , Table.th [] [ text "Col 3" ]
                     ]
-                , Table.tr []
-                    [ Table.td [] [ text "There" ]
-                    , Table.td [] [ text "There" ]
-                    , Table.td [] [ text "There" ]
+            , tbody =
+                Table.tbody []
+                    [ Table.tr []
+                        [ Table.td [] [ text "Hello" ]
+                        , Table.td [] [ text "Hello" ]
+                        , Table.td [] [ text "Hello" ]
+                        ]
+                    , Table.tr []
+                        [ Table.td [] [ text "There" ]
+                        , Table.td [] [ text "There" ]
+                        , Table.td [] [ text "There" ]
+                        ]
+                    , Table.tr []
+                        [ Table.td [] [ text "Dude" ]
+                        , Table.td [] [ text "Dude" ]
+                        , Table.td [] [ text "Dude" ]
+                        ]
                     ]
-                , Table.tr []
-                    [ Table.td [] [ text "Dude" ]
-                    , Table.td [] [ text "Dude" ]
-                    , Table.td [] [ text "Dude" ]
-                    ]
-                ]
-        }
+            }
         ]
     , Accordion.config (\accState -> toMsg { state | optionedState = accState })
         |> Accordion.cards
@@ -206,24 +201,47 @@ optionChecks : State -> (State -> msg) -> Html msg
 optionChecks state toMsg =
     let
         toggleOpt opt _ =
-            if (List.any ((==) opt) state.tableOptions) then
+            if List.any ((==) opt) state.tableOptions then
                 toMsg { state | tableOptions = List.filter ((/=) opt) state.tableOptions }
+
             else
                 toMsg { state | tableOptions = opt :: state.tableOptions }
     in
-        div
-            []
-            (List.map
-                (\opt ->
-                    Checkbox.checkbox
-                        [ Checkbox.inline
-                        , Checkbox.checked (List.any ((==) opt) state.tableOptions)
-                        , Checkbox.onCheck (toggleOpt opt)
-                        ]
-                        (toString opt)
-                )
-                [ Striped, Hover, Small, Inverse, Bordered ]
+    div
+        []
+        (List.map
+            (\opt ->
+                Checkbox.checkbox
+                    [ Checkbox.inline
+                    , Checkbox.checked (List.any ((==) opt) state.tableOptions)
+                    , Checkbox.onCheck (toggleOpt opt)
+                    ]
+                    (tableOptToString opt)
             )
+            [ Striped, Hover, Small, Inverse, Bordered ]
+        )
+
+
+tableOptToString : TableOption -> String
+tableOptToString opt =
+    case opt of
+        Striped ->
+            "Striped"
+
+        Hover ->
+            "Hover"
+
+        Small ->
+            "Small"
+
+        Inverse ->
+            "Inverse"
+
+        Bordered ->
+            "Bordered"
+
+        Responsive ->
+            "Responsive"
 
 
 optionedTableSampleCode : Html msg

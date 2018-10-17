@@ -1,10 +1,10 @@
 module Page.Badge exposing (view)
 
+import Bootstrap.Badge as Badge
+import Bootstrap.Utilities.Spacing as Spacing
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Util
-import Bootstrap.Badge as Badge
-import Bootstrap.Utilities.Spacing as Spacing
 
 
 view : Util.PageContent msg
@@ -12,7 +12,7 @@ view =
     { title = "Badge"
     , description = "Small and adaptive tag for adding context to just about any content."
     , children =
-        (example ++ contextual ++ pills)
+        example ++ contextual ++ pills
     }
 
 
@@ -55,7 +55,7 @@ contextual =
     [ h2 [] [ text "Contextual variations" ]
     , p [] [ text "Use the following functions to change the appearance of a badge." ]
     , Util.example
-        [ Badge.badgePrimary [ ] [ text "Primary" ]
+        [ Badge.badgePrimary [] [ text "Primary" ]
         , Badge.badgeSecondary [ Spacing.ml1 ] [ text "Secondary" ]
         , Badge.badgeSuccess [ Spacing.ml1 ] [ text "Success" ]
         , Badge.badgeInfo [ Spacing.ml1 ] [ text "Info" ]
@@ -93,7 +93,7 @@ pills =
     [ h2 [] [ text "Pill badges" ]
     , p [] [ text "To create more rounded badges use the pill* functions." ]
     , Util.example
-        [ Badge.pillPrimary [ ] [ text "Primary" ]
+        [ Badge.pillPrimary [] [ text "Primary" ]
         , Badge.pillSecondary [ Spacing.ml1 ] [ text "Secondary" ]
         , Badge.pillSuccess [ Spacing.ml1 ] [ text "Success" ]
         , Badge.pillInfo [ Spacing.ml1 ] [ text "Info" ]

@@ -1,13 +1,13 @@
 module Page.Card exposing (view)
 
-import Html exposing (..)
-import Html.Attributes exposing (..)
+import Bootstrap.Button as Button
 import Bootstrap.Card as Card
 import Bootstrap.Card.Block as Block
-import Bootstrap.Button as Button
 import Bootstrap.ListGroup as ListGroup
 import Bootstrap.Text as Text
 import Bootstrap.Utilities.Spacing as Spacing
+import Html exposing (..)
+import Html.Attributes exposing (..)
 import Util
 
 
@@ -18,7 +18,7 @@ view =
         """A card is a flexible and extensible content container.
         It includes options for headers and footers, a wide variety of content, contextual background colors, and powerful display options."""
     , children =
-        (example
+        example
             ++ blocks
             ++ blockContents
             ++ listGroups
@@ -29,7 +29,6 @@ view =
             ++ groups
             ++ decks
             ++ columns
-        )
     }
 
 
@@ -39,7 +38,7 @@ example =
     , p [] [ text """Cards are built with as little markup and styles as possible, but still manage to deliver a ton of control and customization.
                     Built with flexbox, they offer easy alignment and mix well with other Bootstrap components.""" ]
     , Util.example
-        [ Card.config [ Card.attrs [ style [ ( "width", "20rem" ) ] ] ]
+        [ Card.config [ Card.attrs [ style "width" "20rem" ] ]
             |> Card.header [ class "text-center" ]
                 [ img [ src "assets/images/elm-bootstrap.svg" ] []
                 , h3 [ Spacing.mt2 ] [ text "Custom Card Header" ]
@@ -314,8 +313,6 @@ Card.config []
     |> Card.view"""
 
 
-
-
 backgrounds : List (Html msg)
 backgrounds =
     [ h2 [] [ text "Background variants" ]
@@ -326,7 +323,7 @@ backgrounds =
             , Card.textColor Text.white
             , Card.attrs [ Spacing.mb3 ]
             ]
-            |> Card.header [] [ text "Header"]
+            |> Card.header [] [ text "Header" ]
             |> Card.block [] [ quote ]
             |> Card.view
         , Card.config
@@ -334,7 +331,7 @@ backgrounds =
             , Card.textColor Text.white
             , Card.attrs [ Spacing.mb3 ]
             ]
-            |> Card.header [] [ text "Header"]
+            |> Card.header [] [ text "Header" ]
             |> Card.block [] [ quote ]
             |> Card.view
         , Card.config
@@ -342,7 +339,7 @@ backgrounds =
             , Card.textColor Text.white
             , Card.attrs [ Spacing.mb3 ]
             ]
-            |> Card.header [] [ text "Header"]
+            |> Card.header [] [ text "Header" ]
             |> Card.block [] [ quote ]
             |> Card.view
         , Card.config
@@ -350,7 +347,7 @@ backgrounds =
             , Card.textColor Text.white
             , Card.attrs [ Spacing.mb3 ]
             ]
-            |> Card.header [] [ text "Header"]
+            |> Card.header [] [ text "Header" ]
             |> Card.block [] [ quote ]
             |> Card.view
         , Card.config
@@ -358,7 +355,7 @@ backgrounds =
             , Card.textColor Text.white
             , Card.attrs [ Spacing.mb3 ]
             ]
-            |> Card.header [] [ text "Header"]
+            |> Card.header [] [ text "Header" ]
             |> Card.block [] [ quote ]
             |> Card.view
         , Card.config
@@ -366,7 +363,7 @@ backgrounds =
             , Card.textColor Text.white
             , Card.attrs [ Spacing.mb3 ]
             ]
-            |> Card.header [] [ text "Header"]
+            |> Card.header [] [ text "Header" ]
             |> Card.block [] [ quote ]
             |> Card.view
         , Card.config
@@ -374,7 +371,7 @@ backgrounds =
             , Card.textColor Text.primary
             , Card.attrs [ Spacing.mb3 ]
             ]
-            |> Card.header [] [ text "Header"]
+            |> Card.header [] [ text "Header" ]
             |> Card.block [] [ quote ]
             |> Card.view
         , Card.config
@@ -382,22 +379,23 @@ backgrounds =
             , Card.textColor Text.white
             , Card.attrs [ Spacing.mb3 ]
             ]
-            |> Card.header [] [ text "Header"]
+            |> Card.header [] [ text "Header" ]
             |> Card.block [] [ quote ]
             |> Card.view
         , Card.config
             [ Card.primary
             , Card.textColor Text.light
             ]
-            |> Card.header [] [ text "Header"]
+            |> Card.header [] [ text "Header" ]
             |> Card.block
-                [ Block.danger ] [ quote ]
+                [ Block.danger ]
+                [ quote ]
             |> Card.block []
-                [ Block.text [] [ text "Using card level coloring"]]
+                [ Block.text [] [ text "Using card level coloring" ] ]
             |> Card.block
-                [ Block.light, Block.textColor Text.success] [ Block.text [] [text "Success"]]
+                [ Block.light, Block.textColor Text.success ]
+                [ Block.text [] [ text "Success" ] ]
             |> Card.view
-
         ]
     , Util.code backgroundsCode
     ]

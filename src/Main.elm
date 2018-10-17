@@ -1,41 +1,44 @@
-port module Main exposing (..)
+port module Main exposing (Flags, Model, externalLink, init, main, mapPageContent, menuLink, sidebarLink, subscriptions, update, updateAnalytics, urlUpdate, view, viewFooter, viewMenu, viewPage, viewSidebar, wrapPageLayout)
 
-import Html exposing (..)
-import Html.Attributes exposing (..)
-import Navigation exposing (Location)
-import Route
-import Globals
-import Bootstrap.Navbar as Navbar
-import Page.NotFound as NotFound
-import Page.Home as PHome
-import Page.Table as Table
-import Page.Progress as Progress
-import Page.Grid as Grid
-import Page.Alert as Alert
-import Page.Badge as Badge
-import Page.ListGroup as ListGroup
-import Page.Tab as Tab
-import Page.Card as Card
-import Page.Button as Button
-import Page.ButtonGroup as ButtonGroup
-import Page.Dropdown as Dropdown
-import Page.Accordion as Accordion
-import Page.Modal as Modal
-import Page.Navbar as PageNav
-import Page.Form as Form
-import Page.InputGroup as InputGroup
-import Page.Popover as Popover
-import Page.Carousel as Carousel
-import Page.GettingStarted as GettingStarted
-import Util
 import Bootstrap.Grid as Grid
 import Bootstrap.Grid.Col as Col
-import Msg exposing (..)
+import Bootstrap.Navbar as Navbar
 import Bootstrap.Popover as Pop
+import Browser
+import Browser.Navigation as Navigation
+import Globals
+import Html exposing (..)
+import Html.Attributes exposing (..)
+import Msg exposing (..)
+import Page.Accordion as Accordion
+import Page.Alert as Alert
+import Page.Badge as Badge
+import Page.Button as Button
+import Page.ButtonGroup as ButtonGroup
+import Page.Card as Card
+import Page.Carousel as Carousel
+import Page.Dropdown as Dropdown
+import Page.Form as Form
+import Page.GettingStarted as GettingStarted
+import Page.Grid as Grid
+import Page.Home as PHome
+import Page.InputGroup as InputGroup
+import Page.ListGroup as ListGroup
+import Page.Modal as Modal
+import Page.Navbar as PageNav
+import Page.NotFound as NotFound
+import Page.Popover as Popover
+import Page.Progress as Progress
+import Page.Tab as Tab
+import Page.Table as Table
+import Route
+import Url exposing (Url)
+import Util
 
 
 type alias Model =
-    { route : Route.Route
+    { navKey : Navigation.Key
+    , route : Route.Route
     , navbarState : Navbar.State
     , tableState : Table.State
     , progressState : Progress.State
@@ -57,11 +60,15 @@ type alias Model =
     }
 
 
-init : Navigation.Location -> ( Model, Cmd Msg )
-init location =
+type alias Flags =
+    {}
+
+
+init : Flags -> Url -> Navigation.Key -> ( Model, Cmd Msg )
+init flags url key =
     let
         tabInitialState =
-            case (Route.decode location) of
+            case Route.decode url of
                 Just (Route.Tab (Just hash)) ->
                     Tab.initialStateWithHash hash
 
@@ -75,8 +82,9 @@ init location =
             PageNav.initialState
 
         ( model, urlCmd ) =
-            urlUpdate location
-                { route = Route.NotFound
+            urlUpdate url
+                { navKey = key
+                , route = Route.NotFound
                 , navbarState = navbarState
                 , tableState = Table.initialState
                 , progressState = Progress.initialState
@@ -97,42 +105,65 @@ init location =
                 , alertState = Alert.initialState
                 }
     in
-        ( model, Cmd.batch [ navbarCmd, urlCmd, Cmd.map PageNavMsg pageNavCmd ] )
+    ( model, Cmd.batch [ navbarCmd, urlCmd, Cmd.map PageNavMsg pageNavCmd ] )
 
 
-main : Program Never Model Msg
+main : Program Flags Model Msg
 main =
-    Navigation.program UrlChange
+    Browser.application
         { init = init
         , view = view
         , update = update
         , subscriptions = subscriptions
+        , onUrlRequest = ClickedLink
+        , onUrlChange = UrlChange
         }
 
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
     Sub.batch
-        [ Navbar.subscriptions model.navbarState NavbarMsg
-        , Sub.map TabMsg <| Tab.subscriptions model.tabState
-        , Sub.map DropdownMsg <| Dropdown.subscriptions model.dropdownState
-        , Sub.map AccordionMsg <| Accordion.subscriptions model.accordionState
-        , Sub.map PageNavMsg <| PageNav.subscriptions model.pageNavState
-        , Sub.map CarouselMsg <| Carousel.subscriptions model.carouselState
-        , Sub.map ModalMsg <| Modal.subscriptions model.modalState
-        , Sub.map InputGroupMsg <| InputGroup.subscriptions model.inputGroupState
-        , Sub.map AlertMsg <| Alert.subscriptions model.alertState
-        ]
+        ([ Navbar.subscriptions model.navbarState NavbarMsg
+         , Sub.map TabMsg <| Tab.subscriptions model.tabState
+         , Sub.map DropdownMsg <| Dropdown.subscriptions model.dropdownState
+         , Sub.map AccordionMsg <| Accordion.subscriptions model.accordionState
+         , Sub.map PageNavMsg <| PageNav.subscriptions model.pageNavState
+         , Sub.map ModalMsg <| Modal.subscriptions model.modalState
+         , Sub.map InputGroupMsg <| InputGroup.subscriptions model.inputGroupState
+         , Sub.map AlertMsg <| Alert.subscriptions model.alertState
+         ]
+            ++ (case model.route of
+                    Route.Carousel ->
+                        [ Sub.map CarouselMsg <| Carousel.subscriptions model.carouselState ]
+
+                    _ ->
+                        []
+               )
+        )
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
+        ClickedLink req ->
+            case req of
+                Browser.Internal url ->
+                    case url.fragment of
+                        Just "" ->
+                            let
+                                newUrl =
+                                    { url | fragment = Nothing }
+                            in
+                            ( model, Navigation.pushUrl model.navKey <| Url.toString newUrl )
+
+                        _ ->
+                            ( model, Navigation.pushUrl model.navKey <| Url.toString url )
+
+                Browser.External href ->
+                    ( model, Navigation.load href )
+
         UrlChange location ->
             urlUpdate location model
-
-        PageChange url ->
-            ( model, Navigation.newUrl url )
 
         NavbarMsg state ->
             ( { model | navbarState = state }, Cmd.none )
@@ -189,7 +220,7 @@ update msg model =
             ( { model | alertState = Alert.update subMsg model.alertState }, Cmd.none )
 
 
-urlUpdate : Navigation.Location -> Model -> ( Model, Cmd Msg )
+urlUpdate : Url -> Model -> ( Model, Cmd Msg )
 urlUpdate location model =
     case Route.decode location of
         Nothing ->
@@ -202,14 +233,14 @@ urlUpdate location model =
 port updateAnalytics : String -> Cmd msg
 
 
-view : Model -> Html Msg
+view : Model -> Browser.Document Msg
 view model =
-    div
-        []
-        ([ viewMenu model ]
+    { title = "Elm Bootstrap"
+    , body =
+        [ viewMenu model ]
             ++ viewPage model
             ++ [ viewFooter ]
-        )
+    }
 
 
 viewMenu : Model -> Html Msg
@@ -220,7 +251,7 @@ viewMenu model =
         |> Navbar.withAnimation
         |> Navbar.lightCustomClass "bd-navbar"
         |> Navbar.brand
-            (Route.clickTo Route.Home PageChange)
+            (Route.clickTo Route.Home)
             [ text "Elm Bootstrap" ]
         |> Navbar.items
             [ menuLink "Getting started" Route.GettingStarted
@@ -232,7 +263,7 @@ viewMenu model =
 menuLink : String -> Route.Route -> Navbar.Item Msg
 menuLink name route =
     Navbar.itemLink
-        (Route.clickTo route PageChange)
+        (Route.clickTo route)
         [ text name ]
 
 
@@ -242,97 +273,100 @@ viewPage model =
         wrap =
             wrapPageLayout model
     in
-        case model.route of
-            Route.Home ->
-                PHome.view PageChange
+    case model.route of
+        Route.Home ->
+            PHome.view
 
-            Route.GettingStarted ->
-                GettingStarted.view PageChange
+        Route.GettingStarted ->
+            GettingStarted.view
 
-            Route.Grid ->
-                Grid.view model.gridState GridMsg
-                    |> wrap
+        Route.Grid ->
+            Grid.view model.gridState GridMsg
+                |> wrap
 
-            Route.Card ->
-                Card.view |> wrap
+        Route.Card ->
+            Card.view |> wrap
 
-            Route.Table ->
-                Table.view model.tableState TableMsg
-                    |> wrap
+        Route.Table ->
+            Table.view model.tableState TableMsg
+                |> wrap
 
-            Route.Progress ->
-                Progress.view model.progressState ProgressMsg
-                    |> wrap
+        Route.Progress ->
+            Progress.view model.progressState ProgressMsg
+                |> wrap
 
-            Route.Alert ->
-                Alert.view model.alertState
-                    |> mapPageContent AlertMsg
-                    |> wrap
+        Route.Alert ->
+            Alert.view model.alertState
+                |> mapPageContent AlertMsg
+                |> wrap
 
-            Route.Badge ->
-                Badge.view
-                    |> wrap
+        Route.Badge ->
+            Badge.view
+                |> wrap
 
-            Route.ListGroup ->
-                ListGroup.view
-                    |> wrap
+        Route.ListGroup ->
+            ListGroup.view
+                |> wrap
 
-            Route.Tab hash ->
-                Tab.view model.tabState
-                    |> mapPageContent TabMsg
-                    |> wrap
+        Route.Tab hash ->
+            Tab.view model.tabState
+                |> mapPageContent TabMsg
+                |> wrap
 
-            Route.Button ->
-                Button.view |> wrap
+        Route.Button ->
+            Button.view |> wrap
 
-            Route.ButtonGroup ->
-                ButtonGroup.view model.buttonGroupState ButtonGroupMsg
-                    |> wrap
+        Route.ButtonGroup ->
+            ButtonGroup.view model.buttonGroupState ButtonGroupMsg
+                |> wrap
 
-            Route.Dropdown ->
-                Dropdown.view model.dropdownState
-                    |> mapPageContent DropdownMsg
-                    |> wrap
+        Route.Dropdown ->
+            Dropdown.view model.dropdownState
+                |> mapPageContent DropdownMsg
+                |> wrap
 
-            Route.Accordion ->
-                Accordion.view model.accordionState
-                    |> mapPageContent AccordionMsg
-                    |> wrap
+        Route.Accordion ->
+            Accordion.view model.accordionState
+                |> mapPageContent AccordionMsg
+                |> wrap
 
-            Route.Modal ->
-                Modal.view model.modalState
-                    |> mapPageContent ModalMsg
-                    |> wrap
+        Route.Modal ->
+            Modal.view model.modalState
+                |> mapPageContent ModalMsg
+                |> wrap
 
-            Route.Navbar ->
-                PageNav.view model.pageNavState
-                    |> mapPageContent PageNavMsg
-                    |> wrap
+        Route.Navbar ->
+            PageNav.view model.pageNavState
+                |> mapPageContent PageNavMsg
+                |> wrap
 
-            Route.Form ->
-                Form.view |> wrap
+        Route.Form ->
+            Form.view |> wrap
 
-            Route.InputGroup ->
-                InputGroup.view model.inputGroupState
-                    |> mapPageContent InputGroupMsg
-                    |> wrap
+        Route.InputGroup ->
+            InputGroup.view model.inputGroupState
+                |> mapPageContent InputGroupMsg
+                |> wrap
 
-            Route.Popover ->
-                Popover.view model
-                    |> wrap
+        Route.Popover ->
+            Popover.view model
+                |> wrap
 
-            Route.Carousel ->
-                Carousel.view model.carouselState
-                    |> mapPageContent CarouselMsg
-                    |> wrap
+        Route.Carousel ->
+            Carousel.view model.carouselState
+                |> mapPageContent CarouselMsg
+                |> wrap
 
-            Route.NotFound ->
-                NotFound.view
+        Route.NotFound ->
+            NotFound.view
 
 
 mapPageContent : (msg -> Msg) -> Util.PageContent msg -> Util.PageContent Msg
 mapPageContent toMsg content =
-    { content | children = List.map (\c -> Html.map toMsg c) content.children }
+    { title = content.title
+    , description = content.description
+    , children = List.map (\c -> Html.map toMsg c) content.children
+    }
 
 
 wrapPageLayout : Model -> Util.PageContent Msg -> List (Html Msg)
@@ -357,31 +391,31 @@ viewSidebar model =
         link page title =
             sidebarLink page title (page == model.route)
     in
-        nav [ class "bd-links" ]
-            [ div [ class "bd-toc-item active" ]
-                [ text "Modules"
-                , ul [ class "nav bd-sidenav" ]
-                    [ link Route.Accordion "Accordion"
-                    , link Route.Alert "Alert"
-                    , link Route.Badge "Badge"
-                    , link Route.Button "Button"
-                    , link Route.ButtonGroup "Button group"
-                    , link Route.Card "Card"
-                    , link Route.Carousel "Carousel"
-                    , link Route.Dropdown "Dropdown"
-                    , link Route.Form "Form"
-                    , link Route.Grid "Grid"
-                    , link Route.InputGroup "Input group"
-                    , link Route.ListGroup "List group"
-                    , link Route.Modal "Modal"
-                    , link Route.Navbar "Navbar"
-                    , link Route.Popover "Popover"
-                    , link Route.Progress "Progress"
-                    , link (Route.Tab Nothing) "Tab"
-                    , link Route.Table "Table"
-                    ]
+    nav [ class "bd-links" ]
+        [ div [ class "bd-toc-item active" ]
+            [ text "Modules"
+            , ul [ class "nav bd-sidenav" ]
+                [ link Route.Accordion "Accordion"
+                , link Route.Alert "Alert"
+                , link Route.Badge "Badge"
+                , link Route.Button "Button"
+                , link Route.ButtonGroup "Button group"
+                , link Route.Card "Card"
+                , link Route.Carousel "Carousel"
+                , link Route.Dropdown "Dropdown"
+                , link Route.Form "Form"
+                , link Route.Grid "Grid"
+                , link Route.InputGroup "Input group"
+                , link Route.ListGroup "List group"
+                , link Route.Modal "Modal"
+                , link Route.Navbar "Navbar"
+                , link Route.Popover "Popover"
+                , link Route.Progress "Progress"
+                , link (Route.Tab Nothing) "Tab"
+                , link Route.Table "Table"
                 ]
             ]
+        ]
 
 
 sidebarLink : Route.Route -> String -> Bool -> Html Msg
@@ -389,10 +423,11 @@ sidebarLink page label isActive =
     li
         (if isActive then
             [ class "active bd-sidenav-active" ]
+
          else
             []
         )
-        [ a (Route.clickTo page PageChange)
+        [ a (Route.clickTo page)
             [ text label ]
         ]
 
