@@ -132,30 +132,37 @@ import Bootstrap.Navbar as Navbar
 
 -- You need to keep track of the view state for the navbar in your model
 
+
 type alias Model =
     { navbarState : Navbar.State }
 
 
+
 -- The navbar needs to know the initial window size, so the inital state for a navbar requires a command to be run by the Elm runtime
 
-initialState : (Model, Cmd Msg)
-initialState toMsg =
+
+initialState : ( Model, Cmd Msg )
+initialState =
     let
-        (navbarState, navbarCmd)
-            = Navbar.initialState NavbarMsg
+        ( navbarState, navbarCmd ) =
+            Navbar.initialState NavbarMsg
     in
-        ({ navbarState = navbarState }, navBarCmd )
+    ( { navbarState = navbarState }, navbarCmd )
+
 
 
 -- Define a message for the navbar
+
 
 type Msg
     = NavbarMsg Navbar.State
 
 
+
 -- You need to handle navbar messages in your update function to step the navbar state forward
 
-update : Msg -> Model -> (Model, Cmd Msg)
+
+update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         NavbarMsg state ->
@@ -166,14 +173,17 @@ view : Model -> Html Msg
 view model =
     Navbar.config NavbarMsg
         |> Navbar.withAnimation
-        |> Navbar.brand [ href "#"] [ text "Brand"]
+        |> Navbar.brand [ href "#" ] [ text "Brand" ]
         |> Navbar.items
-            [ Navbar.itemLink [href "#"] [ text "Item 1"]
-            , Navbar.itemLink [href "#"] [ text "Item 2"]
+            [ Navbar.itemLink [ href "#" ] [ text "Item 1" ]
+            , Navbar.itemLink [ href "#" ] [ text "Item 2" ]
             ]
-        |> Navbar.view state.basicState
+        |> Navbar.view model.navbarState
+
+
 
 -- If you use animations as above or you use dropdowns in your navbar you need to configure subscriptions too
+
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
@@ -245,25 +255,31 @@ custom state =
 customCode : Html msg
 customCode =
     Util.toMarkdownElm """
-Grid.container [] -- Wrap in a container to center the navbar
+Grid.container []
+    -- Wrap in a container to center the navbar
     [ Navbar.config NavbarMsg
         |> Navbar.withAnimation
-        |> Navbar.collapseMedium            -- Collapse menu at the medium breakpoint
-        |> Navbar.info                      -- Customize coloring
-        |> Navbar.brand                     -- Add logo to your brand with a little styling to align nicely
+        |> Navbar.collapseMedium
+        -- Collapse menu at the medium breakpoint
+        |> Navbar.info
+        -- Customize coloring
+        |> Navbar.brand
+            -- Add logo to your brand with a little styling to align nicely
             [ href "#" ]
             [ img
                 [ src "assets/images/elm-bootstrap.svg"
                 , class "d-inline-block align-top"
-                , style [ ( "width", "30px" ) ]
+                , style "width" "30px"
                 ]
                 []
             , text " Elm Bootstrap"
             ]
         |> Navbar.items
             [ Navbar.itemLink
-                [ href "#" ] [ text "Item 1" ]
-            , Navbar.dropdown              -- Adding dropdowns is pretty simple
+                [ href "#" ]
+                [ text "Item 1" ]
+            , Navbar.dropdown
+                -- Adding dropdowns is pretty simple
                 { id = "mydropdown"
                 , toggle = Navbar.dropdownToggle [] [ text "My dropdown" ]
                 , items =
@@ -283,15 +299,15 @@ Grid.container [] -- Wrap in a container to center the navbar
             ]
         |> Navbar.customItems
             [ Navbar.formItem []
-                [ Input.text [ Input.attrs [placeholder "enter" ]]
+                [ Input.text [ Input.attrs [ placeholder "enter" ] ]
                 , Button.button
                     [ Button.success
-                    , Button.attrs [ Spacing.ml2Sm]
+                    , Button.attrs [ Spacing.ml2Sm ]
                     ]
-                    [ text "Search"]
+                    [ text "Search" ]
                 ]
-            , Navbar.textItem [ Spacing.ml2Sm, class "muted" ] [ text "Text"]
+            , Navbar.textItem [ Spacing.ml2Sm, class "muted" ] [ text "Text" ]
             ]
-        |> Navbar.view state.customState
+        |> Navbar.view model.navbarState
     ]
 """
