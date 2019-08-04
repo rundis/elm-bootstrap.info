@@ -29,6 +29,7 @@ import Page.Navbar as PageNav
 import Page.NotFound as NotFound
 import Page.Popover as Popover
 import Page.Progress as Progress
+import Page.Spinner as Spinner
 import Page.Tab as Tab
 import Page.Table as Table
 import Route
@@ -357,6 +358,10 @@ viewPage model =
                 |> mapPageContent CarouselMsg
                 |> wrap
 
+        Route.Spinner ->
+            Spinner.view
+                |> wrap
+
         Route.NotFound ->
             NotFound.view
 
@@ -411,6 +416,7 @@ viewSidebar model =
                 , link Route.Navbar "Navbar"
                 , link Route.Popover "Popover"
                 , link Route.Progress "Progress"
+                , link Route.Spinner "Spinner"
                 , link (Route.Tab Nothing) "Tab"
                 , link Route.Table "Table"
                 ]

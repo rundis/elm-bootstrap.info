@@ -29,6 +29,7 @@ type Route
     | InputGroup
     | Popover
     | Carousel
+    | Spinner
     | NotFound
 
 
@@ -55,6 +56,7 @@ routeParser =
         , UrlParser.map InputGroup (s "inputgroup")
         , UrlParser.map Popover (s "popover")
         , UrlParser.map Carousel (s "carousel")
+        , UrlParser.map Spinner (s "spinner")
         ]
 
 
@@ -125,6 +127,9 @@ encode route =
 
         Carousel ->
             "/carousel"
+
+        Spinner ->
+            "/spinner"
 
         NotFound ->
             "/notfound"

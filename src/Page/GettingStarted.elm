@@ -187,9 +187,6 @@ Grid.row
 """
 
 
-
-
-
 example : List (Html msg)
 example =
     [ h2 [] [ text "Example page" ]
@@ -200,6 +197,7 @@ example =
     , h3 [] [ text "Html Index Page" ]
     , Util.code exampleHtmlCode
     ]
+
 
 exampleElmCode : Html msg
 exampleElmCode =
@@ -462,6 +460,7 @@ modal model =
         |> Modal.view model.modalVisibility
 
 """
+
 
 exampleHtmlCode : Html msg
 exampleHtmlCode =
