@@ -6,6 +6,7 @@ import Bootstrap.Form.Checkbox as Checkbox
 import Bootstrap.Form.Fieldset as Fieldset
 import Bootstrap.Form.Input as Input
 import Bootstrap.Form.Radio as Radio
+import Bootstrap.Form.Range as Range
 import Bootstrap.Form.Select as Select
 import Bootstrap.Form.Textarea as Textarea
 import Bootstrap.Grid as Grid
@@ -22,6 +23,7 @@ view =
     , description = """Elm Bootstrap provides you functions to easily utilize most of the extensive form support offered by Bootstrap."""
     , children =
         controls
+            ++ rangeControl
             ++ formGroups
             ++ fieldsets
             ++ inline
@@ -140,6 +142,33 @@ Form.form []
         |> Fieldset.view
     , Checkbox.checkbox [ Checkbox.id "checkout" ] "Check me out"
     , Button.button [ Button.primary] [ text "Submit" ]
+    ]
+"""
+
+
+rangeControl : List (Html msg)
+rangeControl =
+    [ h2 [] [ text "Range Inputs"]
+    , p [] [ text "Create horizontally scrollable range inputs" ]
+    , Util.example
+        [ Range.range
+            [ Range.min "0"
+            , Range.max "100"
+            , Range.step "10"
+            , Range.value "30"
+            ]
+        , Util.code rangeControlCode]
+    ]
+
+
+rangeControlCode : Html msg
+rangeControlCode =
+    Util.toMarkdownElm """
+Range.range
+    [ Range.min "0"
+    , Range.max "100"
+    , Range.step "10"
+    , Range.value "30"
     ]
 """
 
@@ -306,7 +335,7 @@ grid =
                 [ Form.row []
                     [ Form.colLabel [ Col.sm2 ] [ text "Email" ]
                     , Form.col [ Col.sm10 ]
-                        [ Input.email [] ]
+                        [ Input.email [ Input.value "email@email.com", Input.plainText True ] ]
                     ]
                 , Form.row []
                     [ Form.colLabel [ Col.sm2 ] [ text "Postal" ]
