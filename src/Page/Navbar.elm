@@ -171,7 +171,7 @@ view model =
             [ Navbar.itemLink [href "#"] [ text "Item 1"]
             , Navbar.itemLink [href "#"] [ text "Item 2"]
             ]
-        |> Navbar.view state.basicState
+        |> Navbar.view model.navbarState
 
 -- If you use animations as above or you use dropdowns in your navbar you need to configure subscriptions too
 
