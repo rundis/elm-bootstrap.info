@@ -172,7 +172,6 @@ view model =
         [ Button.button
             [ Button.outlineSuccess
             , Button.attrs [ onClick <| ShowModal ] ]
-            ]
             [ text "Open modal"]
         , Modal.config CloseModal
             |> Modal.small
@@ -362,7 +361,6 @@ view model =
         [ Button.button
             [ Button.outlineSuccess
             , Button.attrs [ onClick <| ShowModal ] ]
-            ]
             [ text "Open modal"]
         , Modal.config CloseModal
             -- Configure the modal to use animations providing the new AnimateModal msg
